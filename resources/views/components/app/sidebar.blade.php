@@ -118,8 +118,7 @@
 
                     <!-- Gestión de clientes -->
                     @php
-                    $clientesRoutes = ['clientes'];
-                    $isClientesActive = in_array(Request::segment(1), $clientesRoutes) || Route::is(...$clientesRoutes);
+                    $isClientesActive = Route::is('clientes.*');
                     @endphp
                     <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r {{ $isClientesActive ? 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' : '' }}" x-data="{ open: {{ $isClientesActive ? 1 : 0 }} }">
                     <a class="block text-gray-800 dark:text-gray-100 truncate transition hover:text-gray-900 dark:hover:text-white" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
@@ -140,8 +139,8 @@
                     <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                         <ul class="pl-8 mt-1" :class="open ? 'block' : 'hidden'">
                             <li class="mb-1 last:mb-0">
-                                <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate {{ Route::is('clientes') ? 'text-violet-500' : '' }}" href="{{ route('clientes') }}">
-                                    <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Clientes</span>
+                                <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate {{ Route::is('clientes.index') ? 'text-violet-500' : '' }}" href="{{ route('clientes.index') }}">
+                                    <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 {{ Route::is('clientes.index') ? 'text-violet-500' : '' }}">Clientes</span>
                                 </a>
                             </li>
                         </ul>
