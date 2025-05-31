@@ -193,5 +193,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('icons-page');
     Route::fallback(function() {
         return view('pages/utility/404');
-    });    
+    }); 
+    
+    // RUTAS DE CLIENTE
+    Route::get('/clientes', function () {
+        return view('pages.clientes.clientes');
+    })->name('clientes');
+    
 });
