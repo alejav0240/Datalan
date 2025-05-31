@@ -202,5 +202,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     
     // RUTAS DE CLIENTE
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    
+    Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 });

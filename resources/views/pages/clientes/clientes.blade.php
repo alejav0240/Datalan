@@ -6,11 +6,7 @@
             </div>
         </div>
 
-        <div class="mb-4 space-x-1">
-            <x-button href="" class="bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 rounded-lg px-4 py-2 shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:ring-offset-blue-200">
-                <i class="fas fa-plus"></i> Agregar Cliente
-            </x-button>
-        </div>
+       <x-modals.clientes-modal />
 
         <x-tables.clientes-table :clientes="$clientes" />
     </div>
