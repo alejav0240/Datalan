@@ -6,7 +6,7 @@
             </div>
         </div>
 
-       <x-modals.clientes-modal />
+       <x-modals.create-clientes-modal />
 
         <x-tables.clientes-table :clientes="$clientes" />
     </div>

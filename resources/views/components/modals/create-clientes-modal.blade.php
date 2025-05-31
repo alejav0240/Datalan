@@ -19,7 +19,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Tipo de Cliente -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Cliente</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Tipo de Cliente</label>
                         <select name="tipo_cliente" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                             <option value="empresa" {{ old('tipo_cliente') == 'empresa' ? 'selected' : '' }}>Empresa</option>
                             <option value="gobierno" {{ old('tipo_cliente') == 'gobierno' ? 'selected' : '' }}>Gobierno</option>
@@ -31,63 +31,63 @@
 
                     <!-- Nombre -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Nombre</label>
                         <input type="text" name="nombre_cliente" value="{{ old('nombre_cliente') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('nombre_cliente') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- NIT/CI -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">NIT/CI</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">NIT/CI</label>
                         <input type="text" name="nit_ci" value="{{ old('nit_ci') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('nit_ci') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Rubro -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Rubro</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Rubro</label>
                         <input type="text" name="rubro" value="{{ old('rubro') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('rubro') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Dirección -->
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Dirección</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Dirección</label>
                         <textarea name="direccion_principal" rows="2" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">{{ old('direccion_principal') }}</textarea>
                         @error('direccion_principal') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Teléfono -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Teléfono</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Teléfono</label>
                         <input type="text" name="telefono" value="{{ old('telefono') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('telefono') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Celular -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Celular</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Celular</label>
                         <input type="text" name="celular" value="{{ old('celular') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('celular') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Email</label>
                         <input type="email" name="email_acceso" value="{{ old('email_acceso') }}" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('email_acceso') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Contraseña -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Contraseña</label>
                         <input type="password" name="contrasena" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                         @error('contrasena') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <!-- Referencia -->
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Referencia</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Referencia</label>
                         <select name="referencia" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
                             <option value="">Seleccione</option>
                             <option value="recomendacion" {{ old('referencia') == 'recomendacion' ? 'selected' : '' }}>Recomendación</option>
@@ -101,7 +101,7 @@
 
                     <!-- Observaciones -->
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Observaciones</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 text-left">Observaciones</label>
                         <textarea name="observaciones" rows="2" class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">{{ old('observaciones') }}</textarea>
                         @error('observaciones') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
