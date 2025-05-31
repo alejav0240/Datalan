@@ -11,6 +11,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 
+
+// CONTROLADORES DE LOS MODULOS
+
+use App\Http\Controllers\ClienteController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -196,8 +201,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     }); 
     
     // RUTAS DE CLIENTE
-    Route::get('/clientes', function () {
-        return view('pages.clientes.clientes');
-    })->name('clientes');
+    Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
     
 });
