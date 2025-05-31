@@ -26,9 +26,10 @@
                     </a>
                 </div>
             @endif            
-            <x-button class="ml-3">
+            <x-button type="submit" class="ml-3 bg-amber-200 hover:bg-amber-300 text-black font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
                 {{ __('Sign in') }}
-            </x-button>            
+            </x-button>
+                       
         </div>
     </form>
     <x-validation-errors class="mt-4" />   
