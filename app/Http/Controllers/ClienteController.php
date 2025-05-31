@@ -9,7 +9,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        $clientes = Cliente::where('activo', true)->get();
+        $clientes = Cliente::all();
         return view('pages.clientes.clientes', compact('clientes'));
         
     }
@@ -113,6 +113,20 @@ class ClienteController extends Controller
         }
         catch (\Exception $e) {
             dd('Error al eliminar cliente: ' . $e->getMessage());
+        }
+    }
+
+    public function enable($id){
+        $cliente = Cliente::where('id_cliente', $id)->firstOrFail();
+
+        try{
+            // poner activo en true
+            $cliente->activo = true;
+            $cliente->save();
+            return redirect()->route('clientes.index')->with('success', 'Cliente restaurado exitosamente.');
+        }
+        catch (\Exception $e) {
+            dd('Error al restaurar cliente: ' . $e->getMessage());
         }
     }
 

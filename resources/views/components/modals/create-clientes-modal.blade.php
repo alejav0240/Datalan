@@ -1,7 +1,7 @@
 <div x-data="{ open: {{ $errors->any() ? 'true' : 'false' }} }">
 
     <!-- Botón para abrir el modal -->
-    <x-button @click="open = true" class="bg-blue-600 text-white hover:bg-blue-700 hover:cursor-pointer rounded-lg px-4 py-2 shadow mb-3">
+    <x-button @click="open = true" class="bg-blue-600 text-white hover:bg-blue-700 hover:cursor-pointer rounded-lg px-4 py-2 shadow">
         <i class="fas fa-plus"></i> Agregar Cliente
     </x-button>
 
