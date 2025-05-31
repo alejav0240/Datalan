@@ -1,14 +1,13 @@
 <div x-data="{ estado: 'todos' }" class="space-y-4">
     <!-- Filtro -->
     <div class="flex justify-between items-center">
-        <x-modals.create-clientes-modal />
+        <x-modals.clientes-modal titulo-boton="Agregar Cliente" />
         <select x-model="estado" class="border-gray-300 rounded-md shadow-sm ml-2 dark:bg-gray-700 dark:text-white text-sm">
             <option value="todos">Todos</option>
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
         </select>
     </div>
-
 
     <!-- Tabla -->
     <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-x-auto">
@@ -50,7 +49,7 @@
                         </td>
                         <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
                             <div class="flex flex-wrap gap-2 justify-center">
-                                <x-modals.edit-clientes-modal :cliente="$cliente" />
+                                <x-modals.clientes-modal :cliente="$cliente" titulo-boton="Editar Cliente" />
                                 @if ($cliente->activo)
                                     <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST">
                                         @csrf

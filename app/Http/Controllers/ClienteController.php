@@ -50,7 +50,15 @@ class ClienteController extends Controller
         try {
             $cliente = Cliente::create($validated);
             return redirect()->route('clientes.index')->with('success', 'Cliente guardado exitosamente.');
-        } catch (\Exception $e) {
+        }catch (\Illuminate\Validation\ValidationException $e) {
+            // En caso de error de validación
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with('modal', 'create');
+            
+        }
+         catch (\Exception $e) {
             dd('Error al guardar cliente: ' . $e->getMessage());
         }
     }
@@ -96,7 +104,12 @@ class ClienteController extends Controller
         try {
             $cliente->update($validated);
             return redirect()->route('clientes.index')->with('success', 'Cliente actualizado exitosamente.');
-        } catch (\Exception $e) {
+        }catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with('modal', 'edit-' . $cliente->id_cliente);
+            }catch (\Exception $e) {
             dd('Error al actualizar cliente: ' . $e->getMessage());
         }
     }
