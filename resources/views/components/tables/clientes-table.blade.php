@@ -32,7 +32,14 @@
                     <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
                         <div class="flex flex-wrap gap-2 justify-center">
                             <x-modals.edit-clientes-modal :cliente="$cliente" />
-                            <x-button class="bg-red-100 dark:bg-red-700 text-red-800 dark:text-white hover:bg-red-200 dark:hover:bg-red-600 text-xs py-1 px-3 rounded-md shadow-sm transition">Eliminar</x-button>
+                            <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-100 dark:bg-red-700 text-red-800 dark:text-white hover:bg-red-200 dark:hover:bg-red-600 text-xs py-1 px-3 rounded-md shadow-sm transition">
+                                    Deshabilitar
+                                </button>
+                            </form>
+                            
                         </div>
                     </td>
                     <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
