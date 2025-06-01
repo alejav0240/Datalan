@@ -27,7 +27,11 @@ use App\Http\Controllers\ClienteController;
 |
 */
 
-Route::redirect('/', 'login');
+Route::redirect('/', 'inicio');
+
+Route::get('/inicio', fn() => view('inicio'));
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
