@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class ClienteController extends Controller
 {
@@ -71,7 +72,16 @@ class ClienteController extends Controller
                 'activo' => true,
             ]);
 
-            return redirect()->route('clientes.index')->with('success', 'Cliente guardado exitosamente.');
+            if (!Auth::check()) {
+                return redirect()->route('login')->with('success', 'Cliente registrado exitosamente. Por favor, inicie sesión.');
+            }
+            
+            else{
+                return redirect()->route('clientes.index')->with('success', 'Cliente guardado exitosamente.');
+            }
+        
+
+            
         } catch (ValidationException $e) {
             return redirect()->back()
                 ->withErrors($e->validator)

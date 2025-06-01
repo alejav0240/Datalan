@@ -1,11 +1,14 @@
 <x-authentication-layout>
     <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Welcome back!') }}</h1>
-    @if (session('status'))
+    
+    <!-- Mostrar mensaje de éxito -->
+    @if (session('success'))
         <div class="mb-4 font-medium text-sm text-green-600">
-            {{ session('status') }}
+            {{ session('success') }}
         </div>
-    @endif   
-    <!-- Form -->
+    @endif
+
+    <!-- Formulario de Login -->
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="space-y-4">
@@ -29,10 +32,10 @@
             <x-button type="submit" class="ml-3 bg-amber-200 hover:bg-amber-300 text-black font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
                 {{ __('Sign in') }}
             </x-button>
-                       
         </div>
     </form>
     <x-validation-errors class="mt-4" />   
+
     <!-- Footer -->
     <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
         <div class="text-sm">

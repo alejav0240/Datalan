@@ -50,6 +50,10 @@ Route::get('/inicio', function () {
 })->name('inicio');
 
 
+// ESTAS RUTAS SON PARA EL REGISTRO DE CLIENTES
+Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
@@ -225,7 +229,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     
     // RUTAS DE CLIENTE
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
-    Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
     Route::put('/clientes/{id_cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     Route::delete('/clientes/{id_cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
     Route::post('/clientes/{id_cliente}', [ClienteController::class, 'enable'])->name('clientes.enable');
