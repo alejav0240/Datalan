@@ -16,10 +16,42 @@
                 <li><a href="#contacto" class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Contacto</a></li>
                 <li><a href="#reportar-falla" class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Reportar Falla</a></li>
                 <li>
-                    <a href="{{route('login')}}" class="btn font-bold py-1 px-3 sm:py-2 sm:px-4 md:py-2 md:px-5 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-xs sm:text-sm md:text-base">
-                        <i class="fas fa-user-circle me-1"></i> Iniciar Sesión
-                    </a>
+                    @guest
+                        <a href="{{ route('login') }}" class="btn font-bold py-2 px-5 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-base">
+                            <i class="fas fa-user-circle me-1"></i> Iniciar Sesión
+                        </a>
+                    @else
+                        <div class="relative">
+                            <button id="user-menu-btn" class="btn font-bold py-1 px-4 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-sm flex items-center">
+                                <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
+                            </button>
+                            <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden">
+                                <form action="{{ route('logout') }}" method="POST" class="block text-left">
+                                    @csrf
+                                    <button type="submit" class="w-full text-red-500 hover:bg-red-500 hover:text-white py-2 px-4 text-sm font-bold rounded-lg transition-all duration-300">
+                                        <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <script>
+                            const userMenuBtn = document.getElementById('user-menu-btn');
+                            const userMenu = document.getElementById('user-menu');
+
+                            userMenuBtn.addEventListener('click', () => {
+                                userMenu.style.display = (userMenu.style.display === 'none' || userMenu.style.display === '') ? 'block' : 'none';
+                            });
+
+                            document.addEventListener('click', (event) => {
+                                if (!userMenu.contains(event.target) && !userMenuBtn.contains(event.target)) {
+                                    userMenu.style.display = 'none';
+                                }
+                            });
+                        </script>
+                    @endguest
                 </li>
+                
             </ul>
         </nav>
 
@@ -38,10 +70,22 @@
             <li><a href="#productos" class="text-gray-800 font-semibold hover:text-blue-600">Productos</a></li>
             <li><a href="#contacto" class="text-gray-800 font-semibold hover:text-blue-600">Contacto</a></li>
             <li><a href="#reportar-falla" class="text-gray-800 font-semibold hover:text-blue-600">Reportar Falla</a></li>
-            <li>
-                <a href="{{route('login')}}" class="btn font-bold py-2 px-5 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-base">
-                    <i class="fas fa-user-circle me-1"></i> Iniciar Sesión
-                </a>
+            <li class="flex items-center space-x-3">  <!-- Esto organiza los elementos en una fila y los separa -->
+                @guest
+                    <a href="{{ route('login') }}" class="btn font-bold py-2 px-5 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-sm">
+                        <i class="fas fa-user-circle me-1"></i> Iniciar Sesión
+                    </a>
+                @else
+                    <span class="font-bold text-blue-600 flex items-center">
+                        <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
+                    </span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="btn font-bold py-2 px-5 border border-red-500 rounded-full text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 shadow-md text-sm">
+                            <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
+                        </button>
+                    </form>
+                @endguest
             </li>
         </ul>
     </div>
