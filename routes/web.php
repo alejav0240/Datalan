@@ -10,6 +10,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
+use Illuminate\Support\Facades\Auth;
 
 
 // CONTROLADORES DE LOS MODULOS
@@ -27,13 +28,31 @@ use App\Http\Controllers\ClienteController;
 |
 */
 
+
+
 Route::redirect('/', 'inicio');
 
-Route::get('/inicio', fn() => view('inicio'));
+Route::get('/inicio', function () {
+    // Si no está autenticado, redirige al inicio
+    if (!Auth::check()) {
+        return view('inicio');
+    }
+    
+    // Verificar el nivel de acceso del usuario
+    if (Auth::user()->nivel_acceso == 'cliente') {
+        return view('inicio');
+    }
+    else{
+        // Si es un usuario autenticado pero no es cliente, redirigir a la vista de dashboard
+        return redirect()->route('dashboard');   
+    }
+
+})->name('inicio');
 
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
 
     // Route for the getting the data feed
     Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
