@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('id_empleado')->nullable()->after('id');
-            $table->enum('nivel_acceso', ['empleado', 'supervisor', 'administrador'])->default('empleado')->after('password');
+            $table->enum('nivel_acceso', ['empleado', 'supervisor', 'administrador', 'cliente'])->default('empleado')->after('password');
             $table->dateTime('ultimo_login')->nullable()->after('nivel_acceso');
             $table->boolean('activo')->default(true)->after('ultimo_login');
         
