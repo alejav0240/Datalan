@@ -33,7 +33,8 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
             $table->timestamp('fecha_registro')->useCurrent();
             $table->boolean('activo')->default(true);
-        });        
+            $table->timestamps();
+        });
     }
 
     /**
