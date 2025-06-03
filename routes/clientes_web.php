@@ -11,4 +11,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/direcciones-adicionales', [DireccionAdicionalController::class, 'store'])->name('direcciones.store');
     Route::delete('/direcciones-adicionales/{id_direccion}', [DireccionAdicionalController::class, 'destroy'])->name('direcciones.destroy');
 
+    Route::get('/clientes/{id_cliente}/direcciones', [DireccionAdicionalController::class, 'direccionCliente'])->name('clientes.direcciones');
+
+
 });

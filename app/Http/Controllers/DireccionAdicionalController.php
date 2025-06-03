@@ -60,6 +60,17 @@ class DireccionAdicionalController extends Controller
         return redirect()->back()->with('success', 'Dirección adicional eliminada correctamente.');
     }
 
+    public function direccionCliente($id_cliente)
+    {
+        $direcciones = DireccionAdicional::where('id_cliente', $id_cliente)->get();
+
+        if ($direcciones->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron direcciones para este cliente.'], 404);
+        }
+
+        return response()->json($direcciones);
+    }
+
 
     
 }

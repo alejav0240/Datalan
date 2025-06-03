@@ -70,7 +70,7 @@
                         </td>
                         <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100">
                             <div class="flex flex-wrap gap-2 justify-center">
-                                <x-button class="bg-blue-100 dark:bg-blue-700 text-blue-800 dark:text-white hover:bg-blue-200 dark:hover:bg-blue-600 text-xs py-1 px-3 rounded-md shadow-sm transition">Extras</x-button>
+                                <x-modals.clientes-direcciones-modal :cliente="$cliente" />
                                 <x-button class="bg-green-100 dark:bg-green-700 text-green-800 dark:text-white hover:bg-green-200 dark:hover:bg-green-600 text-xs py-1 px-3 rounded-md shadow-sm transition">Servicios</x-button>
                             </div>
                         </td>

@@ -140,8 +140,8 @@
                         class="bg-green-700 text-white hover:bg-green-600 px-3 py-2 rounded-md text-lg mr-2">
                         {{ isset($cliente) ? 'Actualizar' : 'Guardar' }}
                     </x-button>
-                    <a href="{{ route('clientes.index') }}"
-                        class="bg-red-700 text-white hover:bg-red-600 px-3 py-2 rounded-md text-lg">Cancelar</a>
+                    <button type="button" @click="open = false"
+                        class="bg-red-700 text-white hover:bg-red-600 px-3 py-2 rounded-md text-lg">Cancelar</button>
                 </div>
             </form>
         </div>
