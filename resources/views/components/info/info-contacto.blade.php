@@ -1,6 +1,6 @@
 <section class="py-16 bg-gradient-to-r from-blue-100 to-white" id="contacto">
     <div class="container mx-auto">
-        <h2 class="text-4xl font-bold text-center text-blue-900 mb-12">Contáctanos</h2>
+        <h2 class="text-5xl font-bold text-center text-blue-900 mb-12">Contáctanos</h2>
         <div class="flex flex-wrap lg:flex-nowrap justify-center gap-12">
             <!-- Información de contacto -->
             <div class="w-full lg:w-1/2 text-lg bg-white p-8 rounded-xl shadow-lg">
