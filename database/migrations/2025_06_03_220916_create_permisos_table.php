@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('direcciones_adicionales', function (Blueprint $table) {
+        Schema::create('permisos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_cliente')->constrained('clientes')->onDelete('cascade');
-            $table->text('direccion');
+            $table->foreignId('empleado_id')->constrained('empleados')->onDelete('cascade');
+            $table->text('motivo');
+            $table->dateTime('fecha_solida')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('direcciones_adicionales');
+        Schema::dropIfExists('permisos');
     }
 };

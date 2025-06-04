@@ -20,20 +20,22 @@ class StoreEmpleadoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'nombres' => 'required|string|max:255',
-            //'apellidos' => 'required|string|max:255',
-            //'ci' => 'required|string|max:20|unique:empleados,ci',
+            'nombres' => 'required|string|max:255',
+            'apellidos' => 'required|string|max:255',
+            'ci' => 'required|string|max:20|unique:empleados,ci',
             'fecha_nacimiento' => 'required|date',
+            'telefono' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255|unique:empleados,email',
+            'cargo' => 'nullable|string|max:255',
+            'departamento' => 'nullable|string|max:255',
+            'fecha_ingreso' => 'nullable|date',
+            'salario' => 'nullable|numeric|min:0',
+            'tipo_contrato' => 'nullable|string|in:indefinido,temporal',
             'genero' => 'required|string|in:masculino,femenino',
             'estado_civil' => 'required|string|in:soltero,casado,divorciado,viudo',
-            'direccion' => 'required|string|max:255',
-            'telefono' => 'required|string|max:20',
-            //'email' => 'required|email|max:255|unique:empleados,email',
-            'cargo' => 'required|string|max:255',
-            'departamento' => 'required|string|max:255',
-            'fecha_ingreso' => 'required|date',
-            'salario' => 'required|numeric|min:0',
-            'tipo_contrato' => 'required|string|in:indefinido,temporal',
+            'direccion' => 'nullable|string|max:255',
+            'habilidades' => 'nullable|string|max:500',
+            'observaciones' => 'nullable|string|max:500',
         ];
     }
 }

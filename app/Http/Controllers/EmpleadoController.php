@@ -69,8 +69,8 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado): RedirectResponse
     {
-        $empleado->delete();
-
+        $empleado->activo = !$empleado->activo;
+        $empleado->save();
         return redirect()->route('empleados.index')->with('success', 'Empleado eliminado exitosamente.');
     }
 }

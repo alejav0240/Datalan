@@ -111,17 +111,13 @@
                                   class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow">
                             Editar
                         </x-button>
-                        @if ($empleado->activo)
-                            <x-button @click="if(confirm('¿Estás seguro de desactivar este empleado?'))" type="submit"
-                                      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow">
-                                Desactivar
-                            </x-button>
-                        @else
-                            <x-button @click="if(confirm('¿Estás seguro de activar este empleado?')) window.location.href='{{ route('empleados.destroy', $empleado->id_empleado) }}'"
-                                      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
-                                Activar
-                            </x-button>
-                        @endif
+                        <form action="{{ route('empleados.destroy', $empleado->id_empleado) }}" method="POST" onsubmit="return confirm('¿Estás seguro de {{ $empleado->activo ? 'desactivar' : 'activar' }} este empleado?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="{{ $empleado->activo ? 'bg-red-100 dark:bg-red-700 text-red-800 dark:text-white hover:bg-red-200 dark:hover:bg-red-600' : 'bg-green-100 dark:bg-green-700 text-green-800 dark:text-white hover:bg-green-200 dark:hover:bg-green-600' }} text-xs py-1 px-3 rounded-md shadow-sm transition">
+                                {{ $empleado->activo ? 'Desactivar' : 'Activar' }}
+                            </button>
+                        </form>
                     @else
                         <x-button type="summit"
                                   class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow">

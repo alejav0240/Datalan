@@ -1,4 +1,4 @@
-<div x-data="{ estado: 'todos' }" class="space-y-4">
+<div x-data="{ estado: 'activo' }" class="space-y-4">
     <!-- Filtro -->
     <div class="flex justify-between items-center">
         <x-modals.empleados-modal titulo-boton="Agregar Empleado"/>
