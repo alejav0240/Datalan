@@ -16,9 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('tipo_cliente', ['empresa', 'gobierno', 'educacion', 'residencial']);
             $table->string('nombre', 100);
-            $table->string('empresa', 100);
-            $table->string('razon_social', 20)->unique();
-            $table->string('telefono', 20);
+            $table->string('nit_ci', 20)->unique();
+            $table->integer('telefono')->unique();
             $table->timestamps();
         });
 
