@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,14 +11,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     /**
-     * The attributes that are mass assignable.
+     * Los atributos que son asignables en masa.
      *
      * @var array<int, string>
      */
@@ -27,16 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'id_empleado',
-        'nivel_acceso',
-        'ultimo_login',
-        'activo',
-        'id_empleado'
+        'is_active',
+        'role',
+        'profile_photo_path',
     ];
 
-
     /**
-     * The attributes that should be hidden for serialization.
+     * Los atributos que deben ocultarse para la serialización.
      *
      * @var array<int, string>
      */
@@ -48,16 +40,17 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Los atributos que deben castear a tipos nativos.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_active' => 'boolean',
     ];
 
     /**
-     * The accessors to append to the model's array form.
+     * Accessors que se deben añadir al array del modelo.
      *
      * @var array<int, string>
      */
