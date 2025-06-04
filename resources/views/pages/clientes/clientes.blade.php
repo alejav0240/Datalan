@@ -5,6 +5,7 @@
                 <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Clientes</h1>
             </div>
         </div>
+
         
         <x-tables.clientes-table :clientes="$clientes" />
     </div>

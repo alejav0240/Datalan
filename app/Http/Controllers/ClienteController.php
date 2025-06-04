@@ -15,89 +15,104 @@ class ClienteController extends Controller
     {
         return [
             'tipo_cliente' => 'required|in:empresa,gobierno,educacion,residencial',
-            'nombre_cliente' => 'required|string|max:100',
-            'nit_ci' => 'required|string|max:20|unique:clientes,nit_ci' . ($clienteId ? ",$clienteId,id_cliente" : ''),
-            'rubro' => 'nullable|string|max:100',
-            'direccion_principal' => 'required|string',
-            'telefono' => 'required|numeric|digits_between:1,20',
-            'celular' => 'nullable|string|max:20',
-            'email_acceso' => 'required|email|max:100|unique:clientes,email_acceso' . ($clienteId ? ",$clienteId,id_cliente" : ''),
-            'contrasena' => 'nullable|string|min:6',
-            'referencia' => 'nullable|in:recomendacion,publicidad,busqueda,redes,otro',
-            'observaciones' => 'nullable|string',
+            'nombre' => 'required|string|max:100',
+            'nit_ci' => 'required|string|max:20|unique:clientes,nit_ci' . ($clienteId ? ",$clienteId" : ''),
+            'telefono' => 'required|regex:/^[67][0-9]{7}$/',
+            'email_acceso' => 'required|email|unique:users,email' . ($clienteId ? ',' . Cliente::find($clienteId)->user_id : ''),
+            'contrasena' => ($clienteId ? 'nullable' : 'required') . '|string|min:6',
         ];
     }
 
-    // Método para las validaciones personalizadas
     protected function validationMessages()
     {
         return [
             'tipo_cliente.required' => 'El tipo de cliente es obligatorio.',
-            'nombre_cliente.required' => 'El nombre del cliente es obligatorio.',
+            'nombre.required' => 'El nombre del cliente es obligatorio.',
             'nit_ci.required' => 'El NIT/CI es obligatorio.',
             'nit_ci.unique' => 'El NIT/CI ya está en uso.',
-            'email_acceso.required' => 'El email de acceso es obligatorio.',
-            'email_acceso.email' => 'El email de acceso debe ser una dirección de correo válida.',
-            'email_acceso.unique' => 'El email de acceso ya está en uso.',
-            'contrasena.required' => 'La contraseña es obligatoria.',
-            'contrasena.min' => 'La contraseña debe tener al menos 6 caracteres.',
             'telefono.required' => 'El teléfono es obligatorio.',
             'telefono.numeric' => 'El teléfono debe ser un número.',
-            'direccion_principal.required' => 'La dirección principal es obligatoria.',
+            'telefono.regex' => 'El teléfono debe ser válido',
+            'email_acceso.required' => 'El correo es obligatorio.',
+            'email_acceso.email' => 'El correo debe ser válido.',
+            'email_acceso.unique' => 'El correo ya está en uso.',
+            'contrasena.required' => 'La contraseña es obligatoria.',
+            'contrasena.min' => 'La contraseña debe tener al menos 6 caracteres.',
         ];
     }
 
-    // Index de clientes
-    public function index()
+    // Mostrar todos los clientes
+    public function index(Request $request)
     {
-        $clientes = Cliente::all();
+        $clientes = Cliente::with('user')->get();
         return view('pages.clientes.clientes', compact('clientes'));
     }
 
-    // Guardar un nuevo cliente
+    // ========================== REGISTRAR CLIENTE ========================== //
+
+
+    public function create()
+    {
+        return view('pages.clientes.formulario_clientes');
+    }
+
+
     public function store(Request $request)
     {
         $validated = $request->validate($this->validationRules(), $this->validationMessages());
-        $validated['contrasena'] = bcrypt($validated['contrasena']);
+
+        if (!empty($validated['contrasena'])) {
+            $validated['contrasena'] = bcrypt($validated['contrasena']);
+        } else {
+            return redirect()->back()->withErrors(['contrasena' => 'La contraseña es obligatoria'])->withInput();
+        }
 
         try {
-            $cliente = Cliente::create($validated);
-
-            // Crear usuario asociado al cliente
-            User::create([
-                'name' => $validated['nombre_cliente'],
+            // Crear el usuario
+            $user = User::create([
+                'name' => $validated['nombre'],
                 'email' => $validated['email_acceso'],
                 'password' => $validated['contrasena'],
-                'nivel_acceso' => 'cliente',
-                'activo' => true,
+                'is_active' => true,
+                'role' => 'cliente',
             ]);
+
+            // Crear el cliente
+            $clienteData = $validated;
+            $clienteData['user_id'] = $user->id;
+            unset($clienteData['email_acceso'], $clienteData['contrasena']);
+
+            Cliente::create($clienteData);
 
             if (!Auth::check()) {
                 return redirect()->route('login')->with('success', 'Cliente registrado exitosamente. Por favor, inicie sesión.');
-            }
-            
-            else{
+            } else {
                 return redirect()->route('clientes.index')->with('success', 'Cliente guardado exitosamente.');
             }
-        
-
-            
         } catch (ValidationException $e) {
-            return redirect()->back()
-                ->withErrors($e->validator)
-                ->withInput()
-                ->with('modal', 'create');
+            return redirect()->back()->withErrors($e->validator);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al guardar cliente: ' . $e->getMessage());
         }
     }
 
-    // Actualizar un cliente existente
+
+    // ========================== EDITAR CLIENTE ========================== //
+     
+
+    public function edit($id)
+    {
+        $cliente = Cliente::with('user')->findOrFail($id);
+        return view('pages.clientes.formulario_clientes', compact('cliente'));
+    }
+
     public function update(Request $request, $id)
     {
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::with('user')->findOrFail($id);
+
         $validated = $request->validate($this->validationRules($id), $this->validationMessages());
 
+        // Si se envió una nueva contraseña, la encriptamos
         if ($request->filled('contrasena')) {
             $validated['contrasena'] = bcrypt($validated['contrasena']);
         } else {
@@ -105,13 +120,19 @@ class ClienteController extends Controller
         }
 
         try {
-            $cliente->update($validated);
+            // Actualizar datos del cliente
+            $cliente->update([
+                'tipo_cliente' => $validated['tipo_cliente'],
+                'nombre' => $validated['nombre'],
+                'nit_ci' => $validated['nit_ci'],
+                'telefono' => $validated['telefono'],
+            ]);
 
-            // Actualizar usuario asociado al cliente
-            $user = User::where('email', $cliente->email_acceso)->first();
+            // Actualizar usuario asociado
+            $user = $cliente->user;
             if ($user) {
                 $user->update([
-                    'name' => $validated['nombre_cliente'],
+                    'name' => $validated['nombre'],
                     'email' => $validated['email_acceso'],
                     'password' => $validated['contrasena'] ?? $user->password,
                 ]);
@@ -120,21 +141,25 @@ class ClienteController extends Controller
             return redirect()->route('clientes.index')->with('success', 'Cliente actualizado exitosamente.');
         } catch (ValidationException $e) {
             return redirect()->back()
-                ->withErrors($e->validator)
-                ->withInput()
-                ->with('modal', 'edit-' . $cliente->id_cliente);
+                ->withErrors($e->validator);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al actualizar cliente: ' . $e->getMessage());
         }
     }
+
 
     // Eliminar cliente (poner en estado inactivo)
     public function destroy($id)
     {
         $cliente = Cliente::findOrFail($id);
         try {
-            $cliente->activo = false;
-            $cliente->save();
+            // Encontrar el usuario asociado y desactivarlo
+            $user = $cliente->user;
+            if ($user) {
+            $user->is_active = false;
+            $user->save();
+            }
+
             return redirect()->route('clientes.index')->with('success', 'Cliente eliminado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al eliminar cliente: ' . $e->getMessage());
@@ -146,8 +171,11 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::findOrFail($id);
         try {
-            $cliente->activo = true;
-            $cliente->save();
+            $user = $cliente->user;
+            if ($user) {
+                $user->is_active = true;
+                $user->save();
+            }
             return redirect()->route('clientes.index')->with('success', 'Cliente restaurado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al restaurar cliente: ' . $e->getMessage());
