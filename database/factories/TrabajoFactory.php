@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Equipo;
+use App\Models\ReporteFalla;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class TrabajoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'reporte_id' => ReporteFalla::factory(),
+            'equipo_id' => Equipo::factory(),
+            'estado' => $this->faker->randomElement(['pendiente', 'en_proceso', 'completado']),
+            'fecha_asignacion' => now(),
+            'fecha_resolucion' => now()->addDays(rand(1, 7)),
         ];
     }
 }

@@ -13,18 +13,30 @@ class EmpleadoSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 10; $i++) {
-            // Crear un empleado
-            $empleado = Empleado::factory()->create();
+        User::create([
+            'name' => 'Juan Pérez',
+            'email' => 'admin@gmail.com',
+            'password' => '$2y$10$y6EpF8XefmhPkxx9b1oHgOH380.xBL5ig7KBXVr9jSpdBWW.g/18a',
+            'role' => 'administrador',
+        ]);
 
-            // Crear un usuario asociado al empleado
-            User::create([
-                'id_empleado' => $empleado->id,
-                'name' => $empleado->nombres . ' ' . $empleado->apellidos,
-                'email' => $empleado->email,
-                'password' => bcrypt('admin'),
+        for ($i = 1; $i <= 11; $i++) {
+            $user = User::create([
+                'name' => "Empleado $i",
+                'email' => "empleado$i@example.com",
+                'password' => bcrypt('password123'),
+                'role' => 'empleado',
+            ]);
+
+            Empleado::create([
+                'user_id' => $user->id,
+                'cargo' => 'Desarrollador',
+                'experiencia' => rand(1, 10),
+                'telefono' => '123456789',
+                'ci' => str_pad($i, 8, '0', STR_PAD_LEFT),
+                'salario' => rand(3000, 10000),
+                'estado_civil' => 'soltero',
             ]);
         }
-
     }
 }

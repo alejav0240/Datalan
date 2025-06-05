@@ -17,19 +17,12 @@ class ClienteFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory(),
             'tipo_cliente' => $this->faker->randomElement(['empresa', 'gobierno', 'educacion', 'residencial']),
-            'nombre_cliente' => $this->faker->company,
-            'nit_ci' => $this->faker->unique()->numerify('##########'),
-            'rubro' => $this->faker->optional()->word,
-            'direccion_principal' => $this->faker->address,
-            'telefono' => $this->faker->numerify('##########'),
-            'celular' => $this->faker->optional()->numerify('##########'),
-            'email_acceso' => $this->faker->unique()->safeEmail,
-            'contrasena' => bcrypt('password'),
-            'referencia' => $this->faker->optional()->randomElement(['recomendacion', 'publicidad', 'busqueda', 'redes', 'otro']),
-            'observaciones' => $this->faker->optional()->text,
-            'fecha_registro' => $this->faker->dateTimeThisYear(),
-            'activo' => $this->faker->boolean,
+            'nombre' => $this->faker->name,
+            'empresa' => $this->faker->company,
+            'razon_social' => $this->faker->randomNumber(5),
+            'telefono' => $this->faker->phoneNumber
         ];
     }
 }

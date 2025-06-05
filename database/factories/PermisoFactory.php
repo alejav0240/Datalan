@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class PermisoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'empleado_id' => Empleado::factory(),
+            'motivo' => $this->faker->sentence,
+            'estado' => $this->faker->randomElement(['pendiente', 'aprobado', 'rechazado']),
+            'fecha_solicitud' => now(),
         ];
     }
 }
