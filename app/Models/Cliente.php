@@ -8,21 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     use HasFactory;
+
+    // Esta línea ya no es necesaria si usas 'id' como clave primaria
+    // protected $primaryKey = 'id';
+
     protected $table = 'clientes';
-    protected $primaryKey = 'id_cliente';
-    public $timestamps = false;
+
+    // Laravel maneja automáticamente created_at y updated_at
+    public $timestamps = true;
+
     protected $fillable = [
+        'user_id',
         'tipo_cliente',
-        'nombre_cliente',
+        'nombre',
         'nit_ci',
-        'rubro',
-        'direccion_principal',
         'telefono',
-        'celular',
-        'email_acceso',
-        'contrasena',
-        'referencia',
-        'observaciones',
     ];
 
+    // Relación con usuario
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

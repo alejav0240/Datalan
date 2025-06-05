@@ -26,7 +26,7 @@ Route::get('/inicio', function () {
     }
 
     // Verificar el nivel de acceso del usuario
-    if (Auth::user()->nivel_acceso == 'cliente') {
+    if (Auth::user()->role == 'cliente') {
         return view('inicio');
     }
     else{

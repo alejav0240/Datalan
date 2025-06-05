@@ -1,116 +1,98 @@
 <x-authentication-layout>
     <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Crear Cuenta') }}</h1>
-    
-    <!-- Formulario de Registro -->
-    <form method="POST" action="{{ route('clientes.store') }}">
+
+    {{-- Mensaje de éxito --}}
+    @if (session('success'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Mensaje de error --}}
+    @if (session('error'))
+        <div class="mb-4 font-medium text-sm text-red-600">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    {{-- Formulario de registro --}}
+    <form action="{{ route('clientes.store') }}" method="POST">
         @csrf
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-            <!-- Nombre Completo -->
+        <div class="space-y-4">
+            {{-- Tipo de Cliente --}}
             <div>
-                <label class="block text-sm font-medium">Nombre<span class="text-red-500">*</span></label>
-                <input id="nombre_cliente" type="text" name="nombre_cliente" value="{{ old('nombre_cliente') }}" required autofocus autocomplete="name" 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('nombre_cliente') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Email -->
-            <div>
-                <label class="block text-sm font-medium">Correo Electrónico <span class="text-red-500">*</span></label>
-                <input id="email_acceso" type="email" name="email_acceso" value="{{ old('email_acceso') }}" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('email_acceso') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- NIT/CI -->
-            <div>
-                <label class="block text-sm font-medium">NIT/CI <span class="text-red-500">*</span></label>
-                <input id="nit_ci" type="text" name="nit_ci" value="{{ old('nit_ci') }}" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('nit_ci') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Teléfono -->
-            <div>
-                <label class="block text-sm font-medium">Teléfono <span class="text-red-500">*</span></label>
-                <input id="telefono" type="text" name="telefono" value="{{ old('telefono') }}" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('telefono') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Celular -->
-            <div>
-                <label class="block text-sm font-medium">Celular</label>
-                <input id="celular" type="text" name="celular" value="{{ old('celular') }}" 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('celular') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Dirección -->
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium">Dirección <span class="text-red-500">*</span></label>
-                <textarea id="direccion_principal" name="direccion_principal" rows="2" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">{{ old('direccion_principal') }}</textarea>
-                @error('direccion_principal') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
-
-            <!-- Tipo de Cliente -->
-            <div>
-                <label class="block text-sm font-medium">Tipo de Cliente <span class="text-red-500">*</span></label>
-                <select name="tipo_cliente" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
+                <x-label for="tipo_cliente" value="Tipo de cliente *" />
+                <select name="tipo_cliente" id="tipo_cliente"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                    required>
+                    <option value="" disabled selected>Seleccione un tipo</option>
                     <option value="empresa" {{ old('tipo_cliente') == 'empresa' ? 'selected' : '' }}>Empresa</option>
                     <option value="gobierno" {{ old('tipo_cliente') == 'gobierno' ? 'selected' : '' }}>Gobierno</option>
                     <option value="educacion" {{ old('tipo_cliente') == 'educacion' ? 'selected' : '' }}>Educación</option>
                     <option value="residencial" {{ old('tipo_cliente') == 'residencial' ? 'selected' : '' }}>Residencial</option>
                 </select>
-                @error('tipo_cliente') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                @error('tipo_cliente') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <!-- Rubro -->
+            {{-- NIT / CI --}}
             <div>
-                <label class="block text-sm font-medium">Rubro</label>
-                <input id="rubro" type="text" name="rubro" value="{{ old('rubro') }}" 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('rubro') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                <x-label for="nit_ci" value="NIT / CI *" />
+                <x-input id="nit_ci" type="text" name="nit_ci" :value="old('nit_ci')" required />
+                @error('nit_ci') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <!-- Contraseña -->
+            {{-- Nombre --}}
             <div>
-                <label class="block text-sm font-medium">Contraseña <span class="text-red-500">*</span></label>
-                <input type="password" name="contrasena" required 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                @error('contrasena') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                <x-label for="nombre" value="Nombre completo / Razón social *" />
+                <x-input id="nombre" type="text" name="nombre" :value="old('nombre')" required />
+                @error('nombre') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <!-- Referencia -->
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium">Referencia</label>
-                <select name="referencia" 
-                    class="w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:text-white">
-                    <option value="recomendacion" {{ old('referencia') == 'recomendacion' ? 'selected' : '' }}>Recomendación</option>
-                    <option value="publicidad" {{ old('referencia') == 'publicidad' ? 'selected' : '' }}>Publicidad</option>
-                    <option value="busqueda" {{ old('referencia') == 'busqueda' ? 'selected' : '' }}>Búsqueda</option>
-                    <option value="redes" {{ old('referencia') == 'redes' ? 'selected' : '' }}>Redes Sociales</option>
-                    <option value="otro" {{ old('referencia') == 'otro' ? 'selected' : '' }}>Otro</option>
-                </select>
-                @error('referencia') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            {{-- Teléfono --}}
+            <div>
+                <x-label for="telefono" value="Teléfono *" />
+                <x-input id="telefono" type="text" name="telefono" :value="old('telefono')" required />
+                @error('telefono') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
+            {{-- Email --}}
+            <div>
+                <x-label for="email_acceso" value="Correo electrónico *" />
+                <x-input id="email_acceso" type="email" name="email_acceso" :value="old('email_acceso')" required />
+                @error('email_acceso') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Contraseña --}}
+            <div>
+                <x-label for="contrasena" value="Contraseña *" />
+                <x-input id="contrasena" type="password" name="contrasena" required />
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Mínimo 6 caracteres</p>
+                @error('contrasena') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+            </div>
         </div>
 
-        <!-- Botón de Enviar -->
+        {{-- Botones --}}
         <div class="flex items-center justify-between mt-6">
-            <x-button type="submit" class="bg-amber-200 hover:bg-amber-300 text-black font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                {{ __('Guardar') }}
+            <a href="{{ route('clientes.index') }}"
+                class="text-sm underline hover:no-underline text-gray-600 dark:text-gray-300">
+                Cancelar
+            </a>
+            <x-button type="submit" class="ml-3 bg-amber-200 hover:bg-amber-300 text-black font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                {{ __('Registrarse') }}
             </x-button>
         </div>
     </form>
 
+    <x-validation-errors class="mt-4" />
+
+    {{-- Footer --}}
     <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
         <div class="text-sm">
-            {{ __('¿Ya tienes una cuenta?') }} <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="{{ route('login') }}">{{ __('Iniciar Sesión') }}</a>
+            {{ __('¿Ya tienes una cuenta?') }}
+            <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="{{ route('login') }}">
+                {{ __('Iniciar Sesión') }}
+            </a>
         </div>
     </div>
 </x-authentication-layout>

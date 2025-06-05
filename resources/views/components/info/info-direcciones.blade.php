@@ -2,7 +2,7 @@
   <div class="container mx-auto text-center">
     <h2 class="text-5xl font-bold mb-12 text-blue-900">Información Adicional</h2>
     <form action="{{ route('direcciones.store') }}" method="POST" class="mx-auto w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg space-y-6 text-left border border-gray-200">
-      <h2 class="text-4xl text-center font-bold text-blue-600 mb-8">Agregar Dirección Adicional</h2>
+      <h2 class="text-4xl text-center font-bold text-blue-600 mb-8">Agregar Dirección</h2>
       @csrf
   
     <div>

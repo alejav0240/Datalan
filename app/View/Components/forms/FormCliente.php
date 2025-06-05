@@ -1,19 +1,23 @@
 <?php
 
-namespace App\View\Components\Info;
+namespace App\View\Components\forms;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class InfoDireccionesContactos extends Component
+class FormCliente extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+
+    public $cliente;
+
+    public function __construct($cliente = null)
     {
-        //
+        $this->cliente = $cliente;
+      
     }
 
     /**
@@ -21,6 +25,6 @@ class InfoDireccionesContactos extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.info.info-direcciones-contactos');
+        return view('components.forms.form-cliente');
     }
 }
