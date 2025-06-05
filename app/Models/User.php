@@ -30,8 +30,8 @@ class User extends Authenticatable
         'id_empleado',
         'nivel_acceso',
         'ultimo_login',
+        'role',
         'activo',
-        'id_empleado'
     ];
 
 
@@ -64,4 +64,8 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function cliente() { return $this->hasOne(Cliente::class); }
+    public function empleado() { return $this->hasOne(Empleado::class); }
 }

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Empleado;
+use App\Models\Equipo;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,27 +19,18 @@ class EmpleadoFactory extends Factory
      */
     public function definition(): array
     {
-        $faker = \Faker\Factory::create('es_ES'); // Spanish locale for more realistic data
-        return [
-            'nombres' => $faker->firstNameMale(),
-            'apellidos' => $faker->lastName() ,
-            'ci' => $this->faker->unique()->numerify('########'),
-            'fecha_nacimiento' => $this->faker->date('Y-m-d', '-18 years'),
-            'genero' => $this->faker->randomElement(['masculino', 'femenino', 'otro']),
-            'estado_civil' => $this->faker->randomElement(['soltero', 'casado', 'divorciado', 'viudo']),
-            'direccion' => $this->faker->address,
-            'telefono' => $this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
-            'contacto_emergencia' => $this->faker->name,
-            'telefono_emergencia' => $this->faker->phoneNumber,
+        $data = [
+            'user_id' => $this->faker->numberBetween(1, 10),
             'cargo' => $this->faker->jobTitle,
-            'departamento' => $this->faker->word,
-            'fecha_ingreso' => $this->faker->date('Y-m-d'),
+            'experiencia' => $this->faker->numberBetween(1, 10),
+            'equipo_id' => Equipo::factory(),
+            'telefono' => $this->faker->phoneNumber,
+            'ci' => $this->faker->unique()->numerify('########'),
             'salario' => $this->faker->randomFloat(2, 3000, 10000),
-            'tipo_contrato' => $this->faker->randomElement(['indefinido', 'temporal', 'prueba', 'obra']),
-            'habilidades' => $this->faker->words(5, true),
-            'observaciones' => $this->faker->sentence,
-            'activo' => $this->faker->boolean,
+            'estado_civil' => $this->faker->randomElement(['soltero', 'casado', 'divorciado', 'viudo']),
         ];
+
+        print "ID Factory".$data['user_id'] . "\n";
+        return $data;
     }
 }

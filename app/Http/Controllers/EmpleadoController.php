@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Empleado;
 use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class EmpleadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $empleados = Empleado::all();
-        return view('pages.empleados.empleados', compact('empleados'));
+        $empleados = Empleado::with('user')
+            ->filter(request(['search']))
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+        //dd($empleados);
+        return view('pages.empleados.index', compact('empleados'));
     }
 
     /**
@@ -32,9 +36,20 @@ class EmpleadoController extends Controller
     public function store(StoreEmpleadoRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        Empleado::create($validated);
 
-        return redirect()->route('empleados.index')->with('success', 'Empleado creado exitosamente.');
+        DB::transaction(function () use ($validated) {
+            // Crear el usuario
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => bcrypt($validated['password']),
+            ]);
+
+            // Crear el empleado asociado al usuario
+            Empleado::create(array_merge($validated, ['user_id' => $user->id]));
+        });
+
+        return redirect()->route('empleados.index')->with('success', 'Empleado y usuario creados exitosamente.');
     }
 
     /**
@@ -42,6 +57,7 @@ class EmpleadoController extends Controller
      */
     public function show(Empleado $empleado)
     {
+        $empleado->load('user', 'trabajos', 'permisos');
         return view('pages.empleados.show', compact('empleado'));
     }
 
