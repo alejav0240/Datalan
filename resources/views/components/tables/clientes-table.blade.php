@@ -64,12 +64,12 @@
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Nombre</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">NIT/CI</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Contacto</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Estado</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Acciones</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Nombre</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">NIT/CI</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Contacto</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Estado</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -80,16 +80,16 @@
                                 (estado === 'activo' && {{ $cliente->user->is_active ? 'true' : 'false' }}) ||
                                 (estado === 'inactivo' && {{ $cliente->user->is_active ? 'false' : 'true' }})
                             "
-                            class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
+                            class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 text-center"
                         >
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                <div class="flex items-center justify-center">
                                     <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                         {{ $cliente->nombre }}
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     {{ $cliente->tipo_cliente === 'empresa' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200' : '' }}
                                     {{ $cliente->tipo_cliente === 'gobierno' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-200' : '' }}
@@ -113,8 +113,8 @@
                                     {{ $cliente->user->is_active ? 'Activo' : 'Inactivo' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <div class="flex items-center justify-end space-x-3">
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                <div class="flex items-center justify-center space-x-3">
                                     <a 
                                         href="{{ route('clientes.edit', $cliente->id) }}"
                                         class="flex items-center justify-center p-1.5 rounded-md text-blue-600 dark:text-blue-400 hover:text-white hover:bg-blue-600 dark:hover:bg-blue-700 dark:hover:text-white transition-colors duration-200"

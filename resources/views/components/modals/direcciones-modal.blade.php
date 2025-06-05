@@ -10,7 +10,7 @@
 </div>
 
 <script>
-    // Espera a que el DOM esté completamente cargado
+
     document.addEventListener('DOMContentLoaded', () => {
         const abrirDirecciones = document.getElementById('abrirDirecciones');
         const modalDirecciones = document.getElementById('direccionesModal');
@@ -41,7 +41,7 @@
                                             <tr class="hover:bg-blue-50 transition-colors duration-300">
                                                 <td class="border border-gray-300 px-4 py-2">${direccion.direccion}</td>
                                                 <td class="border border-gray-300 px-4 py-2">
-                                                    <form action="/direcciones-adicionales/${direccion.id_direccion}" method="POST" class="inline">
+                                                    <form action="/direcciones-adicionales/${direccion.id}" method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
