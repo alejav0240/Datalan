@@ -11,14 +11,11 @@ class DireccionAdicional extends Model
 
     protected $table = 'direcciones_adicionales';
 
-    protected $primaryKey = 'id_direccion';
-
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_cliente',
         'direccion',
-        'fecha_registro',
     ];
 
     public function cliente()

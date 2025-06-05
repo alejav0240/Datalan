@@ -13,9 +13,10 @@
     <style>
         html {
             scroll-behavior: smooth;
-        }
+        }   
     </style>
 </head>
+<script src="{{ mix('js/app.js') }}"></script>
 
 <body class="bg-white text-gray-900">
 
@@ -27,7 +28,7 @@
 
     <!-- SECCIÓN PARA INFORMACIÓN EXTRA -->
     @auth
-        <x-info.info-direcciones-contactos />
+        <x-info.info-direcciones/>
     @endauth
 
     <!-- SECCIÓN EMPRESA -->

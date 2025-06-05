@@ -12,15 +12,15 @@ class DireccionAdicionalController extends Controller
 
     public function index()
     {
-        $nombre = Auth::user()->name;
-        $cliente = Cliente::where('nombre_cliente', $nombre)->first();
+        $id = Auth::user()->id;
+        $cliente = Cliente::where('user_id', $id)->first();
 
 
         if (!$cliente){
             return response()->json(['error' => 'Cliente no encontrado'], 404);
         }
 
-        $direcciones = DireccionAdicional::where('id_cliente', $cliente->id_cliente)->get();
+        $direcciones = DireccionAdicional::where('id_cliente', $cliente->id)->get();
         
         return response()->json($direcciones);
     }
@@ -28,19 +28,18 @@ class DireccionAdicionalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_cliente' => 'required|string',
             'direccion' => 'required|string',
         ]);
 
         // Buscar cliente por nombre
-        $cliente = Cliente::where('nombre_cliente', $request->nombre_cliente)->first();
+        $cliente = Cliente::where('user_id', Auth::user()->id)->first();
 
         if (!$cliente) {
-            return redirect()->back()->withErrors(['cliente' => 'No se encontró un cliente con ese nombre.']);
+            return redirect()->back()->withErrors(['cliente' => 'No se encontró un cliente.']);
         }
 
         DireccionAdicional::create([
-            'id_cliente' => $cliente->id_cliente,
+            'id_cliente' => $cliente->id,
             'direccion' => $request->direccion,
         ]);
 
@@ -52,7 +51,7 @@ class DireccionAdicionalController extends Controller
         $direccion = DireccionAdicional::find($id);
 
         if (!$direccion) {
-            return response()->json(['error' => 'Dirección no encontrada'], 404);
+            return response()->json(['error' => 'Dirección no encontrada', 'id' => $id], 404);
         }
 
         $direccion->delete();
