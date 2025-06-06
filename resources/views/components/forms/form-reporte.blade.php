@@ -2,6 +2,7 @@
     action="{{ isset($reporte) ? route('reportes.update', $reporte->id) : route('reportes.store') }}"
     method="POST"
     class="space-y-6 max-w-3xl mx-auto w-full bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
+    x-data="{ clienteId: '{{ old('cliente_id', $reporte->cliente_id ?? '') }}' }"
 >
     @csrf
     @if(isset($reporte))
@@ -49,6 +50,25 @@
         <div class="col-span-1">
             <label for="cliente_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cliente <span class="text-red-500">*</span></label>
             <select id="cliente_id" name="cliente_id" required
+                    x-model="clienteId"
+                    x-on:change="
+                        fetch(`/api/direcciones-por-cliente/${clienteId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Limpiar el select de direcciones
+                                const direccionSelect = document.getElementById('direccion_adicional_id');
+                                direccionSelect.innerHTML = '<option value="">Seleccione una dirección</option>';
+                                
+                                // Agregar las nuevas opciones
+                                data.forEach(direccion => {
+                                    const option = document.createElement('option');
+                                    option.value = direccion.id;
+                                    option.textContent = direccion.direccion;
+                                    direccionSelect.appendChild(option);
+                                });
+                            })
+                            .catch(error => console.error('Error:', error));
+                    "
                     class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <option value="">Seleccione un cliente</option>
                 @foreach($clientes as $cliente)
@@ -58,6 +78,25 @@
                 @endforeach
             </select>
             @error('cliente_id')
+            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Dirección Adicional -->
+        <div class="col-span-1">
+            <label for="direccion_adicional_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Dirección <span class="text-red-500">*</span></label>
+            <select id="direccion_adicional_id" name="direccion_adicional_id" required
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <option value="">Seleccione una dirección</option>
+                @if(isset($direcciones))
+                    @foreach($direcciones as $direccion)
+                        <option value="{{ $direccion->id }}" {{ old('direccion_adicional_id', $reporte->direccion_adicional_id ?? '') == $direccion->id ? 'selected' : '' }}>
+                            {{ $direccion->direccion }}
+                        </option>
+                    @endforeach
+                @endif
+            </select>
+            @error('direccion_adicional_id')
             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
             @enderror
         </div>
@@ -84,16 +123,6 @@
             <textarea id="descripcion" name="descripcion" rows="4" required
                       class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ old('descripcion', $reporte->descripcion ?? '') }}</textarea>
             @error('descripcion')
-            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <!-- Dirección -->
-        <div class="col-span-2">
-            <label for="direccion" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Dirección <span class="text-red-500">*</span></label>
-            <input type="text" id="direccion" name="direccion" value="{{ old('direccion', $reporte->direccion ?? '') }}" required
-                   class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            @error('direccion')
             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
             @enderror
         </div>
