@@ -22,30 +22,30 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
             border-radius: 9999px;
         }
     </style>
-    <body class="bg-gray-50">
+    <body class="bg-gray-50 dark:bg-gray-900">
     <div class="container mx-auto px-4 py-8" x-data="{ openFilters: false }">
         <!-- Header -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-indigo-700">
+            <h1 class="text-3xl font-bold text-indigo-700 dark:text-indigo-300">
                 <i class="fas fa-users mr-2"></i> Gestión de Empleados
             </h1>
             <div class="mt-4 md:mt-0">
-                <button @click="openFilters = !openFilters" class="bg-white text-indigo-600 px-4 py-2 rounded-lg shadow mr-3 hover:bg-indigo-50">
+                <button @click="openFilters = !openFilters" class="bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-lg shadow mr-3 hover:bg-indigo-50 dark:hover:bg-gray-700">
                     <i class="fas fa-filter mr-1"></i> Filtros
                 </button>
-                <a href="{{route('empleados.create')}}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700">
+                <a href="{{route('empleados.create')}}" class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
                     <i class="fas fa-plus mr-1"></i> Nuevo Empleado
                 </a>
             </div>
         </div>
 
         <!-- Filtros -->
-        <div x-show="openFilters" class="bg-white rounded-xl shadow p-6 mb-8 transition-all duration-300">
+        <div x-show="openFilters" class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-8 transition-all duration-300">
             <form action="{{ route('empleados.index') }}" method="GET">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
-                        <select name="cargo" class="w-full rounded-lg border-gray-300 shadow-sm">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cargo</label>
+                        <select name="cargo" class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                             <option value="">Todos</option>
                             @foreach($cargos as $cargo)
                                 <option value="{{ $cargo }}">{{ $cargo }}</option>
@@ -53,8 +53,8 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Estado Civil</label>
-                        <select name="estado_civil" class="w-full rounded-lg border-gray-300 shadow-sm">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado Civil</label>
+                        <select name="estado_civil" class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                             <option value="">Todos</option>
                             <option value="Soltero/a">Soltero/a</option>
                             <option value="Casado/a">Casado/a</option>
@@ -63,11 +63,11 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Salario Mínimo</label>
-                        <input type="number" name="salario_min" class="w-full rounded-lg border-gray-300 shadow-sm">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Salario Mínimo</label>
+                        <input type="number" name="salario_min" class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                     </div>
                     <div class="flex items-end">
-                        <button type="submit" class="bg-indigo-600 text-white w-full py-2 rounded-lg shadow hover:bg-indigo-700">
+                        <button type="submit" class="bg-indigo-600 dark:bg-indigo-500 text-white w-full py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
                             Aplicar Filtros
                         </button>
                     </div>
@@ -80,9 +80,9 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
             <form action="{{ route('empleados.index') }}" method="GET">
                 <div class="relative">
                     <input type="text" name="search" placeholder="Buscar empleados..."
-                           class="w-full p-4 rounded-xl shadow-lg border-0 focus:ring-2 focus:ring-indigo-500"
+                           class="w-full p-4 rounded-xl shadow-lg border-0 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300"
                            value="{{ request('search') }}">
-                    <button type="submit" class="absolute right-3 top-3.5 text-indigo-600">
+                    <button type="submit" class="absolute right-3 top-3.5 text-indigo-600 dark:text-indigo-400">
                         <i class="fas fa-search fa-lg"></i>
                     </button>
                 </div>
@@ -112,15 +112,15 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
         <!-- Listado de Empleados -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             @foreach($empleados as $empleado)
-                <div class="card-hover bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="card-hover bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
                     <div class="flex flex-col md:flex-row">
-                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 m-6"></div>
+                        <div class="bg-gray-200 dark:bg-gray-700 border-2 border-dashed rounded-xl w-16 h-16 m-6"></div>
                         <div class="flex-1 p-6">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <h3 class="text-xl font-bold text-gray-800">{{ $empleado->user->name ?? 'N/A' }}</h3>
+                                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-300">{{ $empleado->user->name ?? 'N/A' }}</h3>
                                     <div class="flex items-center mt-1">
-                                        <span class="bg-indigo-100 text-indigo-800 badge mr-2">
+                                        <span class="mr-2">
                                             <i class="fas fa-briefcase mr-1"></i> {{ $empleado->cargo }}
                                         </span>
                                         <span class="bg-green-100 text-green-800 badge">
@@ -129,7 +129,7 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-2xl font-bold text-indigo-700">Bs. {{ number_format($empleado->salario, 2) }}</div>
+                                    <div class="text-2xl font-bold text-indigo-700 dark:text-indigo-500">Bs. {{ number_format($empleado->salario, 2) }}</div>
                                     <div class="text-sm text-gray-500">CI: {{ $empleado->ci }}</div>
                                 </div>
                             </div>
