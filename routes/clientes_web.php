@@ -13,6 +13,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/clientes/registrar/', [ClienteController::class, 'create'])->name('clientes.create');
     Route::get('/clientes/{cliente}/editar', [ClienteController::class, 'edit'])->name('clientes.edit');
+    Route::get('/clientes/{cliente}', [ClienteController::class, 'show'])->name('clientes.show');
     
 
 

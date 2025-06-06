@@ -31,7 +31,6 @@
             </div>
         </div>
 
-
         <!-- Aquí puedes colocar el componente de tabla de clientes -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             @foreach($clientes as $cliente)
@@ -83,7 +82,7 @@
                             </div>
 
                             <div class="mt-6 flex justify-end space-x-3">
-                                <a href="" class="text-indigo-600 hover:text-indigo-900">
+                                <a href="{{ route('clientes.show', $cliente)}}" class="text-indigo-600 hover:text-indigo-900">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </a>
                                 <a href="{{ route('clientes.edit', $cliente) }}"
