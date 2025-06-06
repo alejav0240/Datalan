@@ -45,7 +45,7 @@ class ClienteController extends Controller
     public function index(Request $request)
     {
         $clientes = Cliente::with('user')->get();
-        return view('pages.clientes.clientes', compact('clientes'));
+        return view('pages.clientes.index', compact('clientes'));
     }
 
     // ========================== REGISTRAR CLIENTE ========================== //
