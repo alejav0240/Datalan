@@ -16,6 +16,8 @@ class DireccionAdicional extends Model
     protected $fillable = [
         'id_cliente',
         'direccion',
+        'latitud',
+        'longitud',
     ];
 
     public function cliente()

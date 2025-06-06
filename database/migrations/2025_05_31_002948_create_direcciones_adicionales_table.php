@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('direcciones_adicionales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_cliente')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('id_cliente')->constrained('clientes')->onDelete('cascade');      
             $table->text('direccion');
+            $table->decimal('latitud', 10, 8);
+            $table->decimal('longitud', 10, 8);
             $table->timestamps();
         });
     }

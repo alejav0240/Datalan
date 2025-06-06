@@ -29,7 +29,10 @@ class DireccionAdicionalController extends Controller
     {
         $request->validate([
             'direccion' => 'required|string',
+            'latitud' => 'required|numeric',
+            'longitud' => 'required|numeric',
         ]);
+        
 
         // Buscar cliente por nombre
         $cliente = Cliente::where('user_id', Auth::user()->id)->first();
@@ -41,9 +44,12 @@ class DireccionAdicionalController extends Controller
         DireccionAdicional::create([
             'id_cliente' => $cliente->id,
             'direccion' => $request->direccion,
+            'latitud' => $request->latitud,
+            'longitud' => $request->longitud,
         ]);
+        
 
-        return redirect()->back()->with('success', 'Dirección adicional registrada correctamente.');
+        return redirect()->back()->with('success', 'Dirección registrada correctamente.');
     }
 
     public function destroy($id)
@@ -56,7 +62,7 @@ class DireccionAdicionalController extends Controller
 
         $direccion->delete();
 
-        return redirect()->back()->with('success', 'Dirección adicional eliminada correctamente.');
+        return redirect()->back()->with('success', 'Dirección eliminada correctamente.');
     }
 
     public function direccionCliente($id_cliente)

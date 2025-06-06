@@ -39,7 +39,17 @@
                                     <tbody>
                                         ${data.map(direccion => `
                                             <tr class="hover:bg-blue-50 transition-colors duration-300">
-                                                <td class="border border-gray-300 px-4 py-2">${direccion.direccion}</td>
+                                               <td class="border border-gray-300 px-4 py-2">
+                                                    <div>
+                                                        ${direccion.direccion}
+                                                    </div>
+                                                    <a href="https://www.google.com/maps?q=${direccion.latitud},${direccion.longitud}" 
+                                                    target="_blank" 
+                                                    class="text-blue-600 hover:underline text-sm">
+                                                        Ver en Google Maps
+                                                    </a>
+                                                </td>
+                                                
                                                 <td class="border border-gray-300 px-4 py-2">
                                                     <form action="/direcciones-adicionales/${direccion.id}" method="POST" class="inline">
                                                         @csrf
