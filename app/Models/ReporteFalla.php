@@ -10,9 +10,10 @@ class ReporteFalla extends Model
     /** @use HasFactory<\Database\Factories\ReporteFallaFactory> */
     use HasFactory;
 
+    protected $table = 'reporte_fallas';
+
     protected $fillable = [
-        'cliente_id', 'tipo_fallo', 'descripcion', 'estado', 'fecha',
-        'cordenadas_destino', 'cordenadas_origin', 'direccion'
+        'cliente_id', 'tipo_falla', 'descripcion', 'estado', 'direccion'
     ];
 
     public function cliente() { return $this->belongsTo(Cliente::class); }
