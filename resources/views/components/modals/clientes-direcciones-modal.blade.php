@@ -48,20 +48,36 @@
                 <ul class="divide-y divide-gray-200 dark:divide-gray-700" x-show="direcciones.length > 0">
                     <template x-for="direccion in direcciones" :key="direccion.id">
                         <li class="py-3">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-gray-400 mt-0.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-5 w-5 text-gray-400 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-800 dark:text-gray-200" x-text="direccion.direccion"></p>
+                                    </div>
                                 </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200" x-text="direccion.direccion"></p>
+                
+                                <!-- Link a Google Maps -->
+                                <div class="ml-4">
+                                    <a
+                                        :href="`https://www.google.com/maps?q=${direccion.latitud},${direccion.longitud}`"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-blue-600 hover:underline text-sm font-semibold flex items-center"
+                                        title="Ver en Google Maps"
+                                    >
+                                        <i class="fas fa-map-marker-alt mr-1"></i> Mapa
+                                    </a>
                                 </div>
                             </div>
                         </li>
                     </template>
                 </ul>
+                
             </div>
 
             <!-- Footer -->
