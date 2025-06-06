@@ -28,7 +28,13 @@ class ReporteFallaController extends Controller
     public function store(StoreReporteFallaRequest $request)
     {
         try {
-            $reporte = ReporteFalla::create($request->validated()); // crear reporte
+            $reporte = ReporteFalla::create([
+                'cliente_id' => $request->cliente_id,
+                'tipo_falla' => $request->tipo_falla,
+                'descripcion' => $request->descripcion,
+                'direccion' => $request->direccion,
+                'estado' => 'pendiente', // Estado inicial
+            ]); // crear reporte
             return redirect()->route('reportes.index')->with('success', 'Reporte de falla creado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al crear el reporte de falla: ' . $e->getMessage())->withInput();
@@ -53,10 +59,20 @@ class ReporteFallaController extends Controller
     public function update(UpdateReporteFallaRequest $request, ReporteFalla $reporte) // recibir reporte
     {
         try {
-            $reporte->update($request->validated()); // actualizar reporte
-            return redirect()->route('reportes.index')->with('success', 'Reporte de falla actualizado exitosamente.');
-        } catch (\Exception $e) { 
-            return redirect()->back()->with('error', 'Error al actualizar el reporte de falla: ' . $e->getMessage())->withInput();
+            $reporte->update([ // actualizar reporte
+                'cliente_id' => $request->cliente_id,
+                'tipo_falla' => $request->tipo_falla,
+                'descripcion' => $request->descripcion,
+                'direccion' => $request->direccion,
+                'estado' => $request->estado ?? $reporte->estado,
+            ]);
+
+            return redirect()->route('reportes.index')
+                ->with('success', 'Reporte de falla actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Error al actualizar el reporte de falla: ' . $e->getMessage())
+                ->withInput();
         }
     }
 
