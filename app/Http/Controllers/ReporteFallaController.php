@@ -3,64 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\ReporteFalla;
+use App\Models\Cliente;
 use App\Http\Requests\StoreReporteFallaRequest;
 use App\Http\Requests\UpdateReporteFallaRequest;
+use Illuminate\Http\Request;
 
 class ReporteFallaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Obtener reportes
+    public function index(Request $request)
     {
-        //
+        $reportes = ReporteFalla::with('cliente')->get(); // cargar cliente
+        return view('pages.reportes.index', compact('reportes')); // reportes y clientes relacionados
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Crear
     public function create()
     {
-        //
+        $clientes = Cliente::all(); // obtener clientes
+        return view('pages.reportes.create', compact('clientes')); // lista de clientes
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar
     public function store(StoreReporteFallaRequest $request)
     {
-        //
+        try {
+            $reporte = ReporteFalla::create($request->validated()); // crear reporte
+            return redirect()->route('reportes.index')->with('success', 'Reporte de falla creado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al crear el reporte de falla: ' . $e->getMessage())->withInput();
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ReporteFalla $reporteFalla)
+    // Mostrar
+    public function show(ReporteFalla $reporte)
     {
-        //
+        $reporte->load('cliente', 'trabajo'); // cargar cliente y trabajo
+        return view('pages.reportes.show', compact('reporte'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ReporteFalla $reporteFalla)
+    // Editar
+    public function edit(ReporteFalla $reporte)
     {
-        //
+        $clientes = Cliente::all(); // obtener clientes
+        return view('pages.reportes.edit', compact('reporte', 'clientes')); // lista de clientes
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReporteFallaRequest $request, ReporteFalla $reporteFalla)
+    // Actualizar
+    public function update(UpdateReporteFallaRequest $request, ReporteFalla $reporte) // recibir reporte
     {
-        //
+        try {
+            $reporte->update($request->validated()); // actualizar reporte
+            return redirect()->route('reportes.index')->with('success', 'Reporte de falla actualizado exitosamente.');
+        } catch (\Exception $e) { 
+            return redirect()->back()->with('error', 'Error al actualizar el reporte de falla: ' . $e->getMessage())->withInput();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ReporteFalla $reporteFalla)
+    // Eliminar
+    public function destroy(ReporteFalla $reporte)
     {
-        //
+        try {
+            $reporte->delete(); // eliminar reporte
+            return redirect()->route('reportes.index')->with('success', 'Reporte de falla eliminado exitosamente.');
+        } catch (\Exception $e) { 
+            return redirect()->back()->with('error', 'Error al eliminar el reporte de falla: ' . $e->getMessage());
+        }
     }
 }
