@@ -1,3 +1,4 @@
+@props(['cliente', 'direcciones'])
 <header
     class="sticky top-0 py-4 shadow-lg bg-gradient-to-r from-white to-blue-50 animate__animated animate__fadeInDown z-50">
     <div class="container mx-auto flex justify-between items-center px-6">
@@ -41,7 +42,7 @@
                         <div class="relative">
                             <button id="user-menu-btn"
                                 class="btn font-bold py-1 px-4 border border-blue-500 rounded-full text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md text-sm flex items-center">
-                                <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
+                                <i class="fas fa-user-circle me-1"></i> {{ $cliente->nombre }}
                             </button>
                             <div id="user-menu"
                                 class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg hidden z-50">
@@ -125,7 +126,7 @@
 </header>
 
 <!-- MODAL DIRECCIONES -->
-<x-modals.direcciones-modal />
+<x-modals.direcciones-modal :direcciones="$direcciones" />
 
 
 <!-- SCRIPTS -->

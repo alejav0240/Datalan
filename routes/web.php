@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\InvoiceController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Cliente; 
+use App\Models\DireccionAdicional;
 
 
 // CONTROLADORES DE LOS MODULOS
@@ -19,22 +22,8 @@ use App\Http\Controllers\ClienteController;
 
 Route::redirect('/', 'inicio');
 
-Route::get('/inicio', function () {
-    // Si no está autenticado, redirige al inicio
-    if (!Auth::check()) {
-        return view('inicio');
-    }
+Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
-    // Verificar el nivel de acceso del usuario
-    if (Auth::user()->role == 'cliente') {
-        return view('inicio');
-    }
-    else{
-        // Si es un usuario autenticado pero no es cliente, redirigir a la vista de dashboard
-        return redirect()->route('dashboard');
-    }
-
-})->name('inicio');
 
 
 // ESTAS RUTAS SON PARA EL REGISTRO DE CLIENTES

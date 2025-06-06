@@ -1,73 +1,59 @@
-<div id="direccionesModal" class="hidden flex fixed inset-0 bg-black bg-opacity-50 justify-center items-center z-50">
-    <div class="bg-white w-full max-w-2xl p-6 rounded-lg shadow-lg relative">
-        <button id="cerrarModalDirecciones"
-            class="absolute top-2 right-4 text-gray-600 hover:text-red-500 text-2xl">&times;</button>
-        <h2 class="text-xl font-bold text-blue-600 mb-4 text-center">Mis Direcciones Adicionales</h2>
-        <div id="contenidoDirecciones" class="space-y-4 text-center">
-            <p class="text-gray-500">Cargando direcciones...</p>
-        </div>
+@props(['direcciones'])
+
+<div id="direccionesModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-white w-full max-w-3xl p-6 rounded-lg shadow-lg relative overflow-x-auto">
+        <button id="cerrarModalDirecciones" 
+            class="absolute top-3 right-4 text-gray-600 hover:text-red-500 text-3xl font-bold leading-none">&times;</button>
+        <h2 class="text-2xl font-bold text-blue-600 mb-6 text-center">Mis Direcciones Adicionales</h2>
+
+        @if($direcciones && count($direcciones) > 0)
+            <table class="w-full border-collapse border border-gray-300 text-left text-sm rounded-lg overflow-hidden shadow-md">
+                <thead>
+                    <tr class="bg-blue-600 text-white">
+                        <th class="border border-gray-300 px-4 py-3 font-semibold">Dirección</th>
+                        <th class="border border-gray-300 px-4 py-3 font-semibold text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($direcciones as $direccion)
+                        <tr class="hover:bg-blue-50 transition-colors duration-300">
+                            <td class="border border-gray-300 px-4 py-3 align-top">
+                                <div>{{ $direccion->direccion }}</div>
+                                <a href="https://www.google.com/maps?q={{ $direccion->latitud }},{{ $direccion->longitud }}" 
+                                   target="_blank" 
+                                   class="text-blue-600 hover:underline text-sm inline-block mt-1">
+                                    Ver en Google Maps
+                                </a>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-3 text-center align-middle">
+                                <form action="{{ url('/direcciones-adicionales/'.$direccion->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" 
+                                        class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p class="text-gray-500 text-center">No hay direcciones adicionales disponibles.</p>
+        @endif
     </div>
 </div>
 
 <script>
-
     document.addEventListener('DOMContentLoaded', () => {
         const abrirDirecciones = document.getElementById('abrirDirecciones');
         const modalDirecciones = document.getElementById('direccionesModal');
-        const contenidoDirecciones = document.getElementById('contenidoDirecciones');
         const cerrarModalDirecciones = document.getElementById('cerrarModalDirecciones');
 
         if (abrirDirecciones) {
             abrirDirecciones.addEventListener('click', function () {
                 modalDirecciones.classList.remove('hidden');
-                contenidoDirecciones.innerHTML = '<p class="text-gray-500">Cargando direcciones...</p>';
-
-                fetch('/direcciones-adicionales')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!Array.isArray(data) || data.length === 0) {
-                            contenidoDirecciones.innerHTML = '<p class="text-gray-600">No tienes direcciones adicionales registradas.</p>';
-                        } else {
-                            const tabla = `
-                                <table class="w-full border-collapse border border-gray-300 text-left text-sm rounded-lg overflow-hidden shadow-md">
-                                    <thead>
-                                        <tr class="bg-blue-600 text-white">
-                                            <th class="border border-gray-300 px-4 py-2 font-semibold">Dirección</th>
-                                            <th class="border border-gray-300 px-4 py-2 font-semibold">Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${data.map(direccion => `
-                                            <tr class="hover:bg-blue-50 transition-colors duration-300">
-                                               <td class="border border-gray-300 px-4 py-2">
-                                                    <div>
-                                                        ${direccion.direccion}
-                                                    </div>
-                                                    <a href="https://www.google.com/maps?q=${direccion.latitud},${direccion.longitud}" 
-                                                    target="_blank" 
-                                                    class="text-blue-600 hover:underline text-sm">
-                                                        Ver en Google Maps
-                                                    </a>
-                                                </td>
-                                                
-                                                <td class="border border-gray-300 px-4 py-2">
-                                                    <form action="/direcciones-adicionales/${direccion.id}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
-                                                            <i class="fas fa-trash-alt"></i> Eliminar
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                                </table>
-                            `;
-                            contenidoDirecciones.innerHTML = tabla;
-                        }
-                    });
             });
         }
 
