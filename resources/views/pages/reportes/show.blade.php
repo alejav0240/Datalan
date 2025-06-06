@@ -71,50 +71,6 @@
                     <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ $reporte->descripcion }}</p>
                 </div>
             </div>
-
-            @if($reporte->trabajo)
-            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Trabajo Asignado</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">ID del Trabajo</h3>
-                            <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ $reporte->trabajo->id }}</p>
-                        </div>
-                        <div>
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Tipo de Trabajo</h3>
-                            <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ ucfirst($reporte->trabajo->tipo_trabajo) }}</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Prioridad</h3>
-                            <p class="mt-1">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $reporte->trabajo->prioridad == 'normal' ? 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100' : '' }}
-                                    {{ $reporte->trabajo->prioridad == 'alta' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-100' : '' }}
-                                    {{ $reporte->trabajo->prioridad == 'urgente' ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-100' : '' }}
-                                ">
-                                    {{ ucfirst($reporte->trabajo->prioridad) }}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">No hay trabajo asignado</h2>
-                    <a href="{{ route('trabajos.create', ['reporte_id' => $reporte->id]) }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">
-                        <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
-                            <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                        </svg>
-                        <span class="ml-2">Asignar Trabajo</span>
-                    </a>
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </x-app-layout>
