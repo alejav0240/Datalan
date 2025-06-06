@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-span-1 md:col-span-2">
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Dirección</h3>
-                    <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ $reporte->direccion }}</p>
+                    <p class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{{ $reporte->direccionAdicional->direccion }}</p>
                 </div>
                 <div class="col-span-1 md:col-span-2">
                     <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Descripción</h3>
