@@ -13,9 +13,10 @@ class ReporteFalla extends Model
     protected $table = 'reporte_fallas';
 
     protected $fillable = [
-        'cliente_id', 'tipo_falla', 'descripcion', 'estado', 'direccion'
+        'cliente_id', 'direccion_adicional_id', 'tipo_falla', 'descripcion', 'estado'
     ];
 
     public function cliente() { return $this->belongsTo(Cliente::class); }
+    public function direccionAdicional() { return $this->belongsTo(DireccionAdicional::class); }
     public function trabajo() { return $this->hasOne(Trabajo::class, 'reporte_id'); }
 }
