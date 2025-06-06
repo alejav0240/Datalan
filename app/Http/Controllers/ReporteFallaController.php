@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ReporteFalla;
 use App\Models\Cliente;
+use App\Models\DireccionAdicional;
 use App\Http\Requests\StoreReporteFallaRequest;
 use App\Http\Requests\UpdateReporteFallaRequest;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ReporteFallaController extends Controller
     // Obtener reportes
     public function index(Request $request)
     {
-        $reportes = ReporteFalla::with('cliente')->get(); // cargar cliente
+        $reportes = ReporteFalla::with(['cliente', 'direccionAdicional'])->get(); // cargar cliente y dirección
         return view('pages.reportes.index', compact('reportes')); // reportes y clientes relacionados
     }
 
@@ -21,7 +22,12 @@ class ReporteFallaController extends Controller
     public function create()
     {
         $clientes = Cliente::all(); // obtener clientes
-        return view('pages.reportes.create', compact('clientes')); // lista de clientes
+        $direcciones = collect(); // colección vacía por defecto
+        // Si hay un cliente seleccionado por defecto, cargar sus direcciones
+        if (old('cliente_id')) {
+            $direcciones = DireccionAdicional::where('id_cliente', old('cliente_id'))->get();
+        }
+        return view('pages.reportes.create', compact('clientes', 'direcciones')); // lista de clientes y direcciones
     }
 
     // Guardar
@@ -30,10 +36,10 @@ class ReporteFallaController extends Controller
         try {
             $reporte = ReporteFalla::create([
                 'cliente_id' => $request->cliente_id,
+                'direccion_adicional_id' => $request->direccion_adicional_id,
                 'tipo_falla' => $request->tipo_falla,
                 'descripcion' => $request->descripcion,
-                'direccion' => $request->direccion,
-                'estado' => 'pendiente', // Estado inicial
+                'estado' => 'pendiente', 
             ]); // crear reporte
             return redirect()->route('reportes.index')->with('success', 'Reporte de falla creado exitosamente.');
         } catch (\Exception $e) {
@@ -44,7 +50,7 @@ class ReporteFallaController extends Controller
     // Mostrar
     public function show(ReporteFalla $reporte)
     {
-        $reporte->load('cliente', 'trabajo'); // cargar cliente y trabajo
+        $reporte->load('cliente', 'direccionAdicional'); // cargar cliente, dirección
         return view('pages.reportes.show', compact('reporte'));
     }
 
@@ -52,7 +58,8 @@ class ReporteFallaController extends Controller
     public function edit(ReporteFalla $reporte)
     {
         $clientes = Cliente::all(); // obtener clientes
-        return view('pages.reportes.edit', compact('reporte', 'clientes')); // lista de clientes
+        $direcciones = DireccionAdicional::where('id_cliente', $reporte->cliente_id)->get(); // obtener direcciones 
+        return view('pages.reportes.edit', compact('reporte', 'clientes', 'direcciones')); // lista de clientes y direcciones
     }
 
     // Actualizar
@@ -61,12 +68,11 @@ class ReporteFallaController extends Controller
         try {
             $reporte->update([ // actualizar reporte
                 'cliente_id' => $request->cliente_id,
+                'direccion_adicional_id' => $request->direccion_adicional_id,
                 'tipo_falla' => $request->tipo_falla,
                 'descripcion' => $request->descripcion,
-                'direccion' => $request->direccion,
                 'estado' => $request->estado ?? $reporte->estado,
             ]);
-
             return redirect()->route('reportes.index')
                 ->with('success', 'Reporte de falla actualizado exitosamente.');
         } catch (\Exception $e) {
@@ -85,5 +91,12 @@ class ReporteFallaController extends Controller
         } catch (\Exception $e) { 
             return redirect()->back()->with('error', 'Error al eliminar el reporte de falla: ' . $e->getMessage());
         }
+    }
+    
+    // Obtener direcciones por cliente (para AJAX)
+    public function getDireccionesPorCliente($clienteId)
+    {
+        $direcciones = DireccionAdicional::where('id_cliente', $clienteId)->get();
+        return response()->json($direcciones);
     }
 }
