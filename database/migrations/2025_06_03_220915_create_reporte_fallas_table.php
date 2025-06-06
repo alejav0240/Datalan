@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('reporte_fallas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('direccion_adicional_id')->constrained('direcciones_adicionales')->onDelete('cascade');
             $table->enum('tipo_falla', ['hardware', 'software', 'conectividad', 'otro']);
             $table->string('descripcion', 255)->nullable();
             $table->boolean('estado')->default(false);
-            $table->string('direccion', 255)->nullable();
-
             $table->timestamps();
         });
     }
