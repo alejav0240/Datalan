@@ -17,9 +17,9 @@ class UpdateReporteFallaRequest extends FormRequest
     {
         return [
             'cliente_id' => 'required|exists:clientes,id',
+            'direccion_adicional_id' => 'required|exists:direcciones_adicionales,id',
             'tipo_falla' => 'required|in:hardware,software,conectividad,otro',
             'descripcion' => 'nullable|string|max:255',
-            'direccion' => 'nullable|string|max:255',
             'estado' => 'sometimes|in:pendiente,en_proceso,resuelto',
         ];
     }
@@ -30,12 +30,12 @@ class UpdateReporteFallaRequest extends FormRequest
         return [
             'cliente_id.required' => 'El cliente es obligatorio.',
             'cliente_id.exists' => 'El cliente seleccionado no existe.',
+            'direccion_adicional_id.required' => 'La dirección es obligatoria.',
+            'direccion_adicional_id.exists' => 'La dirección seleccionada no existe.',
             'tipo_falla.required' => 'El tipo de falla es obligatorio.',
             'tipo_falla.in' => 'El tipo de falla seleccionado no es válido.',
             'descripcion.required' => 'La descripción es obligatoria.',
             'descripcion.max' => 'La descripción no debe exceder los 255 caracteres.',
-            'direccion.required' => 'La dirección es obligatoria.',
-            'direccion.max' => 'La dirección no debe exceder los 255 caracteres.',
             'estado.in' => 'El estado seleccionado no es válido.',
         ];
     }
