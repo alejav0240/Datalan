@@ -57,7 +57,6 @@
                             .then(data => {
                                 // Limpiar el select de direcciones
                                 const direccionSelect = document.getElementById('direccion_adicional_id');
-                                direccionSelect.innerHTML = '<option value="">Seleccione una dirección</option>';
                                 
                                 // Agregar las nuevas opciones
                                 data.forEach(direccion => {
