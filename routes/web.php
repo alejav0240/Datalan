@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/clientes/{id_cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     Route::delete('/clientes/{id_cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
     Route::post('/clientes/{id_cliente}', [ClienteController::class, 'enable'])->name('clientes.enable');
+    Route::get('/api/direcciones-por-cliente/{clienteId}', [\App\Http\Controllers\ReporteFallaController::class, 'getDireccionesPorCliente'])->name('api.direcciones-por-cliente');
 
     // Rutas de empleados
     Route::resource('empleados', \App\Http\Controllers\EmpleadoController::class);
