@@ -11,6 +11,8 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Cliente; 
+use App\Models\DireccionAdicional;
 
 
 // CONTROLADORES DE LOS MODULOS
@@ -27,7 +29,12 @@ Route::get('/inicio', function () {
 
     // Verificar el nivel de acceso del usuario
     if (Auth::user()->role == 'cliente') {
-        return view('inicio');
+        // obtener el cliente asociado al usuario autenticado
+
+        $cliente = Cliente::where('user_id', Auth::id())->first();
+        $direcciones = DireccionAdicional::where('id_cliente', $cliente->id)->get();
+
+        return view('inicio', ['cliente' => $cliente], ['direcciones' => $direcciones]);
     }
     else{
         // Si es un usuario autenticado pero no es cliente, redirigir a la vista de dashboard

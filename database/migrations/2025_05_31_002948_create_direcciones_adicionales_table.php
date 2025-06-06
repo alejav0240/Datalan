@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('direcciones_adicionales', function (Blueprint $table) {
+        Schema::create('reporte_fallas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_cliente')->constrained('clientes')->onDelete('cascade');      
-            $table->text('direccion');
-            $table->decimal('latitud', 10, 8);
-            $table->decimal('longitud', 10, 8);
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('direccion_adicional_id')->constrained('direcciones_adicionales')->onDelete('cascade');
+            $table->enum('tipo_falla', ['hardware', 'software', 'conectividad', 'otro']);
+            $table->string('descripcion', 255)->nullable();
+            $table->boolean('estado')->default(false);
             $table->timestamps();
         });
     }
