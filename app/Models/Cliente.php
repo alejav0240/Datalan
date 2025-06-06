@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Cliente extends Model
 {
     use HasFactory;
@@ -29,5 +30,17 @@ class Cliente extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Relación con reportes de error
+    public function reportesErrores()
+    {
+        return $this->hasMany(ReporteFalla::class);
+    }
+
+    // Relación con Direcciones
+    public function direcciones()
+    {
+        return $this->hasMany(DireccionAdicional::class, 'id_cliente');
     }
 }
