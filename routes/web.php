@@ -57,4 +57,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Rutas de empleados
     Route::resource('empleados', \App\Http\Controllers\EmpleadoController::class);
 
+    // Rutas de reportes de fallas
+    Route::resource('reportes', \App\Http\Controllers\ReporteFallaController::class);
 });
