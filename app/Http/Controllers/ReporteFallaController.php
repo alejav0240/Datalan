@@ -12,89 +12,26 @@ use Illuminate\Support\Facades\Auth;
 
 class ReporteFallaController extends Controller
 {
-    // Obtener reportes (solo para administradores)
+    // MÉTODOS PARA ADMINISTRADORES
+    // Obtener reportes
     public function index(Request $request)
     {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
+  
         $reportes = ReporteFalla::with(['cliente', 'direccionAdicional'])->get();
         return view('pages.reportes.index', compact('reportes'));
     }
-
-    // Crear (solo para administradores)
-    public function create()
-    {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
-        $clientes = Cliente::all();
-        $direcciones = collect();
-        if (old('cliente_id')) {
-            $direcciones = DireccionAdicional::where('id_cliente', old('cliente_id'))->get();
-        }
-        return view('pages.reportes.create', compact('clientes', 'direcciones'));
-    }
-
-    // Guardar (solo para administradores)
-    public function store(StoreReporteFallaRequest $request)
-    {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
-        try {
-            $reporte = ReporteFalla::create([
-                'cliente_id' => $request->cliente_id,
-                'direccion_adicional_id' => $request->direccion_adicional_id,
-                'tipo_falla' => $request->tipo_falla,
-                'descripcion' => $request->descripcion,
-                'estado' => 'pendiente', 
-            ]);
-            return redirect()->route('reportes.index')->with('success', 'Reporte de falla creado exitosamente.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al crear el reporte de falla: ' . $e->getMessage())->withInput();
-        }
-    }
-
-    // Mostrar (solo para administradores)
-    public function show(ReporteFalla $reporte)
-    {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
-        $reporte->load('cliente', 'direccionAdicional');
-        return view('pages.reportes.show', compact('reporte'));
-    }
-
-    // Editar (solo para administradores)
+    // Editar
     public function edit(ReporteFalla $reporte)
     {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
+
         $clientes = Cliente::all();
         $direcciones = DireccionAdicional::where('id_cliente', $reporte->cliente_id)->get();
         return view('pages.reportes.edit', compact('reporte', 'clientes', 'direcciones'));
     }
-
-    // Actualizar (solo para administradores)
+    // Actualizar
     public function update(UpdateReporteFallaRequest $request, ReporteFalla $reporte)
     {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
+
         try {
             // El administrador solo puede cambiar el estado
             $reporte->update([
@@ -108,22 +45,6 @@ class ReporteFallaController extends Controller
                 ->withInput();
         }
     }
-
-    // Eliminar (solo para administradores)
-    public function destroy(ReporteFalla $reporte)
-    {
-        // Verificar si es administrador
-        if (Auth::user()->role != 'admin') {
-            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta página.');
-        }
-        
-        try {
-            $reporte->delete();
-            return redirect()->route('reportes.index')->with('success', 'Reporte de falla eliminado exitosamente.');
-        } catch (\Exception $e) { 
-            return redirect()->back()->with('error', 'Error al eliminar el reporte de falla: ' . $e->getMessage());
-        }
-    }
     
     // Obtener direcciones por cliente (para AJAX)
     public function getDireccionesPorCliente($clienteId)
@@ -133,8 +54,7 @@ class ReporteFallaController extends Controller
     }
     
     // MÉTODOS PARA CLIENTES
-    
-    // Guardar reporte (para clientes)
+    // Guardar reporte
     public function clienteStore(Request $request)
     {
         // Validar datos
@@ -143,7 +63,6 @@ class ReporteFallaController extends Controller
             'direccion_adicional_id' => 'required|exists:direcciones_adicionales,id',
             'descripcion' => 'required|string|max:500',
         ]);
-        
         try {
             // Obtener el cliente autenticado
             $cliente = Cliente::where('user_id', Auth::user()->id)->first();
@@ -151,16 +70,13 @@ class ReporteFallaController extends Controller
             if (!$cliente) {
                 return redirect()->back()->with('error', 'No se encontró información de cliente asociada a su cuenta.')->withInput();
             }
-            
             // Verificar que la dirección pertenezca al cliente
             $direccion = DireccionAdicional::where('id', $request->direccion_adicional_id)
                 ->where('id_cliente', $cliente->id)
-                ->first();
-                
+                ->first();   
             if (!$direccion) {
                 return redirect()->back()->with('error', 'La dirección seleccionada no es válida.')->withInput();
             }
-            
             // Crear el reporte
             $reporte = ReporteFalla::create([
                 'cliente_id' => $cliente->id,
@@ -185,7 +101,6 @@ class ReporteFallaController extends Controller
         if (!$cliente) {
             return redirect()->route('inicio')->with('error', 'No se encontró información de cliente asociada a su cuenta.');
         }
-        
         // Obtener el reporte asegurándose que pertenezca al cliente
         $reporte = ReporteFalla::where('id', $id)
             ->where('cliente_id', $cliente->id)
@@ -194,14 +109,11 @@ class ReporteFallaController extends Controller
         if (!$reporte) {
             return redirect()->route('inicio')->with('error', 'El reporte solicitado no existe o no tiene permisos para editarlo.');
         }
-        
         // Si el reporte no está en estado pendiente, no se puede editar
         if ($reporte->estado != 'pendiente') {
             return redirect()->route('inicio')->with('error', 'Solo puede editar reportes en estado pendiente.');
         }
-        
         $direcciones = DireccionAdicional::where('id_cliente', $cliente->id)->get();
-        
         return view('pages.reportes.cliente-edit', compact('reporte', 'direcciones'));
     }
     
@@ -214,7 +126,6 @@ class ReporteFallaController extends Controller
             'direccion_adicional_id' => 'required|exists:direcciones_adicionales,id',
             'descripcion' => 'required|string|max:500',
         ]);
-        
         try {
             // Obtener el cliente autenticado
             $cliente = Cliente::where('user_id', Auth::user()->id)->first();
@@ -222,37 +133,30 @@ class ReporteFallaController extends Controller
             if (!$cliente) {
                 return redirect()->back()->with('error', 'No se encontró información de cliente asociada a su cuenta.')->withInput();
             }
-            
             // Obtener el reporte asegurándose que pertenezca al cliente
             $reporte = ReporteFalla::where('id', $id)
                 ->where('cliente_id', $cliente->id)
                 ->first();
-                
             if (!$reporte) {
                 return redirect()->route('inicio')->with('error', 'El reporte solicitado no existe o no tiene permisos para editarlo.');
             }
-            
             // Si el reporte no está en estado pendiente, no se puede editar
             if ($reporte->estado != 'pendiente') {
                 return redirect()->route('inicio')->with('error', 'Solo puede editar reportes en estado pendiente.');
             }
-            
             // Verificar que la dirección pertenezca al cliente
             $direccion = DireccionAdicional::where('id', $request->direccion_adicional_id)
                 ->where('id_cliente', $cliente->id)
                 ->first();
-                
             if (!$direccion) {
                 return redirect()->back()->with('error', 'La dirección seleccionada no es válida.')->withInput();
             }
-            
             // Actualizar el reporte
             $reporte->update([
                 'direccion_adicional_id' => $request->direccion_adicional_id,
                 'tipo_falla' => $request->tipo_falla,
                 'descripcion' => $request->descripcion,
             ]);
-            
             return redirect()->route('inicio')->with('success', 'Reporte de falla actualizado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al actualizar el reporte de falla: ' . $e->getMessage())->withInput();
@@ -265,11 +169,9 @@ class ReporteFallaController extends Controller
         try {
             // Obtener el cliente autenticado
             $cliente = Cliente::where('user_id', Auth::user()->id)->first();
-            
             if (!$cliente) {
                 return redirect()->route('inicio')->with('error', 'No se encontró información de cliente asociada a su cuenta.');
             }
-            
             // Obtener el reporte asegurándose que pertenezca al cliente
             $reporte = ReporteFalla::where('id', $id)
                 ->where('cliente_id', $cliente->id)
@@ -278,15 +180,12 @@ class ReporteFallaController extends Controller
             if (!$reporte) {
                 return redirect()->route('inicio')->with('error', 'El reporte solicitado no existe o no tiene permisos para eliminarlo.');
             }
-            
             // Si el reporte no está en estado pendiente, no se puede eliminar
             if ($reporte->estado != 'pendiente') {
                 return redirect()->route('inicio')->with('error', 'Solo puede eliminar reportes en estado pendiente.');
             }
-            
             // Eliminar el reporte
             $reporte->delete();
-            
             return redirect()->route('inicio')->with('success', 'Reporte de falla eliminado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->route('inicio')->with('error', 'Error al eliminar el reporte de falla: ' . $e->getMessage());
