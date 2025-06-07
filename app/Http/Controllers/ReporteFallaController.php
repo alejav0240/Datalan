@@ -298,11 +298,9 @@ class ReporteFallaController extends Controller
     {
         // Obtener el cliente autenticado
         $cliente = Cliente::where('user_id', Auth::user()->id)->first();
-        
         if (!$cliente) {
             return response()->json([]);
         }
-        
         // Obtener los reportes del cliente
         $reportes = ReporteFalla::where('cliente_id', $cliente->id)
             ->with('direccionAdicional')
