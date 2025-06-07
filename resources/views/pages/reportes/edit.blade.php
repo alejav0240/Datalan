@@ -6,6 +6,6 @@
             </div>
         </div>
         
-        <x-forms.form-reporte :reporte="$reporte" :clientes="$clientes" />
+        <x-forms.form-reporte :reporte="$reporte" :clientes="$clientes" :direcciones="$direcciones"/>
     </div>
 </x-app-layout>
