@@ -23,16 +23,24 @@
 <body class="bg-white text-gray-900">
 
     <!-- ENCABEZADO -->
-    <x-info.info-header :cliente="$cliente ?? null" :direcciones="$direcciones ?? collect()" />
+    <x-info.info-header :cliente="$cliente ?? null" :direcciones="$direcciones ?? collect()" :reportes="$reportes ?? collect()" />
 
     <!-- SECCIÓN HERO -->
     <x-info.info-hero />
 
     <!-- SECCIÓN PARA INFORMACIÓN EXTRA -->
-    @auth
-        <x-info.info-direcciones />
-
-    @endauth
+@auth
+    @if(Auth::user()->role == 'cliente')
+        <div class="w-full flex flex-col md:flex-row gap-4 px-4 sm:px-6 lg:px-8 py-6">
+            <div class="w-full md:w-1/2">
+                <x-info.info-direcciones />
+            </div>
+            <div class="w-full md:w-1/2">
+                <x-info.info-reportes :direcciones="$direcciones ?? collect()" />
+            </div>
+        </div>
+    @endif
+@endauth
 
     
     <!-- SECCIÓN EMPRESA -->
