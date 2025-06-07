@@ -53,12 +53,12 @@
         </style>
         <div class="min-h-screen flex flex-col">
 
-            <!-- Main Content -->
+            <!-- Contenido -->
             <main class="flex-grow container mx-auto px-4 py-8">
 
                 <div class="bg-white dark:bg-gray-800 rounded-xl employee-card overflow-hidden">
 
-                    <!-- Employee Header -->
+                    <!-- Cliente Header -->
                     <div
                         class="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white p-6 flex flex-col md:flex-row items-center">
                         <div
@@ -79,7 +79,9 @@
                                     class="role-badge {{ $roleColors[$cliente->user->role] ?? 'bg-gray-500 dark:bg-gray-600' }} text-white mr-2">
                                     {{ ucfirst($cliente->user->role) }}
                                 </span>
-                                <span class="status-badge bg-green-700  text-white">Activo</span>
+                                <span class="status-badge {{ $cliente->user->is_active ? 'bg-green-700' : 'bg-red-700' }} text-white">
+                                    {{ $cliente->user->is_active ? 'Activo' : 'Inactivo' }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -94,23 +96,23 @@
                                 </button>
                             </li>
                             <li class="mr-2">
-                                <button data-tab="trabajos"
+                                <button data-tab="direcciones"
                                     class="tab-link inline-block py-4 px-4 text-sm font-medium text-center border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600">
                                     <i class="fas fa-tasks mr-2"></i>Direcciones Registradas
                                 </button>
                             </li>
                             <li class="mr-2">
-                                <button data-tab="permisos"
+                                <button data-tab="reportes_fallas"
                                     class="tab-link inline-block py-4 px-4 text-sm font-medium text-center border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600">
-                                    <i class="fas fa-file-alt mr-2"></i>Permisos
+                                    <i class="fas fa-file-alt mr-2"></i>Reportes de Fallas
                                 </button>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Tab Contents -->
+                    <!-- Datos -->
                     <div class="p-6">
-                        <!-- Personal Information Tab -->
+                        <!-- Información Personal -->
                         <div id="personal" class="tab-content active">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
@@ -153,43 +155,105 @@
 
                             </div>
                         </div>
-
-                
                         <!-- Direcciones Tab -->
-                        <div id="trabajos" class="tab-content">
+                        <div id="direcciones" class="tab-content">
                             <div class="overflow-x-auto">
-                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 rounded-lg overflow-hidden shadow-lg">
-                                    <thead class="bg-gray-50 dark:bg-gray-800">
-                                        <tr>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                Dirección</th>
-                                            <th
-                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                                Mapa</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                                        @foreach($cliente->direcciones as $direccion)
+                                @if($cliente->reportes_falla->isNotEmpty())
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 rounded-lg overflow-hidden shadow-lg">
+                                        <thead class="bg-gray-50 dark:bg-gray-800">
                                             <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $direccion->direccion }}
-                                                    </div>
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <a href="https://www.google.com/maps?q={{ $direccion->latitud }},{{ $direccion->longitud }}" target="_blank"
-                                                        class="text-blue-600 dark:text-blue-400 hover:underline">
-                                                        Ver en Google Maps
-                                                    </a>
-                                                </td>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Dirección</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Mapa</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                                            @foreach($cliente->reportes_falla as $reporte)
+                                                @if($reporte->direccionAdicional)
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <div class="font-medium text-gray-900 dark:text-gray-100">
+                                                                {{ $reporte->direccionAdicional->direccion }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <a href="https://www.google.com/maps?q={{ $reporte->direccionAdicional->latitud }},{{ $reporte->direccionAdicional->longitud }}" target="_blank"
+                                                                class="text-blue-600 dark:text-blue-400 hover:underline">
+                                                                Ver en Google Maps
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="text-gray-500 dark:text-gray-300">No hay direcciones registradas.</p>
+                                @endif
+                            </div>
+                        </div>
+                               
+
+                        <!-- Reportes de fallas Tab -->
+                        <div id="reportes_fallas" class="tab-content">
+                            <div class="overflow-x-auto">
+                                @if($cliente->reportes_falla->isNotEmpty())
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 rounded-lg overflow-hidden shadow-lg">
+                                        <thead class="bg-gray-50 dark:bg-gray-800">
+                                            <tr>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tipo de Error</th>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descripción</th>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Estado</th>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Fecha</th>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Dirección</th>
+                                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Mapa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                                            @foreach($cliente->reportes_falla as $reporte)
+                                                <tr class="text-center">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium text-gray-900 dark:text-gray-100">
+                                                            {{ $reporte->tipo_falla }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-gray-700 dark:text-gray-300">
+                                                            {{ $reporte->descripcion }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="status-badge {{ $reporte->estado === 'pendiente' ? 'bg-yellow-500' : ($reporte->estado === 'en_proceso' ? 'bg-blue-500' : 'bg-green-500') }} text-white">
+                                                            {{ ucfirst($reporte->estado) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-gray-700 dark:text-gray-300">
+                                                            {{ $reporte->created_at->format('d-M-Y') }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-gray-700 dark:text-gray-300">
+                                                            {{ $reporte->direccionAdicional->direccion ?? 'N/A' }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        @if($reporte->direccionAdicional)
+                                                            <a href="https://www.google.com/maps?q={{ $reporte->direccionAdicional->latitud }},{{ $reporte->direccionAdicional->longitud }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">Ver en Google Maps</a>
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="text-gray-500 dark:text-gray-300">No hay reportes de fallas registrados.</p>
+                                @endif
                             </div>
                         </div>
 
-                        <!-- Permisos Tab -->
+
                        
                     </div>
 

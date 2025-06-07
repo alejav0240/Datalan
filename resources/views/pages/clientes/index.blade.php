@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <!-- Aquí puedes colocar el componente de tabla de clientes -->
+        <!-- Listado de Clientes -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             @foreach($clientes as $cliente)
                 <div class="card-hover bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
@@ -68,7 +68,7 @@
                                     <span>Registro: {{ $cliente->created_at->format('d/m/Y') }}</span>
                                 </div>
                                 <div class="flex items-center">
-                                    <i class="fas fa-tasks text-amber-500 mr-2"></i>
+                                    <i class="fa fa-location-arrow text-amber-500 mr-2"></i>
                                     <span>
                                         @if($cliente->direcciones->count() === 0)
                                             Sin direcciones
@@ -76,6 +76,18 @@
                                             1 Dirección
                                         @else
                                             {{ $cliente->direcciones->count() }} Direcciones
+                                        @endif
+                                    </span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa fa-exclamation-triangle text-red-500 mr-2"></i>
+                                    <span>
+                                        @if($cliente->reportes_falla->count() === 0)
+                                            Sin reportes de falla
+                                        @elseif($cliente->reportes_falla->count() === 1)
+                                            1 Reporte de falla
+                                        @else
+                                            {{ $cliente->reportes_falla->count() }} Reportes de falla
                                         @endif
                                     </span>
                                 </div>

@@ -24,5 +24,11 @@ class DireccionAdicional extends Model
     {
         return $this->belongsTo(Cliente::class, 'id_cliente', 'id_cliente');
     }
+    // En el modelo ReporteFalla
+    public function direccionAdicional()
+    {
+        return $this->belongsTo(DireccionAdicional::class, 'direccion_adicional_id');
+    }
+
 
 }
