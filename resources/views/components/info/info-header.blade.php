@@ -1,4 +1,4 @@
-@props(['cliente', 'direcciones'])
+@props(['cliente', 'direcciones', 'reportes'])
 <header
     class="sticky top-0 py-4 shadow-lg bg-gradient-to-r from-white to-blue-50 animate__animated animate__fadeInDown z-50">
     <div class="container mx-auto flex justify-between items-center px-6">
@@ -30,8 +30,12 @@
                         class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Contacto</a>
                 </li>
                 @auth
-                    <li><a href="#agregar-direccion"
-                            class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Información Extra</a></li>
+                    @if(Auth::user()->role == 'cliente')
+                        <li><a href="#agregar-direccion"
+                                class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Direcciones</a></li>
+                        <li><a href="#reportar-falla"
+                                class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Reportar Falla</a></li>
+                    @endif
                 @endauth
                     @guest
                         <a href="{{ route('login') }}"
@@ -50,6 +54,11 @@
                                     <button id="abrirDirecciones"
                                         class="w-full text-blue-600 hover:bg-blue-100 py-2 px-4 text-sm font-bold text-center transition-all duration-300">
                                         <i class="fas fa-map-marker-alt me-1"></i> Mis Direcciones
+                                    </button>
+                                    
+                                    <button id="abrirReportes"
+                                        class="w-full text-blue-600 hover:bg-blue-100 py-2 px-4 text-sm font-bold text-center transition-all duration-300">
+                                        <i class="fas fa-exclamation-triangle me-1"></i> Mis Reportes
                                     </button>
 
                                     <form action="{{ route('logout') }}" method="POST" class="block text-center w-full">
@@ -98,8 +107,12 @@
             <li><a href="#productos" class="text-gray-800 font-semibold hover:text-blue-600">Productos</a></li>
             <li><a href="#contacto" class="text-gray-800 font-semibold hover:text-blue-600">Contacto</a></li>
             @auth
-                <li><a href="#agregar-direccion"
-                        class="text-gray-800 font-semibold hover:text-blue-600">Información Extra</a></li>
+                @if(Auth::user()->role == 'cliente')
+                    <li><a href="#agregar-direccion"
+                            class="text-gray-800 font-semibold hover:text-blue-600">Direcciones</a></li>
+                    <li><a href="#reportar-falla"
+                            class="text-gray-800 font-semibold hover:text-blue-600">Reportar Falla</a></li>
+                @endif
             @endauth
             </li>
             <li class="flex items-center space-x-3">
@@ -128,6 +141,12 @@
 <!-- MODAL DIRECCIONES -->
 <x-modals.direcciones-modal :direcciones="$direcciones" />
 
+<!-- MODAL REPORTES -->
+@auth
+    @if(Auth::user()->role == 'cliente')
+        <x-modals.reportes-modal :reportes="$reportes" />
+    @endif
+@endauth
 
 <!-- SCRIPTS -->
 <script>
