@@ -32,9 +32,7 @@
                 @auth
                     @if(Auth::user()->role == 'cliente')
                         <li><a href="#agregar-direccion"
-                                class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Direcciones</a></li>
-                        <li><a href="#reportar-falla"
-                                class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Reportar Falla</a></li>
+                                class="text-gray-800 font-semibold hover:text-blue-600 transition-colors duration-300">Direcciones y Reportes</a></li>
                     @endif
                 @endauth
                     @guest
