@@ -14,11 +14,12 @@ use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cliente; 
 use App\Models\DireccionAdicional;
+use App\Models\ReporteFalla;
 
 
 // CONTROLADORES DE LOS MODULOS
-
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ReporteFallaController;
 
 Route::redirect('/', 'inicio');
 
@@ -29,6 +30,20 @@ Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 // ESTAS RUTAS SON PARA EL REGISTRO DE CLIENTES
 Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
 
+// RUTAS PARA DIRECCIONES ADICIONALES
+Route::post('/direcciones', [\App\Http\Controllers\DireccionAdicionalController::class, 'store'])->name('direcciones.store');
+Route::delete('/direcciones-adicionales/{id}', [\App\Http\Controllers\DireccionAdicionalController::class, 'destroy']);
+
+// RUTAS PARA REPORTES DE CLIENTES
+Route::middleware(['auth'])->group(function () {
+    // Crear
+    Route::post('/reportes-cliente', [ReporteFallaController::class, 'clienteStore'])->name('reportes.cliente.store');
+    Route::put('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteUpdate'])->name('reportes.cliente.update');
+    // Eliminar  
+    Route::delete('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteDestroy'])->name('reportes.cliente.destroy');
+    // Obtener reportes (para AJAX)
+    Route::get('/reportes-cliente', [ReporteFallaController::class, 'clienteReportes'])->name('reportes.cliente.index');
+});
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -42,10 +57,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/clientes/{id_cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     Route::delete('/clientes/{id_cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
     Route::post('/clientes/{id_cliente}', [ClienteController::class, 'enable'])->name('clientes.enable');
+    Route::get('/api/direcciones-por-cliente/{clienteId}', [ReporteFallaController::class, 'getDireccionesPorCliente'])->name('api.direcciones-por-cliente');
 
     // Rutas de empleados
     Route::resource('empleados', \App\Http\Controllers\EmpleadoController::class);
 
-    // Rutas de reportes de fallas
+    // Rutas de reportes de fallas (solo para administradores)
     Route::resource('reportes', \App\Http\Controllers\ReporteFallaController::class);
 });
