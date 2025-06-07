@@ -116,15 +116,34 @@
 {{--                        </div>--}}
                     </li>
                     <!-- Reportes de Fallas -->
-                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['reportes'])){{ 'bg-linear-to-r from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">
-                        <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['reportes'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="{{ route('reportes.index') }}">
+                    @php
+                    $isReportesActive = Route::is('reportes.*');
+                    @endphp
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r {{ $isReportesActive ? 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' : '' }}" x-data="{ open: {{ $isReportesActive ? 1 : 0 }} }">
+                    <a class="block text-gray-800 dark:text-gray-100 truncate transition hover:text-gray-900 dark:hover:text-white" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
+                        <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg class="shrink-0 h-6 w-6 @if(in_array(Request::segment(1), ['reportes'])){{ 'text-violet-500' }}@else{{ 'text-gray-400 dark:text-gray-500' }}@endif" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="shrink-0 h-6 w-6 {{ $isReportesActive ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Reportes de Fallas</span>
                             </div>
-                        </a>
+                            <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                    <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                        <ul class="pl-8 mt-1" :class="open ? 'block' : 'hidden'">
+                            <li class="mb-1 last:mb-0">
+                                <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate {{ Route::is('reportes.index') ? 'text-violet-500' : '' }}" href="{{ route('reportes.index') }}">
+                                    <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Reportes</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     </li>
                     <!-- Gestión de clientes -->
                     @php
@@ -134,9 +153,7 @@
                     <a class="block text-gray-800 dark:text-gray-100 truncate transition hover:text-gray-900 dark:hover:text-white" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg class="shrink-0 fill-current text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <path d="M9 6.855A3.502 3.502 0 0 0 8 0a3.5 3.5 0 0 0-1 6.855v1.656L5.534 9.65a3.5 3.5 0 1 0 1.229 1.578L8 10.267l1.238.962a3.5 3.5 0 1 0 1.229-1.578L9 8.511V6.855ZM6.5 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm4.803 8.095c.005-.005.01-.01.013-.016l.012-.016a1.5 1.5 0 1 1-.025.032ZM3.5 11c.474 0 .897.22 1.171.563l.013.016.013.017A1.5 1.5 0 1 1 3.5 11Z" />
-                                </svg>
+                                <i class="fas fa-users text-gray-400 dark:text-gray-500"></i>
                                 <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Gestión Clientes</span>
                             </div>
                             <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -166,9 +183,7 @@
                     <a class="block text-gray-800 dark:text-gray-100 truncate transition hover:text-gray-900 dark:hover:text-white" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <svg class="shrink-0 fill-current text-gray-400 dark:text-gray-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <path d="M9 6.855A3.502 3.502 0 0 0 8 0a3.5 3.5 0 0 0-1 6.855v1.656L5.534 9.65a3.5 3.5 0 1 0 1.229 1.578L8 10.267l1.238.962a3.5 3.5 0 1 0 1.229-1.578L9 8.511V6.855ZM6.5 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm4.803 8.095c.005-.005.01-.01.013-.016l.012-.016a1.5 1.5 0 1 1-.025.032ZM3.5 11c.474 0 .897.22 1.171.563l.013.016.013.017A1.5 1.5 0 1 1 3.5 11Z" />
-                                </svg>
+                                <i class="fas fa-user-cog text-gray-400 dark:text-gray-500"></i>
                                 <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Gestión Empleados</span>
                             </div>
                             <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
@@ -187,6 +202,36 @@
                             </li>
                         </ul>
                     </div>
+                    </li>
+
+                    <!-- Solicitud de permiso -->
+                    @php
+                    $isPermisosActive = Route::is('permisos.*');
+                    @endphp
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r {{ $isPermisosActive ? 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' : '' }}" x-data="{ open: {{ $isPermisosActive ? 1 : 0 }} }">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition hover:text-gray-900 dark:hover:text-white" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <i class="fas fa-file-signature text-gray-400 dark:text-gray-500 {{ $isPermisosActive ? 'text-violet-500' : '' }}"></i>
+                                    <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Permisos</span>
+                                </div>
+                                <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-8 mt-1">
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate {{ Route::is('permisos.index') ? 'text-violet-500' : '' }}" href="{{ route('permisos.index') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Solicitudes</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
                     </li>
 
 
@@ -237,3 +282,5 @@
         </div>
     </div>
 </div>
+ <!-- Font Awesome -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>

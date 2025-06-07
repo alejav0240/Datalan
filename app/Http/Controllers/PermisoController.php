@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Permiso;
 use App\Http\Requests\StorePermisoRequest;
 use App\Http\Requests\UpdatePermisoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PermisoController extends Controller
 {
@@ -13,7 +14,7 @@ class PermisoController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.permisos.index');
     }
 
     /**
