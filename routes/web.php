@@ -36,13 +36,10 @@ Route::delete('/direcciones-adicionales/{id}', [\App\Http\Controllers\DireccionA
 
 // RUTAS PARA REPORTES DE CLIENTES
 Route::middleware(['auth'])->group(function () {
-    // Crear reporte
+    // Crear
     Route::post('/reportes-cliente', [ReporteFallaController::class, 'clienteStore'])->name('reportes.cliente.store');
-    // Editar reporte 
-    Route::get('/reportes-cliente/{id}/edit', [ReporteFallaController::class, 'clienteEdit'])->name('reportes.cliente.edit');
-    // Actualizar reporte 
     Route::put('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteUpdate'])->name('reportes.cliente.update');
-    // Eliminar reporte 
+    // Eliminar  
     Route::delete('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteDestroy'])->name('reportes.cliente.destroy');
     // Obtener reportes (para AJAX)
     Route::get('/reportes-cliente', [ReporteFallaController::class, 'clienteReportes'])->name('reportes.cliente.index');

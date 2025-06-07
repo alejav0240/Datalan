@@ -35,28 +35,21 @@
                             </td>
                             <td class="border border-gray-300 px-4 py-3">{{ $reporte->created_at->format('d/m/Y') }}</td>
                             <td class="border border-gray-300 px-4 py-3 text-center">
-                                <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('reportes.cliente.edit', $reporte->id) }}" 
-                                       class="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-300">
-                                        <i class="fas fa-edit"></i> Editar
-                                    </a>
-                                    
-                                    @if($reporte->estado == 'pendiente')
-                                        <form action="{{ route('reportes.cliente.destroy', $reporte->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" 
-                                                onclick="return confirm('¿Está seguro de eliminar este reporte?')"
-                                                class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
-                                                <i class="fas fa-trash-alt"></i> Eliminar
-                                            </button>
-                                        </form>
-                                    @else
-                                        <span class="text-gray-400 cursor-not-allowed" title="No se puede eliminar un reporte que ya está en proceso o resuelto">
+                                @if($reporte->estado == 'pendiente')
+                                    <form action="{{ route('reportes.cliente.destroy', $reporte->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" 
+                                            onclick="return confirm('¿Está seguro de eliminar este reporte?')"
+                                            class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
                                             <i class="fas fa-trash-alt"></i> Eliminar
-                                        </span>
-                                    @endif
-                                </div>
+                                        </button>
+                                    </form>
+                                @else
+                                    <span class="text-gray-400 cursor-not-allowed" title="No se puede eliminar un reporte que ya está en proceso o resuelto">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
