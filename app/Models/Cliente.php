@@ -33,7 +33,7 @@ class Cliente extends Model
     }
 
     // Relación con reportes de error
-    public function reportesErrores()
+    public function reportes_falla()
     {
         return $this->hasMany(ReporteFalla::class);
     }

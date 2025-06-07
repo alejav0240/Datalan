@@ -41,12 +41,23 @@ class ClienteController extends Controller
         ];
     }
 
-    // Mostrar todos los clientes
+    // =========================== LISTAR CLIENTES ========================== //
     public function index(Request $request)
     {
         $clientes = Cliente::with('user')->get();
         return view('pages.clientes.index', compact('clientes'));
     }
+
+    // ========================== VER DETALLES CLIENTE ========================== //
+
+    public function show(Cliente $cliente)
+    {
+        $cliente->load('user', 'direcciones', 'reportes_falla');
+        return view('pages.clientes.show', compact('cliente'));
+    }
+
+
+
 
     // ========================== REGISTRAR CLIENTE ========================== //
 
