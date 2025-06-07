@@ -23,15 +23,17 @@
 <body class="bg-white text-gray-900">
 
     <!-- ENCABEZADO -->
-    <x-info.info-header :cliente="$cliente ?? null" :direcciones="$direcciones ?? collect()" />
+    <x-info.info-header :cliente="$cliente ?? null" :direcciones="$direcciones ?? collect()" :reportes="$reportes ?? collect()" />
 
     <!-- SECCIÓN HERO -->
     <x-info.info-hero />
 
     <!-- SECCIÓN PARA INFORMACIÓN EXTRA -->
     @auth
-        <x-info.info-direcciones />
-
+        @if(Auth::user()->role == 'cliente')
+            <x-info.info-direcciones />
+            <x-info.info-reportes :direcciones="$direcciones ?? collect()" />
+        @endif
     @endauth
 
     
