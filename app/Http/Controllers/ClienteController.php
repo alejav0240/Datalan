@@ -17,7 +17,7 @@ class ClienteController extends Controller
             'tipo_cliente' => 'required|in:empresa,gobierno,educacion,residencial',
             'nombre' => 'required|string|max:100',
             'nit_ci' => 'required|string|max:20|unique:clientes,nit_ci' . ($clienteId ? ",$clienteId" : ''),
-            'telefono' => 'required|regex:/^[67][0-9]{7}$/',
+            'telefono' => 'required|regex:/^[67][0-9]{7}$/|unique:clientes,telefono' . ($clienteId ? ",$clienteId" : ''),
             'email_acceso' => 'required|email|unique:users,email' . ($clienteId ? ',' . Cliente::find($clienteId)->user_id : ''),
             'contrasena' => ($clienteId ? 'nullable' : 'required') . '|string|min:6',
         ];
@@ -33,6 +33,7 @@ class ClienteController extends Controller
             'telefono.required' => 'El teléfono es obligatorio.',
             'telefono.numeric' => 'El teléfono debe ser un número.',
             'telefono.regex' => 'El teléfono debe ser válido',
+            'telefono.unique' => 'El teléfono ya está en uso.',
             'email_acceso.required' => 'El correo es obligatorio.',
             'email_acceso.email' => 'El correo debe ser válido.',
             'email_acceso.unique' => 'El correo ya está en uso.',
