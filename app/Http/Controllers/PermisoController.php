@@ -6,6 +6,7 @@ use App\Models\Permiso;
 use App\Http\Requests\StorePermisoRequest;
 use App\Http\Requests\UpdatePermisoRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Empleado;
 
 class PermisoController extends Controller
 {
@@ -14,7 +15,21 @@ class PermisoController extends Controller
      */
     public function index()
     {
-        return view('pages.permisos.index');
+        // Si el usuario no es administrador, obtener los permisos del usuario
+        if (Auth::user()->role !== 'administrador') {
+            // Obtiene el empleado relacionado con el usuario actual
+            $empleado = Empleado::where('user_id', Auth::id())->first();
+            
+            // Obtiene los permisos asociados a ese empleado
+            $permisos = $empleado ? $empleado->permisos : collect(); // Si no se encuentra el empleado, retorna una colección vacía
+        }
+        // Si el usuario es administrador, obtiene todos los permisos
+        else {
+            $permisos = Permiso::all();
+        }
+
+        // Devuelve la vista con los permisos
+        return view('pages.permisos.index', compact('permisos'));
     }
 
     /**
