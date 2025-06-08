@@ -1,11 +1,23 @@
 <section class="py-20 bg-gradient-to-br from-blue-50 via-white to-blue-100" id="reportar-falla">
-  <div class="container mx-auto max-w-3xl px-6">
-    <div class="bg-white rounded-2xl shadow-xl p-10 border border-gray-200">
-      
-      <h2 class="text-4xl font-bold text-center text-blue-700 mb-10">
-        Reportar una Falla
-      </h2>
+    <div class="notification fixed top-5 right-5 p-4 rounded-xl bg-white shadow-notification flex items-center gap-3 z-50 border-l-4 border-success">
+        <i class="fas fa-check-circle text-success text-xl"></i>
+        <div>
+            <h3 class="font-semibold text-gray-800">¡Dirección guardada!</h3>
+            <p class="text-sm text-secondary">Tu ubicación se ha registrado correctamente.</p>
+        </div>
+    </div>
 
+    <div class="container mx-auto max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-lg">
+        <!-- Encabezado -->
+      <div class="bg-gradient-to-r from-primary to-blue-500 py-8 px-6 text-center">
+          <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
+              <i class="fas fa-exclamation-triangle mr-3"></i>
+              Reportar una Falla Técnica
+          </h1>
+          <p class="text-blue-100 text-sm md:text-base">Selecciona tu ubicación en el mapa y completa los detalles</p>
+      </div>
+    <div class="bg-white rounded-2xl shadow-xl p-10 border border-gray-200">
       <form action="{{ route('reportes.cliente.store') }}" method="POST" class="space-y-8">
         @csrf
 
@@ -63,5 +75,6 @@
 
       </form>
     </div>
-  </div>
+        </div>
+    </div>
 </section>
