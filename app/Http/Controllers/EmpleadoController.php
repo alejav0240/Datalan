@@ -22,9 +22,6 @@ class EmpleadoController extends Controller
         return view('pages.empleados.index', compact('empleados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('pages.empleados.create');
@@ -66,6 +63,7 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
+        $empleado->load('user');
         return view('pages.empleados.edit', compact('empleado'));
     }
 

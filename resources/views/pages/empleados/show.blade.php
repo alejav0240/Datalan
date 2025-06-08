@@ -1,4 +1,3 @@
-
 <x-app-layout>
 <body class="bg-gray-100">
 <style>
@@ -45,7 +44,7 @@
 
         <div class="bg-white rounded-xl employee-card overflow-hidden">
             <!-- Employee Header -->
-            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 flex flex-col md:flex-row items-center">
+            <div class="bg-gradient-to-r from-purple-600 to-blue-800 text-white p-6 flex flex-col md:flex-row items-center">
                 <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center mb-4 md:mb-0 md:mr-6">
                     <i class="fas fa-user text-blue-600 text-4xl"></i>
                 </div>

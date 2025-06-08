@@ -157,7 +157,7 @@ $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
                                 <a href="{{route('empleados.show',$empleado)}}" class="text-indigo-600 hover:text-indigo-900">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </a>
-                                <a class="text-yellow-600 hover:text-yellow-800">
+                                <a href="{{route('empleados.edit',$empleado)}}" class="text-yellow-600 hover:text-yellow-800">
                                     <i class="fas fa-edit fa-lg"></i>
                                 </a>
                                 <a class="text-red-600 hover:text-red-800">
