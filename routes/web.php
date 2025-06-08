@@ -69,4 +69,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas de permisos
     Route::resource('permisos', PermisoController::class);
+    Route::post('permisos/{permiso}/aprobar', [PermisoController::class, 'aprobar'])->name('permisos.aprobar');
+    Route::post('permisos/{permiso}/rechazar', [PermisoController::class, 'rechazar'])->name('permisos.rechazar');
 });

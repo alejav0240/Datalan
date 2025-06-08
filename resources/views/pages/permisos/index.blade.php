@@ -26,7 +26,7 @@
             <div class="mt-4 md:mt-0">
                 @if(Auth::user()->role !== 'administrador')
                     @if(Auth::user()->empleado->permisos->count() < 5)
-                        <a href="{{route('clientes.create')}}"
+                        <a href="{{route('permisos.create')}}"
                             class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
                             <i class="fas fa-plus mr-1"></i> Solicitar Permiso
                         </a>
@@ -40,9 +40,17 @@
             </div>
         </div>
 
-        <!-- Listado de Clientes -->
+        <!-- Listado de Permisos -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
+            @if($permisos->isEmpty())
+                <div class="text-center text-gray-500 dark:text-gray-400">
+                    <i class="fas fa-info-circle mr-2"></i> No hay permisos disponibles.
+                </div>
+            @else
+                @foreach($permisos as $permiso)
+                    <x-card-item :item="$permiso" type="permisos"/>
+                @endforeach
+            @endif
         </div>
 
     </div>
