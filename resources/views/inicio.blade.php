@@ -23,16 +23,26 @@
 <body class="bg-white text-gray-900">
 
     <!-- ENCABEZADO -->
-    <x-info.info-header />
+    <x-info.info-header :cliente="$cliente ?? null" :direcciones="$direcciones ?? collect()" :reportes="$reportes ?? collect()" />
 
     <!-- SECCIÓN HERO -->
     <x-info.info-hero />
 
     <!-- SECCIÓN PARA INFORMACIÓN EXTRA -->
-    @auth
-        <x-info.info-direcciones />
-    @endauth
+@auth
+    @if(Auth::user()->role == 'cliente')
+        <div class="w-full flex flex-col md:flex-row gap-4 px-4 sm:px-6 lg:px-8 py-6">
+            <div class="w-full md:w-1/2">
+                <x-info.info-direcciones />
+            </div>
+            <div class="w-full md:w-1/2">
+                <x-info.info-reportes :direcciones="$direcciones ?? collect()" />
+            </div>
+        </div>
+    @endif
+@endauth
 
+    
     <!-- SECCIÓN EMPRESA -->
     <x-info.info-empresa />
 
@@ -59,6 +69,25 @@
             // Ocultar automáticamente después de 4 segundos
             setTimeout(() => {
                 const toast = document.getElementById('toastSuccess');
+                if (toast) {
+                    toast.classList.add('opacity-0', 'translate-y-4');
+                    setTimeout(() => toast.remove(), 500);
+                }
+            }, 4000);
+        </script>
+    @endif
+
+    @if (session('error'))
+        <div id="toastError"
+            class="fixed bottom-6 right-6 z-50 bg-red-700 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 animate-slide-in">
+            <i class="fas fa-exclamation-circle text-xl"></i>
+            <span class="font-semibold">{{ session('error') }}</span>
+        </div>
+
+        <script>
+            // Ocultar automáticamente después de 4 segundos
+            setTimeout(() => {
+                const toast = document.getElementById('toastError');
                 if (toast) {
                     toast.classList.add('opacity-0', 'translate-y-4');
                     setTimeout(() => toast.remove(), 500);
