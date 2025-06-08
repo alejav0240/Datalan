@@ -20,6 +20,8 @@ use App\Models\ReporteFalla;
 // CONTROLADORES DE LOS MODULOS
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ReporteFallaController;
+use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\PermisoController;
 
 Route::redirect('/', 'inicio');
 
@@ -60,8 +62,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/api/direcciones-por-cliente/{clienteId}', [ReporteFallaController::class, 'getDireccionesPorCliente'])->name('api.direcciones-por-cliente');
 
     // Rutas de empleados
-    Route::resource('empleados', \App\Http\Controllers\EmpleadoController::class);
+    Route::resource('empleados', EmpleadoController::class);
 
     // Rutas de reportes de fallas (solo para administradores)
-    Route::resource('reportes', \App\Http\Controllers\ReporteFallaController::class);
+    Route::resource('reportes', ReporteFallaController::class);
+
+    // Rutas de permisos
+    Route::resource('permisos', PermisoController::class);
 });
