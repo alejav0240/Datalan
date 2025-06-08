@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('empleado_id')->constrained('empleados')->onDelete('cascade');
             $table->text('motivo');
-            $table->dateTime('fecha_solida')->nullable();
+            $table->dateTime('fecha_solicitud')->nullable();
+            $table->enum('estado', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');
             $table->timestamps();
         });
     }
