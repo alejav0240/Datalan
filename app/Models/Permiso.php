@@ -11,7 +11,7 @@ class Permiso extends Model
     use HasFactory;
 
     protected $fillable = [
-        'empleado_id', 'motivo', 'estado', 'fecha_solicitud'
+        'empleado_id', 'motivo', 'estado', 'fecha_inicio', 'fecha_fin'
     ];
 
     public function empleado() { return $this->belongsTo(Empleado::class); }

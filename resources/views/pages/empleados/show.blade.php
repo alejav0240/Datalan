@@ -210,39 +210,39 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach($empleado->trabajos as $trabajo)
-                                                                            <tr>
-                                                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                                                    <div class="font-medium text-gray-900">{{ $trabajo->nombre }}</div>
-                                                                                    <div class="text-sm text-gray-500">{{ $trabajo->descripcion }}</div>
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                                                    <span
-                                                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                                                    {{ $trabajo->estado == 'completado' ? 'bg-green-100 text-green-800' :
-                                                ($trabajo->estado == 'en_progreso' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800') }}">
-                                                                                        {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
-                                                                                    </span>
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                    {{ $trabajo->fecha_inicio->format('d M Y') }}
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                    {{ $trabajo->fecha_fin ? $trabajo->fecha_fin->format('d M Y') : 'En curso' }}
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                    @if($trabajo->pivot->is_encargado)
-                                                                                        <span
-                                                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                                                                            Encargado
-                                                                                        </span>
-                                                                                    @else
-                                                                                        <span
-                                                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                                                            Miembro
-                                                                                        </span>
-                                                                                    @endif
-                                                                                </td>
-                                                                            </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium text-gray-900">{{ $trabajo->nombre }}</div>
+                                                        <div class="text-sm text-gray-500">{{ $trabajo->descripcion }}</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                        {{ $trabajo->estado == 'completado' ? 'bg-green-100 text-green-800' :
+                                                        ($trabajo->estado == 'en_progreso' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800') }}">
+                                                            {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $trabajo->fecha_inicio->format('d M Y') }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $trabajo->fecha_fin ? $trabajo->fecha_fin->format('d M Y') : 'En curso' }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        @if($trabajo->pivot->is_encargado)
+                                                            <span
+                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                                                Encargado
+                                                            </span>
+                                                        @else
+                                                            <span
+                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                                Miembro
+                                                            </span>
+                                                        @endif
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -264,9 +264,6 @@
                                             <tr>
                                                 <th
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Tipo</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Razón</th>
                                                 <th
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -281,29 +278,25 @@
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
                                             @foreach($empleado->permisos as $permiso)
-                                                                            <tr>
-                                                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                                                    <div class="font-medium text-gray-900">{{ ucfirst($permiso->tipo) }}
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                                                    <div class="text-sm text-gray-900">{{ $permiso->razon }}</div>
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                    {{ $permiso->fecha_inicio->format('d M Y') }}
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                    {{ $permiso->fecha_fin->format('d M Y') }}
-                                                                                </td>
-                                                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                                                    <span
-                                                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                                                    {{ $permiso->estado == 'aprobado' ? 'bg-green-100 text-green-800' :
-                                                ($permiso->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
-                                                                                        {{ ucfirst($permiso->estado) }}
-                                                                                    </span>
-                                                                                </td>
-                                                                            </tr>
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">{{ $permiso->motivo }}</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $permiso->fecha_inicio }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $permiso->fecha_fin }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span
+                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                                {{ $permiso->estado == 'aprobado' ? 'bg-green-100 text-green-800' :
+                                                                ($permiso->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                                                                {{ ucfirst($permiso->estado) }}
+                                                            </span>
+                                                    </td>
+                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
