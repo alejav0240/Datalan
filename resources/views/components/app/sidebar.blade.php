@@ -100,20 +100,20 @@
                                 </div>
                             </div>
                         </a>
-{{--                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">--}}
-{{--                            <ul class="pl-8 mt-1 @if(!in_array(Request::segment(1), ['tasks'])){{ 'hidden' }}@endif" :class="open ? 'block!' : 'hidden'">--}}
-{{--                                <li class="mb-1 last:mb-0">--}}
-{{--                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('tasks-kanban')){{ 'text-violet-500!' }}@endif" href="{{ route('tasks-kanban') }}">--}}
-{{--                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Kanban</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                                <li class="mb-1 last:mb-0">--}}
-{{--                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('tasks-list')){{ 'text-violet-500!' }}@endif" href="{{ route('tasks-list') }}">--}}
-{{--                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">List</span>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-8 mt-1 @if(!in_array(Request::segment(1), ['tasks'])){{ 'hidden' }}@endif" :class="open ? 'block!' : 'hidden'">
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('trabajos.index')){{ 'text-violet-500!' }}@endif" href="{{ route('trabajos.index') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Tablero</span>
+                                    </a>
+                                </li>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('trabajos.index')){{ 'text-violet-500!' }}@endif" href="{{ route('trabajos.index') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <!-- Reportes de Fallas -->
                     @php
@@ -231,7 +231,7 @@
                                 </li>
                             </ul>
                         </div>
-                        
+
                     </li>
 
 
