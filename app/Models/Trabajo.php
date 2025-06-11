@@ -11,7 +11,7 @@ class Trabajo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'reporte_id', 'equipo_id', 'estado', 'fecha_asignacion', 'fecha_resolucion'
+        'reporte_id', 'tipo_trabajo', 'descripcion', 'prioridad', 'materiales', 'observaciones_materiales'
     ];
     public function empleados()
     {
