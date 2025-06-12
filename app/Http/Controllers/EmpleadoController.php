@@ -39,6 +39,7 @@ class EmpleadoController extends Controller
             $user = User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
+                'role' => 'empleado',
                 'password' => bcrypt($validated['password']),
             ]);
 
