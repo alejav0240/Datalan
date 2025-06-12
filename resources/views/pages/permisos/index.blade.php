@@ -41,10 +41,14 @@
         </div>
 
         <!-- Listado de Permisos -->
+        <!-- Listado de Permisos -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             @if($permisos->isEmpty())
-                <div class="text-center text-gray-500 dark:text-gray-400">
-                    <i class="fas fa-info-circle mr-2"></i> No hay permisos disponibles.
+                <div class="text-center text-gray-500 dark:text-gray-400 p-6 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 shadow-md">
+                    <i class="fas fa-info-circle text-3xl text-yellow-500 mb-4"></i>
+                    <div class="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                        Sin solicitudes de permiso registrados
+                    </div>
                 </div>
             @else
                 @foreach($permisos as $permiso)
@@ -52,6 +56,8 @@
                 @endforeach
             @endif
         </div>
+
+        
 
     </div>
 

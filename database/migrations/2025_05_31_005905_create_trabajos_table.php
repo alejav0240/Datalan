@@ -17,23 +17,11 @@ return new class extends Migration
             $table->enum('tipo_trabajo', ['instalacion', 'mantenimiento', 'reparacion', 'configuracion', 'otro']);
             $table->text('descripcion')->nullable();
 
-            // Ubicación origen
-            $table->string('origen_nombre', 100)->nullable();
-            $table->text('origen_direccion')->nullable();
-            $table->decimal('origen_lat', 10, 7)->nullable();
-            $table->decimal('origen_lng', 10, 7)->nullable();
-
-            // Ubicación destino
-            $table->string('destino_nombre', 100)->nullable();
-            $table->text('destino_direccion')->nullable();
-            $table->decimal('destino_lat', 10, 7)->nullable();
-            $table->decimal('destino_lng', 10, 7)->nullable();
-
             // Programación
             $table->enum('prioridad', ['normal', 'alta', 'urgente'])->default('normal');
 
             // Materiales
-            $table->json('materiales_json')->nullable();
+            $table->text('materiales')->nullable();
             $table->text('observaciones_materiales')->nullable();
 
 
