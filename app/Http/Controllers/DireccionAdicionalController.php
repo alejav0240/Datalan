@@ -21,7 +21,7 @@ class DireccionAdicionalController extends Controller
         }
 
         $direcciones = DireccionAdicional::where('id_cliente', $cliente->id)->get();
-        
+
         return response()->json($direcciones);
     }
 
@@ -32,7 +32,7 @@ class DireccionAdicionalController extends Controller
             'latitud' => 'required|numeric',
             'longitud' => 'required|numeric',
         ]);
-        
+
 
         // Buscar cliente por nombre
         $cliente = Cliente::where('user_id', Auth::user()->id)->first();
@@ -47,7 +47,7 @@ class DireccionAdicionalController extends Controller
             'latitud' => $request->latitud,
             'longitud' => $request->longitud,
         ]);
-        
+
 
         return redirect()->back()->with('success', 'Dirección registrada correctamente.');
     }
@@ -77,5 +77,5 @@ class DireccionAdicionalController extends Controller
     }
 
 
-    
+
 }

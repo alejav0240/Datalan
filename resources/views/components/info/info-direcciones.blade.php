@@ -161,7 +161,6 @@
         });
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
             const direccionVal = direccionInput.value.trim();
 
             if (direccionVal.length < 10) {
