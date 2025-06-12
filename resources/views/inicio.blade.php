@@ -9,9 +9,66 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        primaryDark: '#1d4ed8',
+                        primaryLight: '#dbeafe',
+                        secondary: '#64748b',
+                        success: '#10b981',
+                        danger: '#ef4444',
+                        warning: '#f59e0b',
+                        light: '#f8fafc',
+                        dark: '#1e293b',
+                    },
+                    borderRadius: {
+                        xl: '16px',
+                    },
+                    boxShadow: {
+                        card: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
+                        button: '0 4px 6px -1px rgba(37, 99, 235, 0.3), 0 2px 4px -1px rgba(37, 99, 235, 0.1)',
+                        buttonHover: '0 10px 15px -3px rgba(37, 99, 235, 0.3), 0 4px 6px -2px rgba(37, 99, 235, 0.15)',
+                        map: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
+                        notification: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                    },
+                    transitionProperty: {
+                        'all': 'all',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+
+        .notification {
+            transform: translateX(150%);
+            transition: transform 0.4s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .map-overlay {
+            backdrop-filter: blur(4px);
+        }
+    </style>
     <style>
         html {
             scroll-behavior: smooth;
@@ -42,7 +99,7 @@
     @endif
 @endauth
 
-    
+
     <!-- SECCIÓN EMPRESA -->
     <x-info.info-empresa />
 

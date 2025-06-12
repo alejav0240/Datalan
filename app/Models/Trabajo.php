@@ -11,6 +11,7 @@ class Trabajo extends Model
     use HasFactory;
 
     protected $fillable = [
+
         'reporte_id', 'tipo_trabajo', 'descripcion', 'prioridad', 'materiales', 'observaciones_materiales'
     ];
     public function empleados()
@@ -19,7 +20,6 @@ class Trabajo extends Model
             ->withPivot('is_encargado')
             ->withTimestamps();
     }
-
     public function reporte() { return $this->belongsTo(ReporteFalla::class, 'reporte_id'); }
     public function equipo() { return $this->belongsTo(Equipo::class); }
 }

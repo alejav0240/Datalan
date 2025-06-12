@@ -12,7 +12,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Cliente; 
+use App\Models\Cliente;
 use App\Models\DireccionAdicional;
 use App\Models\ReporteFalla;
 
@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // Crear
     Route::post('/reportes-cliente', [ReporteFallaController::class, 'clienteStore'])->name('reportes.cliente.store');
     Route::put('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteUpdate'])->name('reportes.cliente.update');
-    // Eliminar  
+    // Eliminar
     Route::delete('/reportes-cliente/{id}', [ReporteFallaController::class, 'clienteDestroy'])->name('reportes.cliente.destroy');
     // Obtener reportes (para AJAX)
     Route::get('/reportes-cliente', [ReporteFallaController::class, 'clienteReportes'])->name('reportes.cliente.index');
@@ -63,6 +63,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas de empleados
     Route::resource('empleados', EmpleadoController::class);
+
+    Route::resource('trabajos', \App\Http\Controllers\TrabajoController::class);
 
     // Rutas de reportes de fallas (solo para administradores)
     Route::resource('reportes', ReporteFallaController::class);

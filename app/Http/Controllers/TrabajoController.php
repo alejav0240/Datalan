@@ -13,7 +13,8 @@ class TrabajoController extends Controller
      */
     public function index()
     {
-        //
+//        $trabajos = Trabajo::all();
+        return view('pages.trabajos.index');
     }
 
     /**

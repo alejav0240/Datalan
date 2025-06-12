@@ -1,9 +1,10 @@
 import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm';
- 
+
 Livewire.start()
 
 import './bootstrap';
 
+import '@wotz/livewire-sortablejs';
 
 // Import Chart.js
 import { Chart } from 'chart.js';

@@ -9,6 +9,7 @@
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/postcss": "^4.0.3",
         "@tailwindcss/typography": "^0.5.16",
+        "@wotz/livewire-sortablejs": "^1.0.0",
         "axios": "^1.7.9",
         "brotli-size": "^4.0.0",
         "esbuild": "^0.24.2",
