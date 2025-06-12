@@ -9,9 +9,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
-
-        return view('pages/dashboard/dashboard', );
+        if (auth()->user()->role == 'administrador') {
+            return view('pages/dashboard/dashboard', );
+        }
+        return redirect('/trabajos');
     }
 
     /**

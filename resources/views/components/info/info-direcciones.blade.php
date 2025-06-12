@@ -1,5 +1,8 @@
 <section class="py-20 bg-gradient-to-br from-blue-50 via-white to-blue-100" id="reportar-falla">
-    <div class="notification fixed top-5 right-5 p-4 rounded-xl bg-white shadow-notification flex items-center gap-3 z-50 border-l-4 border-success">
+    <!-- Notificación -->
+    <div id="notification"
+         class="notification fixed top-5 right-5 p-4 rounded-xl bg-white shadow-lg flex items-center gap-3 z-50 border-l-4 border-success opacity-0 pointer-events-none transition-opacity duration-300"
+         role="alert" aria-live="polite">
         <i class="fas fa-check-circle text-success text-xl"></i>
         <div>
             <h3 class="font-semibold text-gray-800">¡Dirección guardada!</h3>
@@ -8,22 +11,22 @@
     </div>
 
     <div class="container mx-auto max-w-3xl">
-        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-lg">
-            <!-- Encabezado -->
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-200 transition hover:shadow-lg">
+            <!-- Header -->
             <div class="bg-gradient-to-r from-primary to-blue-500 py-8 px-6 text-center">
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                <h1 class="text-3xl font-bold text-white mb-2 flex items-center justify-center">
                     <i class="fa-solid fa-location-dot mr-3"></i>
                     Registrar una Dirección
                 </h1>
-                <p class="text-blue-100 text-sm md:text-base">Selecciona tu ubicación en el mapa y completa los detalles</p>
+                <p class="text-blue-100 text-base">Selecciona tu ubicación en el mapa y completa los detalles</p>
             </div>
 
-            <!-- Cuerpo -->
+            <!-- Formulario -->
             <div class="p-6 md:p-8">
-                <form action="{{ route('direcciones.store') }}" method="POST" class="space-y-6">
+                <form id="direccion-form" action="{{ route('direcciones.store') }}" method="POST" class="space-y-6">
                     @csrf
 
-                    <!-- Mapa y coordenadas -->
+                    <!-- Mapa -->
                     <div>
                         <label class="block text-lg font-semibold text-gray-800 mb-3 flex items-center">
                             <i class="fas fa-map-marked-alt text-primary mr-2"></i>
@@ -31,26 +34,23 @@
                         </label>
 
                         <div class="relative rounded-xl border-2 border-gray-200 shadow-map h-80 md:h-96 mb-3 overflow-hidden">
-                            <div id="map" class="w-full h-full"></div>
-                            <div class="map-overlay absolute top-4 left-4 bg-white/90 py-2 px-4 rounded-full shadow flex items-center gap-2">
-                                <i class="fas fa-info-circle text-primary"></i>
-                                <span class="text-sm">Haz clic en el mapa para seleccionar tu ubicación</span>
+                            <div id="map" class="w-full h-full" role="application" aria-label="Mapa para seleccionar ubicación"></div>
+                            <div class="absolute top-4 left-4 bg-white/90 py-2 px-4 rounded-full shadow flex items-center gap-2 text-sm text-primary">
+                                <i class="fas fa-info-circle"></i>
+                                Haz clic en el mapa para seleccionar tu ubicación
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div class="bg-primaryLight p-4 rounded-lg">
                                 <div class="text-primaryDark font-semibold flex items-center gap-2 mb-2">
-                                    <i class="fas fa-latitude"></i>
-                                    <span>Latitud</span>
+                                    <i class="fas fa-latitude"></i> Latitud
                                 </div>
                                 <div id="lat-display" class="font-mono text-lg">-16.5000</div>
                             </div>
-
                             <div class="bg-primaryLight p-4 rounded-lg">
                                 <div class="text-primaryDark font-semibold flex items-center gap-2 mb-2">
-                                    <i class="fas fa-longitude"></i>
-                                    <span>Longitud</span>
+                                    <i class="fas fa-longitude"></i> Longitud
                                 </div>
                                 <div id="lng-display" class="font-mono text-lg">-68.1193</div>
                             </div>
@@ -58,7 +58,7 @@
 
                         <input type="hidden" id="latitud" name="latitud" value="-16.5000">
                         <input type="hidden" id="longitud" name="longitud" value="-68.1193">
-                        <input type="hidden" id="nombre_cliente" name="nombre_cliente" value="{{ Auth::user()->name }}" />
+                        <input type="hidden" id="nombre_cliente" name="nombre_cliente" value="{{ Auth::user()->name }}">
                     </div>
 
                     <!-- Dirección -->
@@ -76,9 +76,9 @@
                             <div id="address-loading" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 loading-spinner rounded-full hidden"></div>
                         </div>
 
-                        <div class="error-message text-danger flex items-center gap-2 mt-2 hidden">
+                        <div id="error-direccion" class="text-danger text-sm mt-2 hidden flex items-center gap-2">
                             <i class="fas fa-exclamation-circle"></i>
-                            <span>Por favor ingresa una dirección válida</span>
+                            Ingrese una dirección válida (mín. 10 caracteres).
                         </div>
                     </div>
 
@@ -97,9 +97,17 @@
         </div>
     </div>
 
+    <!-- Script Map & Lógica -->
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiaGVucnJ5ZGcyNCIsImEiOiJjbHVscTdkdnowamF3MmlsbGgxMTlsdm90In0.gBaopfRF0dmSrl-ZcM_BVw';
 
+        const form = document.getElementById('direccion-form');
+        const btn = document.getElementById('submit-btn');
+        const spinner = btn.querySelector('.loading-spinner');
+        const btnText = btn.querySelector('.btn-text');
+        const direccionInput = document.getElementById('direccion');
+        const error = document.getElementById('error-direccion');
+        const notification = document.getElementById('notification');
 
         const map = new mapboxgl.Map({
             container: 'map',
@@ -110,55 +118,14 @@
 
         map.addControl(new mapboxgl.NavigationControl());
         map.addControl(new mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
+            positionOptions: { enableHighAccuracy: true },
             trackUserLocation: true,
             showUserHeading: true
         }));
 
-        let marker = new mapboxgl.Marker({
-            color: '#3b82f6',
-            draggable: true
-        })
+        const marker = new mapboxgl.Marker({ color: '#3b82f6', draggable: true })
             .setLngLat([-68.1193, -16.5000])
             .addTo(map);
-
-        // Función para obtener la dirección a partir de coordenadas
-        function reverseGeocode(lng, lat) {
-            const loadingSpinner = document.getElementById('address-loading');
-            loadingSpinner.classList.remove('hidden');
-
-            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&language=es`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.features && data.features.length > 0) {
-                        document.getElementById('direccion').value = data.features[0].place_name;
-                    } else {
-                        document.getElementById('direccion').value = 'Dirección no encontrada';
-                    }
-                    loadingSpinner.classList.add('hidden');
-                })
-                .catch(error => {
-                    console.error('Error al obtener la dirección:', error);
-                    document.getElementById('direccion').value = 'Error al obtener dirección';
-                    loadingSpinner.classList.add('hidden');
-                });
-        }
-
-        // Actualizar coordenadas al hacer clic en el mapa
-        map.on('click', function(e) {
-            const { lng, lat } = e.lngLat;
-            updateMarkerPosition(lng, lat);
-            reverseGeocode(lng, lat);
-        });
-
-        // Actualizar coordenadas al arrastrar el marcador
-        marker.on('dragend', function() {
-            const lngLat = marker.getLngLat();
-            updateMarkerPosition(lngLat.lng, lngLat.lat);
-            reverseGeocode(lngLat.lng, lngLat.lat);
-        });
 
         function updateMarkerPosition(lng, lat) {
             marker.setLngLat([lng, lat]);
@@ -168,64 +135,59 @@
             document.getElementById('lng-display').textContent = lng.toFixed(6);
         }
 
-        // Mostrar notificación
-        function showNotification(message, type) {
-            const notification = document.querySelector('.notification');
-            const icon = notification.querySelector('i');
-            const title = notification.querySelector('h3');
-
-            // Actualizar estilos según tipo
-            notification.className = `notification fixed top-5 right-5 p-4 rounded-xl bg-white shadow-notification flex items-center gap-3 z-50 border-l-4 ${type === 'success' ? 'border-success' : 'border-danger'}`;
-            icon.className = `fas ${type === 'success' ? 'fa-check-circle text-success' : 'fa-exclamation-circle text-danger'} text-xl`;
-            title.textContent = message;
-
-            notification.classList.add('show');
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+        function reverseGeocode(lng, lat) {
+            const loading = document.getElementById('address-loading');
+            loading.classList.remove('hidden');
+            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}&language=es`)
+                .then(res => res.json())
+                .then(data => {
+                    const place = data.features?.[0]?.place_name || 'Dirección no encontrada';
+                    direccionInput.value = place;
+                })
+                .catch(() => direccionInput.value = 'Error al obtener dirección')
+                .finally(() => loading.classList.add('hidden'));
         }
 
-        // Manejar envío del formulario
-        document.querySelector('form').addEventListener('submit', function(e) {
+        map.on('click', e => {
+            const { lng, lat } = e.lngLat;
+            updateMarkerPosition(lng, lat);
+            reverseGeocode(lng, lat);
+        });
+
+        marker.on('dragend', () => {
+            const { lng, lat } = marker.getLngLat();
+            updateMarkerPosition(lng, lat);
+            reverseGeocode(lng, lat);
+        });
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const direccionVal = direccionInput.value.trim();
 
-            const btn = document.getElementById('submit-btn');
-            const spinner = btn.querySelector('.loading-spinner');
-            const btnText = btn.querySelector('.btn-text');
-            const direccion = document.getElementById('direccion');
-            const error = document.querySelector('.error-message');
-
-            // Validación
-            if(direccion.value.trim().length < 10) {
+            if (direccionVal.length < 10) {
                 error.classList.remove('hidden');
-                direccion.classList.add('border-danger');
-                direccion.focus();
+                direccionInput.classList.add('border-danger');
+                direccionInput.focus();
                 return;
-            } else {
-                error.classList.add('hidden');
-                direccion.classList.remove('border-danger');
             }
 
-            // Mostrar spinner de carga
-            btnText.classList.add('opacity-70');
-            spinner.classList.remove('hidden');
+            error.classList.add('hidden');
+            direccionInput.classList.remove('border-danger');
+
             btn.disabled = true;
+            btnText.classList.add('opacity-50');
+            spinner.classList.remove('hidden');
 
-            // Simular envío (en un caso real sería una petición AJAX)
-            setTimeout(() => {
-                // Ocultar spinner
-                btnText.classList.remove('opacity-70');
-                spinner.classList.add('hidden');
-                btn.disabled = false;
+            // Simulación de envío real
+            await new Promise(res => setTimeout(res, 1500));
 
-                // Mostrar notificación
-                showNotification('¡Dirección guardada con éxito!', 'success');
+            btn.disabled = false;
+            btnText.classList.remove('opacity-50');
+            spinner.classList.add('hidden');
 
-                // Resetear formulario (opcional)
-                // document.querySelector('form').reset();
-                // updateMarkerPosition(-68.1193, -16.5000);
-            }, 1500);
+            // Notificación
+            notification.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => notification.classList.add('opacity-0', 'pointer-events-none'), 3000);
         });
     </script>
 </section>
