@@ -32,9 +32,24 @@ class StoreTrabajoRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'reporte_id.required' => 'Debe seleccionar un reporte de falla.',
+            'reporte_id.exists' => 'El reporte de falla seleccionado no existe.',
+            'tipo_trabajo.required' => 'El tipo de trabajo es obligatorio.',
+            'tipo_trabajo.in' => 'El tipo de trabajo seleccionado no es válido.',
+            'descripcion.required' => 'La descripción del trabajo es obligatoria.',
+            'descripcion.string' => 'La descripción debe ser un texto.',
+            'descripcion.max' => 'La descripción no debe exceder los 500 caracteres.',
+            'prioridad.required' => 'La prioridad es obligatoria.',
+            'prioridad.in' => 'La prioridad seleccionada no es válida.',
+            'materiales.string' => 'Los materiales deben ser un texto.',
+            'observaciones_materiales.string' => 'Las observaciones de materiales deben ser un texto.',
+            'empleados.required' => 'Debe seleccionar al menos un empleado.',
+            'empleados.array' => 'Los empleados deben ser una lista.',
             'empleados.min' => 'Debe seleccionar al menos 2 empleados para el equipo de trabajo.',
             'empleados.max' => 'No puede seleccionar más de 5 empleados para el equipo de trabajo.',
+            'empleados.*.exists' => 'Uno o más empleados seleccionados no existen.',
             'encargado_id.required' => 'Debe designar a un encargado para el trabajo.',
+            'encargado_id.exists' => 'El encargado seleccionado no existe.',
         ];
     }
 }

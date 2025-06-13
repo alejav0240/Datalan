@@ -208,7 +208,7 @@
                                     </div>
                                 </div>
 
-                               <!-- Sección: Equipo de Trabajo -->
+                                <!-- Sección: Equipo de Trabajo -->
                                 <div class="mb-10">
                                     <div class="flex items-center mb-6">
                                         <div class="bg-indigo-100 dark:bg-indigo-700 p-2 rounded-full mr-3">
@@ -222,55 +222,55 @@
                                             Seleccionar Empleados <span class="text-red-500">*</span> (Mínimo 2, Máximo 5)
                                         </label>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                                        @foreach($empleados as $empleado)
-                                            <div class="flex items-center space-x-3 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
-                                                <input type="checkbox" name="empleados[]" value="{{ $empleado->id }}" 
-                                                    id="empleado_{{ $empleado->id }}"
-                                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                                    @checked(in_array($empleado->id, old('empleados', $empleadosAsignados)))
-                                                <label for="empleado_{{ $empleado->id }}" class="flex-1 text-sm text-gray-700 dark:text-gray-300">
-                                                    {{ $empleado->user->name }} - {{ $empleado->cargo }}
-                                                </label>
-                                            </div>
-                                        @endforeach
+                                            @foreach($empleados as $empleado)
+                                                <div class="flex items-center space-x-3 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                                                    <input type="checkbox" name="empleados[]" value="{{ $empleado->id }}" id="empleado_{{ $empleado->id }}"
+                                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                                        @checked(in_array($empleado->id, old('empleados', $empleadosAsignados)))>
+                                                    <label for="empleado_{{ $empleado->id }}" class="flex-1 text-sm text-gray-700 dark:text-gray-300">
+                                                        {{ $empleado->user->name }} - {{ $empleado->cargo }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        @error('empleados')
+                                            <p class="error-message mt-2">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    @error('empleados')
-                                        <p class="error-message mt-2">{{ $message }}</p>
-                                    @enderror
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                                            Encargado del Trabajo <span class="text-red-500">*</span>
+                                        </label>
+                                        <select name="encargado_id"
+                                            class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('encargado_id') input-error @enderror">
+                                            <option value="" class="text-gray-500 dark:text-gray-400">Seleccione un encargado...</option>
+                                            @foreach($empleados as $empleado)
+                                                <option value="{{ $empleado->id }}" 
+                                                    @selected(old('encargado_id', $encargado ? $encargado->id : '') == $empleado->id)>
+                                                    {{ $empleado->user->name }} - {{ $empleado->cargo }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('encargado_id')
+                                            <p class="error-message">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
 
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">
-                                        Encargado del Trabajo <span class="text-red-500">*</span>
-                                    </label>
-                                    <select name="encargado_id"
-                                        class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('encargado_id') input-error @enderror">
-                                        <option value="" class="text-gray-500 dark:text-gray-400">Seleccione un encargado...</option>
-                                        @foreach($empleados as $empleado)
-                                            <option value="{{ $empleado->id }}" 
-                                                @selected(old('encargado_id', $encargado ? $encargado->id : '') == $empleado->id)>
-                                                {{ $empleado->user->name }} - {{ $empleado->cargo }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('encargado_id')
-                                        <p class="error-message">{{ $message }}</p>
-                                    @enderror
+                                <!-- Botones -->
+                                <div class="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-200">
+                                    <a href="{{ route('trabajos.index') }}" 
+                                        class="px-6 py-3 text-center bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300 transition">
+                                        <i class="fas fa-arrow-left mr-2"></i> Cancelar
+                                    </a>
+                                    <button type="submit"
+                                        class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-700 text-white rounded-lg shadow hover:opacity-90 transition">
+                                        <i class="fas fa-save mr-2"></i> Actualizar Trabajo
+                                    </button>
                                 </div>
-                            </div>
-
-                            <!-- Botones -->
-                            <div class="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-200">
-                                <a href="{{ route('trabajos.index') }}" 
-                                    class="px-6 py-3 text-center bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300 transition">
-                                    <i class="fas fa-arrow-left mr-2"></i> Cancelar
-                                </a>
-                                <button type="submit"
-                                    class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-700 text-white rounded-lg shadow hover:opacity-90 transition">
-                                    <i class="fas fa-save mr-2"></i> Actualizar Trabajo
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

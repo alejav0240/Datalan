@@ -81,7 +81,7 @@
         <div class="mb-8">
             <form action="{{ route('trabajos.index') }}" method="GET">
                 <div class="relative">
-                    <input type="text" name="search" placeholder="Buscar trabajos..."
+                    <input type="text" name="search" placeholder="Buscar trabajos por descripción..."
                         class="w-full p-4 rounded-xl shadow-lg border-0 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300"
                         value="{{ request('search') }}">
                     <button type="submit" class="absolute right-3 top-3.5 text-indigo-600 dark:text-indigo-400">
