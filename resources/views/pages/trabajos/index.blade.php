@@ -67,10 +67,12 @@
                             <option value="otro" {{ request('tipo_trabajo') == 'otro' ? 'selected' : '' }}>Otro</option>
                         </select>
                     </div>
-                    <div class="flex items-end">
-                        <button type="submit"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition w-full">
-                            Aplicar Filtros
+                    <div class="flex items-end space-x-3">
+                        <a href="{{ route('trabajos.index') }}" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600">
+                            <i class="fas fa-times mr-1"></i> Descartar
+                        </a>
+                        <button type="submit" class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
+                            <i class="fas fa-filter mr-1"></i> Aplicar
                         </button>
                     </div>
                 </div>
