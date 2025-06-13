@@ -15,16 +15,21 @@ class TrabajoController extends Controller
     // Filtros
     public function index(Request $request)
     {
+        // Consulta
         $query = Trabajo::with(['reporte', 'empleados']);
+        // Prioridad
         if ($request->has('prioridad')) {
             $query->where('prioridad', $request->prioridad);
         }
+        // Tipo de trabajo
         if ($request->has('tipo_trabajo')) {
             $query->where('tipo_trabajo', $request->tipo_trabajo);
         }
+        // Buscar
         if ($request->has('search')) {
             $query->where('descripcion', 'like', '%' . $request->search . '%');
         }
+        // Ordenar
         $trabajos = $query->orderBy('created_at', 'desc')->get();
         return view('pages.trabajos.index', compact('trabajos'));
     }
@@ -32,7 +37,9 @@ class TrabajoController extends Controller
     // Crear
     public function create()
     {
+        // Reportes en estado pendiente
         $reportes = ReporteFalla::where('estado', 'pendiente')->get();
+        // Empleados
         $empleados = Empleado::with('user')->get();
         return view('pages.trabajos.create', compact('reportes', 'empleados'));
     }
@@ -41,8 +48,8 @@ class TrabajoController extends Controller
     public function store(StoreTrabajoRequest $request)
     {
         try {
-            DB::beginTransaction();            
-            // Crear el trabajo
+            DB::beginTransaction();
+            // Crear trabajo
             $trabajo = Trabajo::create([
                 'reporte_id' => $request->reporte_id,
                 'tipo_trabajo' => $request->tipo_trabajo,
@@ -59,6 +66,7 @@ class TrabajoController extends Controller
                 $empleados = $request->empleados;
                 $encargado = $request->encargado_id;
                 foreach ($empleados as $empleadoId) {
+                    // Asignar encargado
                     $trabajo->empleados()->attach($empleadoId, [
                         'is_encargado' => ($empleadoId == $encargado)
                     ]);
@@ -75,6 +83,7 @@ class TrabajoController extends Controller
     // Mostrar
     public function show(Trabajo $trabajo)
     {
+        // Cargar relaciones
         $trabajo->load('reporte', 'empleados', 'reporte.cliente', 'reporte.direccionAdicional');
         return view('pages.trabajos.show', compact('trabajo'));
     }
@@ -82,10 +91,15 @@ class TrabajoController extends Controller
     // Editar
     public function edit(Trabajo $trabajo)
     {
+        // Cargar relaciones
         $trabajo->load('reporte', 'empleados');
+        // Reportes
         $reportes = ReporteFalla::all();
+        // Empleados
         $empleados = Empleado::with('user')->get();
+        // Empleados asignados
         $empleadosAsignados = $trabajo->empleados->pluck('id')->toArray();
+        // Encargado
         $encargado = $trabajo->empleados->where('pivot.is_encargado', true)->first();
         return view('pages.trabajos.edit', compact('trabajo', 'reportes', 'empleados', 'empleadosAsignados', 'encargado'));
     }
@@ -95,7 +109,7 @@ class TrabajoController extends Controller
     {
         try {
             DB::beginTransaction();
-            // Actualizar trabajo
+            // Actualizar campos
             $trabajo->update([
                 'tipo_trabajo' => $request->tipo_trabajo,
                 'descripcion' => $request->descripcion,
@@ -107,9 +121,9 @@ class TrabajoController extends Controller
             if ($request->has('estado_reporte')) {
                 $trabajo->reporte->update(['estado' => $request->estado_reporte]);
             }
-            // Actualizar empleados 
+            // Actualizar empleados
             if ($request->has('empleados')) {
-                // Eliminar asignaciones 
+                // Eliminar asignaciones
                 $trabajo->empleados()->detach();
                 // Crear asignaciones
                 $empleados = $request->empleados;
