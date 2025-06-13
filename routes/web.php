@@ -73,4 +73,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('permisos', PermisoController::class);
     Route::post('permisos/{permiso}/aprobar', [PermisoController::class, 'aprobar'])->name('permisos.aprobar');
     Route::post('permisos/{permiso}/rechazar', [PermisoController::class, 'rechazar'])->name('permisos.rechazar');
+
+    // Rutas para trabajos
+    Route::resource('trabajos', App\Http\Controllers\TrabajoController::class);
+    Route::post('trabajos/{trabajo}/cambiar-estado', [App\Http\Controllers\TrabajoController::class, 'cambiarEstado'])->name('trabajos.cambiar-estado');
 });
