@@ -102,7 +102,7 @@
                 <div class="opacity-80">Trabajos Urgentes</div>
             </div>
             <div class="bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-2xl shadow-lg p-6">
-                <div class="text-3xl font-bold">{{ $trabajos->whereHas('reporte', function($q) { $q->where('estado', 'resuelto'); })->count() }}</div>
+                <div class="text-3xl font-bold">{{ $trabajos->filter(function($trabajo) { return $trabajo->reporte->estado == 'resuelto'; })->count() }}</div>
                 <div class="opacity-80">Trabajos Resueltos</div>
             </div>
         </div>
