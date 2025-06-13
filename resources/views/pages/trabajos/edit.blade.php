@@ -227,7 +227,7 @@
                                                 <input type="checkbox" name="empleados[]" value="{{ $empleado->id }}" 
                                                     id="empleado_{{ $empleado->id }}"
                                                     class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                                    @checked(in_array($empleado->id, old('empleados', $empleadosAsignados))>
+                                                    @checked(in_array($empleado->id, old('empleados', $empleadosAsignados)))
                                                 <label for="empleado_{{ $empleado->id }}" class="flex-1 text-sm text-gray-700 dark:text-gray-300">
                                                     {{ $empleado->user->name }} - {{ $empleado->cargo }}
                                                 </label>
