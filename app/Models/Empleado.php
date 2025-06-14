@@ -22,16 +22,43 @@ class Empleado extends Model
         'created_at',
     ];
 
-    public function scopeFilter($query, array $filters)
+    // app/Models/Empleado.php
+    public function scopeFilter($query, $filters)
     {
-        if ($filters['search'] ?? false) {
-            $query->where('cargo', 'like', '%' . $filters['search'] . '%')
-                  ->orWhere('experiencia', 'like', '%' . $filters['search'] . '%')
-                  ->orWhere('telefono', 'like', '%' . $filters['search'] . '%')
-                  ->orWhere('ci', 'like', '%' . $filters['search'] . '%')
-                  ->orWhere('salario', 'like', '%' . $filters['search'] . '%')
-                  ->orWhere('estado_civil', 'like', '%' . $filters['search'] . '%');
+        if (isset($filters['search'])) {
+            $query->where('name', 'like', '%' . $filters['search'] . '%') // Filtrar por el campo name de Empleado
+            ->orWhereHas('user', function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['search'] . '%'); // Filtrar por el campo name de User
+            });
         }
+
+        if (isset($filters['cargo'])) {
+            $query->where('cargo', $filters['cargo']);
+        }
+
+        if (isset($filters['estado_civil'])) {
+            $query->where('estado_civil', $filters['estado_civil']);
+        }
+
+        if (isset($filters['salario_min'])) {
+            $query->where('salario', '>=', $filters['salario_min']);
+        }
+        if (isset($filters['is_active'])) {
+            if ($filters['is_active'] == 2) {
+                // No aplicar filtro, mostrar todos
+            } else {
+                $query->whereHas('user', function ($q) use ($filters) {
+                    $q->where('is_active', $filters['is_active']);
+                });
+            }
+        } else {
+            // Por defecto mostrar activos
+            $query->whereHas('user', function ($q) {
+                $q->where('is_active', true);
+            });
+        }
+
+        return $query;
     }
     public function trabajos()
     {

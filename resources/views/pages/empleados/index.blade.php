@@ -1,11 +1,3 @@
-@php
-    $cargos = ['Gerente', 'Desarrollador', 'Diseñador', 'Analista', 'Administrador'];
-    $totalEmpleados = $empleados->count();
-    $salarioPromedio = $empleados->avg('salario');
-    $totalCasados = $empleados->where('estado_civil', 'Casado/a')->count();
-    $totalConExperiencia = $empleados->where('experiencia', '>', 5)->count();
-@endphp
-
 <x-app-layout>
     <style>
         .card-hover {
@@ -48,7 +40,7 @@
             <div x-show="openFilters"
                 class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-8 transition-all duration-300">
                 <form action="{{ route('empleados.index') }}" method="GET">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cargo</label>
                             <select name="cargo"
@@ -65,10 +57,18 @@
                             <select name="estado_civil"
                                 class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                                 <option value="">Todos</option>
-                                <option value="Soltero/a">Soltero/a</option>
-                                <option value="Casado/a">Casado/a</option>
-                                <option value="Divorciado/a">Divorciado/a</option>
-                                <option value="Viudo/a">Viudo/a</option>
+                                @foreach($estados_civiles as $estado)
+                                    <option value="{{ $estado }}">{{ $estado }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
+                            <select name="is_active"
+                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
+                                <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>Activos</option>
+                                <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>Inactivos</option>
+                                <option value="2" {{ request('is_active') == '2' ? 'selected' : '' }}>Todos</option>
                             </select>
                         </div>
                         <div>
