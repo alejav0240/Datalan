@@ -42,10 +42,9 @@
             class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-8 transition-all duration-300">
             <!-- Formulario -->
             <form action="{{ route('trabajos.index') }}" method="GET">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prioridad</label>
-                        <!-- Prioridad -->
                         <select name="prioridad"
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                             <option value="">Todas</option>
@@ -56,7 +55,6 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tipo de Trabajo</label>
-                        <!-- Tipo de Trabajo -->
                         <select name="tipo_trabajo"
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
                             <option value="">Todos</option>
@@ -67,13 +65,23 @@
                             <option value="otro" {{ request('tipo_trabajo') == 'otro' ? 'selected' : '' }}>Otro</option>
                         </select>
                     </div>
-                    <div class="flex items-end space-x-3">
-                        <a href="{{ route('trabajos.index') }}" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600">
-                            <i class="fas fa-times mr-1"></i> Descartar
-                        </a>
-                        <button type="submit" class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
+                        <select name="estado"
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
+                            <option value="">Todos</option>
+                            <option value="pendiente" {{ request('estado') === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                            <option value="en_proceso" {{ request('estado') === 'en_proceso' ? 'selected' : '' }}>En Proceso</option>
+                            <option value="resuelto" {{ request('estado') === 'resuelto' ? 'selected' : '' }}>Resuelto</option>
+                        </select>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button type="submit" class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600 h-10 flex items-center">
                             <i class="fas fa-filter mr-1"></i> Aplicar
                         </button>
+                        <a href="{{ route('trabajos.index') }}" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 h-10 flex items-center">
+                            <i class="fas fa-times mr-1"></i> Limpiar
+                        </a>
                     </div>
                 </div>
             </form>

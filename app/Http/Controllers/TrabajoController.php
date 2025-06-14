@@ -18,15 +18,21 @@ class TrabajoController extends Controller
         // Consulta
         $query = Trabajo::with(['reporte', 'empleados']);
         // Prioridad
-        if ($request->has('prioridad')) {
+        if ($request->filled('prioridad')) {
             $query->where('prioridad', $request->prioridad);
         }
         // Tipo de trabajo
-        if ($request->has('tipo_trabajo')) {
+        if ($request->filled('tipo_trabajo')) { 
             $query->where('tipo_trabajo', $request->tipo_trabajo);
         }
+        // Estado
+        if ($request->filled('estado')) {
+            $query->whereHas('reporte', function($q) use ($request) {
+                $q->where('estado', $request->estado);
+            });
+        }
         // Buscar
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $query->where('descripcion', 'like', '%' . $request->search . '%');
         }
         // Ordenar
