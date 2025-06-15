@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 class PermisoController extends Controller
 {
@@ -161,4 +162,81 @@ class PermisoController extends Controller
 
         return redirect()->route('permisos.index')->with('success', 'Permiso rechazado.');
     }
+
+    // =========== Generar PDF del permiso =========== //
+    public function generarPermisoPDF(Permiso $permiso)
+    {
+        if (!$permiso) {
+            return redirect()->route('permisos.index')->with('error', 'Permiso no encontrado.');
+        }
+
+        $pdf = new Fpdf();
+        $pdf->AddPage();
+        $pdf->SetMargins(25, 25, 25);
+
+        // Logo de Datalan Bolivia
+        $pdf->Image(public_path('images/logodatalan.png'), 25, 10, 30); // X=25, Y=10, Ancho=30mm
+        $pdf->Ln(25); // Espacio después del logo
+
+        // Encabezado
+        $pdf->SetFont('Arial', 'B', 18);
+        $pdf->SetTextColor(40, 40, 40);
+        $pdf->Cell(0, 15, mb_convert_encoding('SOLICITUD DE PERMISO LABORAL', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+
+        // Línea decorativa
+        $pdf->SetDrawColor(79, 129, 189);
+        $pdf->SetLineWidth(0.75);
+        $pdf->Line(25, $pdf->GetY(), 190, $pdf->GetY());
+        $pdf->Ln(15);
+
+        // Información
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetTextColor(60, 60, 60);
+
+        $nombre = mb_convert_encoding($permiso->empleado->user->name, 'ISO-8859-1', 'UTF-8');
+        $cargo = mb_convert_encoding($permiso->empleado->cargo, 'ISO-8859-1', 'UTF-8');
+        $carnet = mb_convert_encoding($permiso->empleado->ci, 'ISO-8859-1', 'UTF-8');
+        $motivo = mb_convert_encoding($permiso->motivo, 'ISO-8859-1', 'UTF-8');
+        $fechaInicio = Carbon::parse($permiso->fecha_inicio)->format('d/m/Y');
+        $fechaFin = $permiso->fecha_fin ? Carbon::parse($permiso->fecha_fin)->format('d/m/Y') : 'N/A';
+        $estado = mb_convert_encoding(ucfirst($permiso->estado), 'ISO-8859-1', 'UTF-8');
+
+        $pdf->SetFillColor(245, 245, 245);
+        $pdf->SetDrawColor(200, 200, 200);
+        $pdf->Rect(25, $pdf->GetY(), 160, 80, 'DF');
+
+        $pdf->SetXY(30, $pdf->GetY() + 10);
+        $texto = "Yo, $nombre, identificado con documento No. $carnet, cargo $cargo, solicito permiso laboral por el siguiente motivo:";
+        $pdf->MultiCell(0, 7, $texto, 0, 'L');
+
+        $pdf->SetXY(30, $pdf->GetY() + 5);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->MultiCell(0, 7, $motivo, 0, 'L');
+
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->SetXY(30, $pdf->GetY() + 5);
+        $pdf->MultiCell(0, 7, "Periodo solicitado: Desde el $fechaInicio hasta el $fechaFin.", 0, 'L');
+
+        $pdf->SetXY(30, $pdf->GetY() + 5);
+        $pdf->MultiCell(0, 7, "Estado actual de la solicitud: $estado.", 0, 'L');
+
+        // Firma del solicitante más abajo
+        $pdf->SetY(-75);
+        $pdf->SetFont('Arial', '', 11);
+        $pdf->SetTextColor(100, 100, 100);
+
+        $pdf->Cell(0, 7, mb_convert_encoding('Firma del Solicitante', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+        $pdf->Ln(20);
+        $pdf->Cell(0, 1, '', 'B', 1, 'C'); // Línea de firma
+        $pdf->Ln(5);
+        $pdf->Cell(0, 7, $nombre, 0, 1, 'C');
+        $pdf->Cell(0, 7, mb_convert_encoding('Empleado', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+
+        $pdf->Output('I', 'Solicitud_Permiso_' . $permiso->id . '.pdf');
+        exit;
+    }
+
+
+   
+
 }
