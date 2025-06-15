@@ -14,24 +14,30 @@
 
     <!-- Aprobación y rechazo de permisos (solo si el rol es administrador) -->
     @if($type === 'permisos' && auth()->user()->role === 'administrador')
-        @if($item->estado === 'pendiente') 
+        @if($item->estado === 'pendiente')
             <!-- Botón Aceptar -->
-            <form action="{{ route('permisos.aprobar', $item) }}" method="POST">
+            <form action="{{ route('permisos.aprobar', $item) }}" method="POST" class="inline-block">
                 @csrf
-                <button type="submit">
+                <button type="submit" class="p-2 rounded hover:bg-green-100 transition">
                     <i class="fas fa-thumbs-up fa-lg text-green-500 hover:text-green-700"></i>
                 </button>
             </form>
-    
+
             <!-- Botón Rechazar -->
-            <form action="{{ route('permisos.rechazar', $item) }}" method="POST">
+            <form action="{{ route('permisos.rechazar', $item) }}" method="POST" class="inline-block">
                 @csrf
-                <button type="submit">
+                <button type="submit" class="p-2 rounded hover:bg-red-100 transition">
                     <i class="fas fa-thumbs-down fa-lg text-red-500 hover:text-red-700"></i>
                 </button>
             </form>
         @endif
+
+        <!-- Botón PDF -->
+        <a href="{{ route('permisos.pdf', $item->id) }}" target="_blank" class="p-2 rounded hover:bg-gray-100 transition inline-block">
+            <i class="fa-regular fa-file-pdf fa-lg text-red-500 hover:text-red-700"></i>
+        </a>
     @endif
+
 
     <!-- Mostrar botón de eliminar solo si no es 'permisos' o si está en estado 'pendiente' -->
     @if($type === 'clientes')

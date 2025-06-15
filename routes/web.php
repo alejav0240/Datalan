@@ -73,6 +73,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('permisos', PermisoController::class);
     Route::post('permisos/{permiso}/aprobar', [PermisoController::class, 'aprobar'])->name('permisos.aprobar');
     Route::post('permisos/{permiso}/rechazar', [PermisoController::class, 'rechazar'])->name('permisos.rechazar');
+    Route::get('/permisos/{permiso}/pdf', [PermisoController::class, 'generarPermisoPDF'])
+     ->name('permisos.pdf');
 
     // Rutas para trabajos
     Route::resource('trabajos', App\Http\Controllers\TrabajoController::class);
