@@ -34,6 +34,11 @@
                     class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
                     <i class="fas fa-plus mr-1"></i> Nuevo Trabajo
                 </a>
+                <a href="{{route('trabajos.pdf')}}"
+                    target="_blank"
+                    class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600">
+                    <i class="fas fa-file-pdf mr-1"></i> PDF
+                </a>
             </div>
         </div>
 

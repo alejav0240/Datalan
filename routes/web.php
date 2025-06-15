@@ -22,6 +22,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ReporteFallaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\TrabajoController;
 
 Route::redirect('/', 'inicio');
 
@@ -64,8 +65,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Rutas de empleados
     Route::resource('empleados', EmpleadoController::class);
 
-    Route::resource('trabajos', \App\Http\Controllers\TrabajoController::class);
-
     // Rutas de reportes de fallas (solo para administradores)
     Route::resource('reportes', ReporteFallaController::class);
 
@@ -77,6 +76,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
      ->name('permisos.pdf');
 
     // Rutas para trabajos
-    Route::resource('trabajos', App\Http\Controllers\TrabajoController::class);
-    Route::post('trabajos/{trabajo}/cambiar-estado', [App\Http\Controllers\TrabajoController::class, 'cambiarEstado'])->name('trabajos.cambiar-estado');
+    Route::get('trabajos/pdf', [TrabajoController::class, 'generarTrabajosPDF'])->name('trabajos.pdf');
+    Route::resource('trabajos', TrabajoController::class);
+    Route::post('trabajos/{trabajo}/cambiar-estado', [TrabajoController::class, 'cambiarEstado'])->name('trabajos.cambiar-estado');
 });
