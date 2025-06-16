@@ -69,10 +69,10 @@
             <span>
                 @if($item->direcciones->count() === 0)
                     Sin direcciones
-                @elseif($item->reportes_falla->count() === 1)
+                @elseif($item->direcciones->count() === 1)
                     1 Dirección
                 @else
-                    {{ $item->reportes_falla->count() }} Direcciones
+                    {{ $item->direcciones->count() }} Direcciones
                 @endif
             </span>
         </div>

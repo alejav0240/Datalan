@@ -158,7 +158,7 @@
                         <!-- Direcciones Tab -->
                         <div id="direcciones" class="tab-content">
                             <div class="overflow-x-auto">
-                                @if($cliente->reportes_falla->isNotEmpty())
+                                @if($cliente->direcciones->isNotEmpty())
                                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 rounded-lg overflow-hidden shadow-lg">
                                         <thead class="bg-gray-50 dark:bg-gray-800">
                                             <tr>
@@ -167,22 +167,20 @@
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                                            @foreach($cliente->reportes_falla as $reporte)
-                                                @if($reporte->direccionAdicional)
-                                                    <tr>
-                                                        <td class="px-6 py-4 whitespace-nowrap">
-                                                            <div class="font-medium text-gray-900 dark:text-gray-100">
-                                                                {{ $reporte->direccionAdicional->direccion }}
-                                                            </div>
-                                                        </td>
-                                                        <td class="px-6 py-4 whitespace-nowrap">
-                                                            <a href="https://www.google.com/maps?q={{ $reporte->direccionAdicional->latitud }},{{ $reporte->direccionAdicional->longitud }}" target="_blank"
-                                                                class="text-blue-600 dark:text-blue-400 hover:underline">
+                                            @foreach($cliente->direcciones as $direccion)
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="font-medium text-gray-900 dark:text-gray-100">
+                                                            {{ $direccion->direccion }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <a href="https://www.google.com/maps?q={{ $direccion->latitud }},{{ $direccion->longitud }}" target="_blank"
+                                                            class="text-blue-600 dark:text-blue-400 hover:underline">
                                                                 Ver en Google Maps
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
