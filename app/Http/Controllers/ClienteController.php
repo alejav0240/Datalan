@@ -45,7 +45,7 @@ class ClienteController extends Controller
     // =========================== LISTAR CLIENTES ========================== //
     public function index(Request $request)
     {
-        $clientes = Cliente::with('user')->get();
+        $clientes = Cliente::with('user')->paginate(10);
         return view('pages.clientes.index', compact('clientes'));
     }
 

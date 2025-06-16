@@ -38,7 +38,14 @@
             @endforeach
         </div>
 
+        <!-- Paginación -->
+        <div class="mt-8">
+            {{ $clientes->links() }}
+        </div>
+
     </div>
+
+
 
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
