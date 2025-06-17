@@ -24,6 +24,11 @@ class ReporteFallaController extends Controller
             $query->where('estado', $request->estado);
         }
 
+        // Filtro por tipo de falla
+        if ($request->filled('tipo_falla')) {
+            $query->where('tipo_falla', $request->tipo_falla);
+        }
+
         // Búsqueda por descripción o nombre del cliente
         if ($request->filled('search')) {
             $search = $request->search;
