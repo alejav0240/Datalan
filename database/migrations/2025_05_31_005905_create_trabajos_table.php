@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
 
             // Programación
-            $table->enum('prioridad', ['normal', 'alta', 'urgente'])->default('normal');
+            $table->enum('prioridad', ['normal', 'baja', 'urgente', 'alta'])->default('normal');
 
             // Materiales
             $table->text('materiales')->nullable();

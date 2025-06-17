@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('direccion_adicional_id')->constrained('direcciones_adicionales')->onDelete('cascade');
             $table->enum('tipo_falla', ['hardware', 'software', 'conectividad', 'otro']);
             $table->string('descripcion', 255)->nullable();
-            $table->boolean('estado')->default(false);
+            $table->enum('estado', ['pendiente', 'en_proceso', 'resuelto'])->default('pendiente');
             $table->timestamps();
         });
     }

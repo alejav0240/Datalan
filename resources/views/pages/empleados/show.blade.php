@@ -188,69 +188,59 @@
                         <div id="trabajos" class="tab-content">
                             @if($empleado->trabajos->count() > 0)
                                 <div class="overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-gray-200">
-                                        <thead class="bg-gray-50">
-                                            <tr>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Trabajo</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Estado</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Fecha Inicio</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Fecha Fin</th>
-                                                <th
-                                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Rol</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white divide-y divide-gray-200">
-                                            @foreach($empleado->trabajos as $trabajo)
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="font-medium text-gray-900">{{ $trabajo->nombre }}</div>
-                                                        <div class="text-sm text-gray-500">{{ $trabajo->descripcion }}</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                        {{ $trabajo->estado == 'completado' ? 'bg-green-100 text-green-800' :
-                                                        ($trabajo->estado == 'en_progreso' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800') }}">
-                                                            {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{ $trabajo->fecha_inicio->format('d M Y') }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {{ $trabajo->fecha_fin ? $trabajo->fecha_fin->format('d M Y') : 'En curso' }}
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        @if($trabajo->pivot->is_encargado)
-                                                            <span
-                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                                                Encargado
-                                                            </span>
-                                                        @else
-                                                            <span
-                                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                                Miembro
-                                                            </span>
-                                                        @endif
-                                                    </td>
-                                                </tr>
+                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                        <thead class="bg-gray-50 dark:bg-gray-800">
+                                        <tr>
+                                            @foreach(['Trabajo', 'Estado', 'Fecha Inicio', 'Fecha Fin', 'Rol'] as $header)
+                                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                                                    {{ $header }}
+                                                </th>
                                             @endforeach
+                                        </tr>
+                                        </thead>
+                                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                                        @foreach($empleado->trabajos as $trabajo)
+                                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ $trabajo->nombre }}</div>
+                                                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ $trabajo->descripcion }}</div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    @switch($trabajo->estado)
+                                        @case('completado') bg-green-100 text-green-800 dark:bg-green-200/10 dark:text-green-400 @break
+                                        @case('en_progreso') bg-blue-100 text-blue-800 dark:bg-blue-200/10 dark:text-blue-400 @break
+                                        @default bg-yellow-100 text-yellow-800 dark:bg-yellow-200/10 dark:text-yellow-400
+                                    @endswitch">
+                                    {{ ucfirst(str_replace('_', ' ', $trabajo->estado)) }}
+                                </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                                    {{ $trabajo->created_at->format('d M Y') }}
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                                    {{ $trabajo->updated_at ? $trabajo->updated_at->format('d M Y') : 'En curso' }}
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                    @if($trabajo->pivot->is_encargado)
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-200/10 dark:text-purple-400">
+                                        Encargado
+                                    </span>
+                                                    @else
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-200/10 dark:text-gray-400">
+                                        Miembro
+                                    </span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             @else
                                 <div class="text-center py-8">
-                                    <i class="fas fa-tasks text-4xl text-gray-300 mb-4"></i>
-                                    <p class="text-gray-500">Este empleado no tiene trabajos asignados</p>
+                                    <i class="fas fa-tasks text-4xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                                    <p class="text-gray-500 dark:text-gray-400">Este empleado no tiene trabajos asignados</p>
                                 </div>
                             @endif
                         </div>
@@ -299,7 +289,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    
+
                                 </div>
                             @else
                                 <div class="text-center py-8">
