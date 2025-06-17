@@ -51,6 +51,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
+    // Rutas validadas para empleado y administrador
+    Route::middleware(['role:empleado,administrador'])->group(function () {
+        Route::resource('reportes', ReporteFallaController::class);
+        Route::resource('trabajos', TrabajoController::class);
+        Route::resource('empleados', EmpleadoController::class);
+        Route::resource('permisos', PermisoController::class);
+    });
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
@@ -62,14 +70,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/clientes/{id_cliente}', [ClienteController::class, 'enable'])->name('clientes.enable');
     Route::get('/api/direcciones-por-cliente/{clienteId}', [ReporteFallaController::class, 'getDireccionesPorCliente'])->name('api.direcciones-por-cliente');
 
-    // Rutas de empleados
-    Route::resource('empleados', EmpleadoController::class);
-
-    // Rutas de reportes de fallas (solo para administradores)
-    Route::resource('reportes', ReporteFallaController::class);
-
     // Rutas de permisos
-    Route::resource('permisos', PermisoController::class);
     Route::post('permisos/{permiso}/aprobar', [PermisoController::class, 'aprobar'])->name('permisos.aprobar');
     Route::post('permisos/{permiso}/rechazar', [PermisoController::class, 'rechazar'])->name('permisos.rechazar');
     Route::get('/permisos/{permiso}/pdf', [PermisoController::class, 'generarPermisoPDF'])
@@ -77,6 +78,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Rutas para trabajos
     Route::get('trabajos/pdf', [TrabajoController::class, 'generarTrabajosPDF'])->name('trabajos.pdf');
-    Route::resource('trabajos', TrabajoController::class);
     Route::post('trabajos/{trabajo}/cambiar-estado', [TrabajoController::class, 'cambiarEstado'])->name('trabajos.cambiar-estado');
 });
