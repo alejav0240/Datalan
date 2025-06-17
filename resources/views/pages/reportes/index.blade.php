@@ -17,13 +17,62 @@
         }
     </style>
 
-    <div class="container mx-auto px-4 py-8 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4 py-8 bg-gray-50 dark:bg-gray-900" x-data="{ openFilters: false }">
         <!-- Header -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
             <!-- Título -->
             <h1 class="text-3xl font-bold text-indigo-700 dark:text-indigo-300">
                 <i class="fas fa-exclamation-triangle mr-2"></i> Reportes de Fallas
             </h1>
+            <!-- Botones -->
+            <div class="mt-4 md:mt-0 flex space-x-3">
+                <button @click="openFilters = !openFilters"
+                    class="bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 px-4 py-2 rounded-lg shadow mr-3 hover:bg-indigo-50 dark:hover:bg-gray-700">
+                    <i class="fas fa-filter mr-1"></i> Filtros
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div x-show="openFilters"
+            class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-8 transition-all duration-300">
+            <!-- Formulario -->
+            <form action="{{ route('reportes.index') }}" method="GET">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
+                        <select name="estado"
+                            class="w-full rounded-lg border-gray-300 dark:border-gray-600 shadow-sm dark:bg-gray-700 dark:text-gray-300">
+                            <option value="">Todos</option>
+                            <option value="pendiente" {{ request('estado') === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                            <option value="en_proceso" {{ request('estado') === 'en_proceso' ? 'selected' : '' }}>En Proceso</option>
+                            <option value="resuelto" {{ request('estado') === 'resuelto' ? 'selected' : '' }}>Resuelto</option>
+                        </select>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button type="submit" class="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 dark:hover:bg-indigo-600 h-10 flex items-center">
+                            <i class="fas fa-filter mr-1"></i> Aplicar
+                        </button>
+                        <a href="{{ route('reportes.index') }}" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 h-10 flex items-center">
+                            <i class="fas fa-times mr-1"></i> Limpiar
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Buscador -->
+        <div class="mb-8">
+            <form action="{{ route('reportes.index') }}" method="GET">
+                <div class="relative">
+                    <input type="text" name="search" placeholder="Buscar reportes por descripción o cliente..."
+                        class="w-full p-4 rounded-xl shadow-lg border-0 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300"
+                        value="{{ request('search') }}">
+                    <button type="submit" class="absolute right-3 top-3.5 text-indigo-600 dark:text-indigo-400">
+                        <i class="fas fa-search fa-lg"></i>
+                    </button>
+                </div>
+            </form>
         </div>
 
         <!-- Estadísticas -->
@@ -118,8 +167,8 @@
 
                             <!-- Botones de acción -->
                             <div class="mt-6 flex justify-end space-x-3">
-                                <a href="{{ route('reportes.edit', $reporte) }}" class="text-yellow-600 hover:text-yellow-800">
-                                    <i class="fas fa-edit fa-lg"></i>
+                                <a href="{{ route('reportes.edit', $reporte) }}" class="text-indigo-600 hover:text-indigo-800">
+                                    <i class="fas fa-eye fa-lg"></i>
                                 </a>
                             </div>
                         </div>
