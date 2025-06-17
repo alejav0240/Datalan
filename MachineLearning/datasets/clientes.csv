@@ -1,0 +1,71 @@
+,user_id,tipo_cliente,institucion,telefono,nit_ci,created_at,updated_at
+0,12,educacion,Unidad Educativa Ayacucho,71234567,123456,2024-09-16,2024-09-28
+1,13,residencial,Juan Ribera,70987654,234567,2023-04-15,2023-04-25
+2,14,gobierno,Ministerio de Trabajo,69874521,345678,2024-01-08,2024-02-03
+3,15,gobierno,Ministerio de Relaciones Exteriores,76543210,456789,2024-11-02,2024-11-08
+4,16,residencial,Rosa Barrientos,76451238,567890,2023-10-03,2023-10-30
+5,17,educacion,Colegio San Calixto,65432109,678901,2023-09-22,2023-10-19
+6,18,residencial,Cristóbal Poma,74561234,789012,2024-06-19,2024-07-01
+7,19,gobierno,Ministerio de Minería y Metalurgia,73456789,890123,2025-03-30,2025-04-14
+8,20,educacion,Colegio Boliviano Americano (CBA),68765432,1234567,2024-09-23,2024-10-17
+9,21,empresa,Banco Nacional de Bolivia (BNB - Sucursal El Alto),69874563,2345678,2023-08-27,2023-09-12
+10,22,gobierno,Ministerio de Economía y Finanzas Públicas,70123456,3456789,2024-07-16,2024-08-01
+11,23,empresa,Banco Económico,72123456,4567890,2023-02-19,2023-02-19
+12,24,gobierno,Ministerio de Minería y Metalurgia,77654321,5678901,2024-04-16,2024-05-15
+13,25,gobierno,Ministerio de Educación,76549871,6789012,2023-12-14,2024-01-11
+14,26,empresa,Banco Unión S.A.,67890123,7890123,2024-06-22,2024-07-09
+15,27,residencial,Gonzalo Ibarra,73456987,8901234,2024-09-13,2024-10-11
+16,28,educacion,Unidad Educativa Copacabana,65478901,12345678,2024-04-11,2024-04-23
+17,29,educacion,Colegio Don Bosco,74185296,23456789,2023-03-30,2023-04-04
+18,30,empresa,Banco Ganadero,72147852,34567890,2023-10-25,2023-10-29
+19,31,educacion,Colegio Don Bosco,67895214,45678901,2023-03-19,2023-04-05
+20,32,residencial,Melva Flores,73480125,56789012,2024-05-25,2024-06-07
+21,33,empresa,Banco BISA S.A.,73254678,67890123,2023-09-27,2023-10-23
+22,34,empresa,Banco Unión S.A. (Sucursal El Alto),68954712,78901234,2025-04-26,2025-05-24
+23,35,gobierno,Ministerio de Obras Públicas,72345678,89012345,2023-01-13,2023-02-11
+24,36,educacion,Unidad Educativa Aniceto Arce,76439875,90123456,2024-02-21,2024-03-06
+25,37,empresa,Banco Mercantil Santa Cruz (Sucursal El Alto),75678123,91234567,2024-12-09,2025-01-05
+26,38,empresa,Banco Mercantil Santa Cruz (BMSC),68889977,92345678,2024-10-11,2024-11-09
+27,39,residencial,Luis Suárez,69996666,93456789,2024-03-20,2024-04-08
+28,40,empresa,Banco Mercantil Santa Cruz (Sucursal El Alto),71231231,94567890,2024-06-06,2024-06-16
+29,41,empresa,Banco Pyme Los Andes ProCredit S.A.,70119988,95678901,2023-08-02,2023-08-08
+30,42,empresa,Banco BISA S.A.,78945612,96789012,2023-03-31,2023-04-16
+31,43,gobierno,Ministerio de Desarrollo Productivo y Economía Plural,74568910,97890123,2023-10-15,2023-10-30
+32,44,empresa,Banco Pyme Los Andes ProCredit S.A.,76547632,98901234,2024-11-12,2024-11-17
+33,45,empresa,Banco BISA S.A.,65419876,99012345,2024-06-09,2024-06-25
+34,46,residencial,Óscar Choque,67788899,12349876,2024-08-13,2024-08-19
+35,47,residencial,Sandra Laura,69870012,23450987,2023-11-25,2023-12-21
+36,48,empresa,Banco Unión S.A. (Sucursal El Alto),76651234,34561098,2023-02-25,2023-03-18
+37,49,gobierno,Ministerio de Salud y Deportes,71239845,45672109,2023-09-03,2023-10-03
+38,50,gobierno,Ministerio de Medio Ambiente y Agua,74325678,56783210,2024-08-06,2024-08-12
+39,51,residencial,Daniela Reyes,75630129,67894321,2024-09-25,2024-10-25
+40,52,residencial,Edgar Rivera,66547890,78905432,2025-06-16,2025-07-15
+41,53,residencial,Carmen Flores,73127654,89016543,2023-07-04,2023-07-08
+42,54,educacion,Colegio Don Bosco,79988877,90127654,2023-10-21,2023-11-07
+43,55,empresa,Banco BISA S.A.,73214785,91238765,2024-07-07,2024-07-27
+44,56,residencial,Yolanda Choque,69990123,92349876,2024-09-08,2024-09-21
+45,57,residencial,Nelly Colque,74569382,93450987,2024-01-26,2024-02-25
+46,58,empresa,Banco Unión S.A.,72345896,94561098,2024-06-06,2024-06-22
+47,59,residencial,Esther Laura,75469873,95672109,2024-03-19,2024-04-17
+48,60,educacion,Unidad Educativa Aniceto Arce,66651238,96783210,2023-09-30,2023-10-01
+49,61,educacion,"Colegio Británico ""The British School""",76540129,97894321,2023-04-14,2023-04-18
+50,62,gobierno,Ministerio de Educación,73333222,98905432,2024-05-17,2024-06-02
+51,63,empresa,Banco Mercantil Santa Cruz (Sucursal El Alto),72117645,99016543,2023-06-12,2023-06-25
+52,64,educacion,Unidad Educativa Aniceto Arce,65478962,10234567,2024-09-01,2024-09-11
+53,65,empresa,Banco Mercantil Santa Cruz (BMSC),76509090,11345678,2025-05-31,2025-06-24
+54,66,empresa,Banco Ganadero,71234599,12456789,2024-08-26,2024-09-16
+55,67,residencial,Luisa Flores,70122334,13567890,2024-08-31,2024-09-29
+56,68,gobierno,Ministerio de Medio Ambiente y Agua,77889900,14678901,2024-09-02,2024-09-05
+57,69,gobierno,Ministerio de Trabajo,73415672,15789012,2023-07-02,2023-07-14
+58,70,gobierno,Ministerio de Medio Ambiente y Agua,68812345,16890123,2023-12-17,2023-12-25
+59,71,educacion,Unidad Educativa Ayacucho,76876431,17901234,2024-01-25,2024-02-16
+60,72,educacion,"Colegio Británico ""The British School""",65430987,18012345,2023-04-06,2023-05-02
+61,73,empresa,Banco Solidario S.A. (BancoSol),79990123,19123456,2024-08-05,2024-08-18
+62,74,gobierno,Ministerio de Desarrollo Productivo y Economía Plural,76767676,20234567,2023-06-15,2023-07-08
+63,75,empresa,Banco Fortaleza S.A.,75673421,21345678,2023-09-24,2023-09-28
+64,76,residencial,Carla Tórrez,68899912,22456789,2024-04-07,2024-04-11
+65,77,gobierno,Ministerio de Educación,72233344,23567890,2024-12-24,2024-12-30
+66,78,residencial,Rodrigo Quispe,69999987,24678901,2023-11-10,2023-11-27
+67,79,educacion,Colegio Calvert,74444555,25789012,2023-12-12,2024-01-06
+68,80,educacion,Unidad Educativa Ayacucho,78901234,26890123,2023-05-22,2023-06-17
+69,81,residencial,Paola Condori,77001234,27901234,2025-03-28,2025-04-26

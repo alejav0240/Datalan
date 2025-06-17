@@ -1,0 +1,11 @@
+,name,email,email_verified_at,password,remember_token,is_active,role,profile_photo_path,created_at,updated_at,id
+0,Juan Mamani,Juan@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2024-01-10,2024-01-29,1
+1,Juana Quispe,Juana@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2023-03-24,2023-04-02,2
+2,José Condori,José@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2024-02-08,2024-02-25,3
+3,María Choque,María@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2024-11-16,2024-12-14,4
+4,Carlos Flores,Carlos@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2023-04-03,2023-04-16,5
+5,Ana Copa,Ana@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2023-02-05,2023-02-05,6
+6,Luis Laura,Luis@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2024-12-23,2025-01-05,7
+7,Carmen Apaza,Carmen@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2023-06-09,2023-06-12,8
+8,Jorge Cortez,Jorge@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2024-01-07,2024-01-19,9
+9,Patricia Ramos,Patricia@gmail.com,,$2y$12$gc3HNtOvW5ohrGh4TqXvheRM3HPWD/2GU8jLWE8JgoS8omT4BcaF6,,True,empleado,,2023-09-09,2023-09-30,10

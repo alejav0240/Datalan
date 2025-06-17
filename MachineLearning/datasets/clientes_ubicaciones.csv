@@ -1,0 +1,71 @@
+,user_id,direccion,latitud,longitud,created_at,updated_at,id_cliente
+0,12,"Av. Montes N° 856, Zona Central, La Paz",-16.492,-68.136,2024-09-16,2024-09-28,1
+1,13,"Calle Potosí N° 567, Zona Central, La Paz",-16.4952,-68.1367,2023-04-15,2023-04-25,2
+2,14," Empleo y Previsión Social ""Calle Mercado N° 1090 La Paz""",-16.497,-68.133,2024-01-08,2024-02-03,3
+3,15,"Plaza Murillo s/n, La Paz",-16.4947,-68.1355,2024-11-02,2024-11-08,4
+4,16,"Calle Aspiazu N° 15, Zona Sopocachi, La Paz",-16.5078,-68.1295,2023-10-03,2023-10-30,5
+5,17,"Calle Yanacocha N° 534, Zona Central, La Paz",-16.495,-68.138,2023-09-22,2023-10-19,6
+6,18,"Calle Junín N° 777, Zona Central, La Paz",-16.4948,-68.1375,2024-06-19,2024-07-01,7
+7,19,Avenida 6 de Agosto N° 2605 La Paz,-16.5085,-68.125,2025-03-30,2025-04-14,8
+8,20,"Av. Gral. Guemes N° 100, Zona Sopocachi, La Paz",-16.507,-68.13,2024-09-23,2024-10-17,9
+9,21,"Av. Jorge Carrasco N° 500, Zona 16 de Julio, El Alto",-16.515,-68.175,2023-08-27,2023-09-12,10
+10,22,"Avenida Mariscal Santa Cruz esq. Colon, La Paz",-16.496,-68.134,2024-07-16,2024-08-01,11
+11,23,"Calle Sagarnaga N° 200, Zona San Francisco, La Paz",-16.496,-68.139,2023-02-19,2023-02-19,12
+12,24,Avenida 6 de Agosto N° 2605 La Paz,-16.5085,-68.125,2024-04-16,2024-05-15,13
+13,25,"Avenida Arce N° 2147, La Paz",-16.509,-68.129,2023-12-14,2024-01-11,14
+14,26,"Av. 16 de Julio N° 1769, El Prado, La Paz",-16.498,-68.132,2024-06-22,2024-07-09,15
+15,27,"Calle 1 de Mayo N° 10, Zona Senkata, El Alto",-16.54,-68.205,2024-09-13,2024-10-11,16
+16,28,"Av. 6 de Marzo N° 1500, Zona Villa Dolores, El Alto",-16.526,-68.183,2024-04-11,2024-04-23,17
+17,29,"Calle Sagarnaga N° 170, Zona San Francisco, La Paz",-16.4965,-68.1395,2023-03-30,2023-04-04,18
+18,30,"Av. 6 de Agosto N° 2234, Sopocachi, La Paz",-16.51,-68.128,2023-10-25,2023-10-29,19
+19,31,"Calle Sagarnaga N° 170, Zona San Francisco, La Paz",-16.4965,-68.1395,2023-03-19,2023-04-05,20
+20,32,"Av. Abaroa N° 300, Zona Villa Dolores, El Alto",-16.527,-68.182,2024-05-25,2024-06-07,21
+21,33,"Calle Colón esq. Camacho, Zona Central, La Paz",-16.499,-68.135,2023-09-27,2023-10-23,22
+22,34,"Av. 6 de Marzo N° 200, Zona Central, El Alto",-16.52,-68.18,2025-04-26,2025-05-24,23
+23,35," Servicios y Vivienda ""Avenida Juan Pablo II s/n El Alto""",-16.511,-68.167,2023-01-13,2023-02-11,24
+24,36,"Av. Tiahuanacu S/N, Zona 16 de Julio, El Alto",-16.516,-68.174,2024-02-21,2024-03-06,25
+25,37,"Av. La Paz N° 100, Zona Villa Dolores, El Alto",-16.525,-68.182,2024-12-09,2025-01-05,26
+26,38,"Calle Mercado N° 1090, Zona Central, La Paz",-16.497,-68.1335,2024-10-11,2024-11-09,27
+27,39,"Calle 5 N° 20, Zona Ciudad Satélite, El Alto",-16.53,-68.187,2024-03-20,2024-04-08,28
+28,40,"Av. La Paz N° 100, Zona Villa Dolores, El Alto",-16.525,-68.182,2024-06-06,2024-06-16,29
+29,41,"Av. Franco Valle N° 400, Zona 12 de Octubre, El Alto",-16.52,-68.17,2023-08-02,2023-08-08,30
+30,42,"Calle Colón esq. Camacho, Zona Central, La Paz",-16.499,-68.135,2023-03-31,2023-04-16,31
+31,43,"Calle Potosí s/n, La Paz",-16.4945,-68.136,2023-10-15,2023-10-30,32
+32,44,"Av. Franco Valle N° 400, Zona 12 de Octubre, El Alto",-16.52,-68.17,2024-11-12,2024-11-17,33
+33,45,"Calle Colón esq. Camacho, Zona Central, La Paz",-16.499,-68.135,2024-06-09,2024-06-25,34
+34,46,"Calle Figueroa N° 50, Zona Central, La Paz",-16.4968,-68.1388,2024-08-13,2024-08-19,35
+35,47,"Calle 10 N° 15, Zona Senkata, El Alto",-16.541,-68.204,2023-11-25,2023-12-21,36
+36,48,"Av. 6 de Marzo N° 200, Zona Central, El Alto",-16.52,-68.18,2023-02-25,2023-03-18,37
+37,49,"Avenida Saavedra N° 2246, La Paz",-16.505,-68.127,2023-09-03,2023-10-03,38
+38,50,"Avenida 16 de Julio N° 1769, La Paz",-16.498,-68.132,2024-08-06,2024-08-12,39
+39,51,"Av. Las Retamas N° 200, Zona Obrajes, La Paz",-16.521,-68.101,2024-09-25,2024-10-25,40
+40,52,"Calle Cochabamba N° 180, Zona El Kenko, El Alto",-16.51,-68.172,2025-06-16,2025-07-15,41
+41,53,"Calle Colombia N° 15, Zona Sopocachi, La Paz",-16.5055,-68.131,2023-07-04,2023-07-08,42
+42,54,"Calle Sagarnaga N° 170, Zona San Francisco, La Paz",-16.4965,-68.1395,2023-10-21,2023-11-07,43
+43,55,"Calle Colón esq. Camacho, Zona Central, La Paz",-16.499,-68.135,2024-07-07,2024-07-27,44
+44,56,"Av. Montes N° 1000, Zona Central, La Paz",-16.4925,-68.135,2024-09-08,2024-09-21,45
+45,57,"Av. La Paz N° 400, Zona Villa Exaltación, El Alto",-16.512,-68.167,2024-01-26,2024-02-25,46
+46,58,"Av. 16 de Julio N° 1769, El Prado, La Paz",-16.498,-68.132,2024-06-06,2024-06-22,47
+47,59,"Av. Manco Capac N° 654, Zona Tembladerani, La Paz",-16.485,-68.145,2024-03-19,2024-04-17,48
+48,60,"Av. Tiahuanacu S/N, Zona 16 de Julio, El Alto",-16.516,-68.174,2023-09-30,2023-10-01,49
+49,61,"Calle 23 de Calacoto N° 8000, Calacoto, La Paz",-16.56,-68.07,2023-04-14,2023-04-18,50
+50,62,"Avenida Arce N° 2147, La Paz",-16.509,-68.129,2024-05-17,2024-06-02,51
+51,63,"Av. La Paz N° 100, Zona Villa Dolores, El Alto",-16.525,-68.182,2023-06-12,2023-06-25,52
+52,64,"Av. Tiahuanacu S/N, Zona 16 de Julio, El Alto",-16.516,-68.174,2024-09-01,2024-09-11,53
+53,65,"Calle Mercado N° 1090, Zona Central, La Paz",-16.497,-68.1335,2025-05-31,2025-06-24,54
+54,66,"Av. 6 de Agosto N° 2234, Sopocachi, La Paz",-16.51,-68.128,2024-08-26,2024-09-16,55
+55,67,"Av. Montes N° 99, Zona Central, La Paz",-16.493,-68.1355,2024-08-31,2024-09-29,56
+56,68,"Avenida 16 de Julio N° 1769, La Paz",-16.498,-68.132,2024-09-02,2024-09-05,57
+57,69," Empleo y Previsión Social ""Calle Mercado N° 1090 La Paz""",-16.497,-68.133,2023-07-02,2023-07-14,58
+58,70,"Avenida 16 de Julio N° 1769, La Paz",-16.498,-68.132,2023-12-17,2023-12-25,59
+59,71,"Av. Montes N° 856, Zona Central, La Paz",-16.492,-68.136,2024-01-25,2024-02-16,60
+60,72,"Calle 23 de Calacoto N° 8000, Calacoto, La Paz",-16.56,-68.07,2023-04-06,2023-05-02,61
+61,73,"Av. Kollasuyo N° 1200, Zona El Tejar, La Paz",-16.48,-68.14,2024-08-05,2024-08-18,62
+62,74,"Calle Potosí s/n, La Paz",-16.4945,-68.136,2023-06-15,2023-07-08,63
+63,75,"Av. Satélite N° 1500, Zona Satélite, El Alto",-16.53,-68.185,2023-09-24,2023-09-28,64
+64,76,"Calle Potosí N° 567, Zona Central, La Paz",-16.4952,-68.1367,2024-04-07,2024-04-11,65
+65,77,"Avenida Arce N° 2147, La Paz",-16.509,-68.129,2024-12-24,2024-12-30,66
+66,78,"Av. Juan Pablo II N° 700, Zona Villa Exaltación, El Alto",-16.511,-68.168,2023-11-10,2023-11-27,67
+67,79,"Calle 10 de Obrajes N° 230, Obrajes, La Paz",-16.525,-68.095,2023-12-12,2024-01-06,68
+68,80,"Av. Montes N° 856, Zona Central, La Paz",-16.492,-68.136,2023-05-22,2023-06-17,69
+69,81,"Pasaje Sucre N° 78, Zona San Pedro, La Paz",-16.4988,-68.1401,2025-03-28,2025-04-26,70

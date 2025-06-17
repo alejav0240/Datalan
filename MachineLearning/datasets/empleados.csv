@@ -1,0 +1,11 @@
+user_id,cargo,experiencia,telefono,ci,salario,estado_civil,created_at,updated_at
+2,Técnico de Mantenimiento,7,71234567,123456,5050,soltero,2024-09-21,2024-10-11
+3,Supervisor de Instalaciones,9,70987654,234567,2612,viudo,2024-01-19,2024-01-25
+4,Técnico de Instalación,1,69874521,345678,2903,viudo,2023-12-27,2024-01-12
+5,Técnico de Instalación,5,76543210,456789,5492,divorciado,2024-12-31,2025-01-21
+6,Especialista en Cableado Estructurado,2,76451238,567890,3172,viudo,2025-06-12,2025-07-11
+7,Especialista en Soporte Técnico,10,65432109,678901,4782,soltero,2025-01-31,2025-01-31
+8,Supervisor de Instalaciones,5,74561234,789012,3583,divorciado,2023-05-17,2023-06-10
+9,Especialista en Soporte Técnico,7,73456789,890123,2873,soltero,2024-04-04,2024-04-19
+10,Técnico de Mantenimiento,7,68765432,1234567,2627,viudo,2024-11-14,2024-12-10
+11,Técnico de Mantenimiento,8,69874563,2345678,3858,soltero,2023-06-24,2023-07-23
