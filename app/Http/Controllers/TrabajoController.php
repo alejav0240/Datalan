@@ -16,8 +16,16 @@ class TrabajoController extends Controller
     // Filtros
     public function index(Request $request)
     {
-        // Consulta
+        // Consulta base
         $query = Trabajo::with(['reporte', 'empleados']);
+
+        // Solo mostrar trabajos asignados 
+        if (auth()->user()->role === 'empleado') {
+            $query->whereHas('empleados', function($q) {
+                $q->where('user_id', auth()->user()->id);
+            });
+        }
+
         // Prioridad
         if ($request->filled('prioridad')) {
             $query->where('prioridad', $request->prioridad);
