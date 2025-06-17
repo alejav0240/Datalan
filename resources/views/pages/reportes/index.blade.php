@@ -181,6 +181,11 @@
                 </div>
             @endforelse
         </div>
+
+        <!-- Paginación -->
+        <div class="mt-8">
+            {{ $reportes->links() }}
+        </div>
     </div>
 
     <!-- Font Awesome -->

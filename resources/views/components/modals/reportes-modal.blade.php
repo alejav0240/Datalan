@@ -40,7 +40,6 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 
-                                            onclick="return confirm('¿Está seguro de eliminar este reporte?')"
                                             class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
                                             <i class="fas fa-trash-alt"></i> Eliminar
                                         </button>

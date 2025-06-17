@@ -36,8 +36,8 @@ class TrabajoController extends Controller
         if ($request->filled('search')) {
             $query->where('descripcion', 'like', '%' . $request->search . '%');
         }
-        // Ordenar
-        $trabajos = $query->orderBy('created_at', 'desc')->get();
+        // Ordenar y paginar
+        $trabajos = $query->orderBy('created_at', 'desc')->paginate(10);
         return view('pages.trabajos.index', compact('trabajos'));
     }
 

@@ -35,8 +35,8 @@ class ReporteFallaController extends Controller
             });
         }
 
-        // Ordenar por fecha de creación
-        $reportes = $query->orderBy('created_at', 'desc')->get();
+        // Ordenar por fecha de creación y paginar
+        $reportes = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('pages.reportes.index', compact('reportes'));
     }
