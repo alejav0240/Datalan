@@ -6,7 +6,7 @@
             <div class="relative inline-flex" x-data="{ open: false }">
                 <button
                     class="rounded-full"
-                    :class="open ? 'bg-gray-100 dark:bg-gray-700/60 text-gray-500 dark:text-gray-400': 'text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400'"          
+                    :class="open ? 'bg-gray-100 dark:bg-gray-700/60 text-gray-500 dark:text-gray-400': 'text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400'"
                     aria-haspopup="true"
                     @click.prevent="open = !open"
                     :aria-expanded="open"
@@ -19,7 +19,7 @@
                     </svg>
                 </button>
                 <div
-                    class="origin-top-right z-10 absolute top-full right-0 min-w-36 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1"                
+                    class="origin-top-right z-10 absolute top-full right-0 min-w-36 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
                     @click.outside="open = false"
                     @keydown.escape.window="open = false"
                     x-show="open"
@@ -29,7 +29,7 @@
                     x-transition:leave="transition ease-out duration-200"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
-                    x-cloak                
+                    x-cloak
                 >
                     <ul>
                         <li>
@@ -47,7 +47,7 @@
         </header>
         <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Sales</div>
         <div class="flex items-start">
-            <div class="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">${{ number_format($dataFeed->sumDataSet(1, 1), 0) }}</div>
+            <div class="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">$</div>
             <div class="text-sm font-medium text-green-700 px-1.5 bg-green-500/20 rounded-full">+49%</div>
         </div>
     </div>
