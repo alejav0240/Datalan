@@ -16,8 +16,33 @@ class ReporteFallaController extends Controller
     // Obtener reportes
     public function index(Request $request)
     {
-  
-        $reportes = ReporteFalla::with(['cliente', 'direccionAdicional'])->get();
+        // Consulta base
+        $query = ReporteFalla::with(['cliente', 'direccionAdicional']);
+
+        // Filtro por estado
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        // Filtro por tipo de falla
+        if ($request->filled('tipo_falla')) {
+            $query->where('tipo_falla', $request->tipo_falla);
+        }
+
+        // Búsqueda por descripción o nombre del cliente
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('descripcion', 'like', '%' . $search . '%')
+                  ->orWhereHas('cliente', function($q) use ($search) {
+                      $q->where('nombre', 'like', '%' . $search . '%');
+                  });
+            });
+        }
+
+        // Ordenar por fecha de creación y paginar
+        $reportes = $query->orderBy('created_at', 'desc')->paginate(10);
+
         return view('pages.reportes.index', compact('reportes'));
     }
     // Editar

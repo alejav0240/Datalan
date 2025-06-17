@@ -196,7 +196,7 @@
                                 <a href="{{ route('trabajos.edit', $trabajo) }}" class="text-yellow-600 hover:text-yellow-800">
                                     <i class="fas fa-edit fa-lg"></i>
                                 </a>
-                                <form action="{{ route('trabajos.destroy', $trabajo) }}" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este trabajo?')">
+                                <form action="{{ route('trabajos.destroy', $trabajo) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-800">
@@ -213,6 +213,11 @@
                     <p class="text-xl text-gray-500">No hay trabajos registrados</p>
                 </div>
             @endforelse
+        </div>
+
+        <!-- Paginación -->
+        <div class="mt-8">
+            {{ $trabajos->links() }}
         </div>
     </div>
 
