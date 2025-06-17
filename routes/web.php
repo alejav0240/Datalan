@@ -63,6 +63,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
     Route::get('/dashboard/trabajosmes', [DashboardController::class, 'trabajosPorMes'])->name('trabajos.index');
+    Route::get('/dashboard/tipos-fallas-mes', [DashboardController::class, 'tiposFallasMes']);
 
     // RUTAS DE CLIENTE
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');

@@ -1,4 +1,4 @@
-<div class="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
+<div class="flex flex-col col-span-full sm:col-span-8 xl:col-span-12 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
     <div class="px-5 pt-5">
         <header class="flex justify-between items-start mb-2">
             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Trabajos Por Mes </h2>
@@ -53,7 +53,7 @@
     </div>
     <!-- Chart built with Chart.js 3 -->
     <!-- Check out src/js/components/dashboard-card-01.js for config -->
-    <div class="grow max-sm:max-h-[128px] xl:max-h-[128px]">
+    <div class="grow max-sm:max-h-[180px] xl:max-h-[128px]">
         <!-- Change the height attribute to adjust the chart height -->
         <canvas id="dashboard-card-01" width="389" height="128"></canvas>
     </div>

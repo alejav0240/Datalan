@@ -75,6 +75,19 @@ class DashboardController extends Controller
         return response()->json($trabajosPorMes);
     }
 
+    public function tiposFallasMes()
+    {
+        $tiposFallas = ReporteFalla::select(
+            'tipo_falla',
+            DB::raw('COUNT(*) as cantidad')
+        )
+            ->where('created_at', '>=', now()->startOfMonth()) // Filtrar por el mes actual
+            ->groupBy('tipo_falla') // Agrupar por tipo de falla
+            ->get();
+
+        return response()->json($tiposFallas);
+    }
+
     /**
      * Displays the analytics screen
      *
