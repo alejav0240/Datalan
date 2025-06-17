@@ -88,8 +88,8 @@
 {{--            <!-- Stacked bar chart (Sales VS Refunds) -->--}}
 {{--            <x-dashboard.dashboard-card-09 />--}}
 
-{{--            <!-- Card (Customers) -->--}}
-{{--            <x-dashboard.dashboard-card-10 />--}}
+            <!-- Card (Customers) -->
+            <x-dashboard.dashboard-card-10 :empleadosConMasTrabajos=$empleadosConMasTrabajos/>
 
 {{--            <!-- Card (Reasons for Refunds) -->--}}
 {{--            <x-dashboard.dashboard-card-11 />--}}
