@@ -37,6 +37,9 @@ Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.st
 Route::post('/direcciones', [\App\Http\Controllers\DireccionAdicionalController::class, 'store'])->name('direcciones.store');
 Route::delete('/direcciones-adicionales/{id}', [\App\Http\Controllers\DireccionAdicionalController::class, 'destroy']);
 
+// RUTAS PARA REPORTES DE FALLAS
+Route::post('predecir-api', [\App\Http\Controllers\PredecirController::class, 'predecirTiempoApi'])->name('predecir.tiempo.api');
+
 // RUTAS PARA REPORTES DE CLIENTES
 Route::middleware(['auth'])->group(function () {
     // Crear

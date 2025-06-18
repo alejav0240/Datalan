@@ -16,8 +16,11 @@ class ReporteFallaController extends Controller
     // Obtener reportes
     public function index(Request $request)
     {
+        if (Auth::user()->role == 'cliente') {
+            return redirect()->route('inicio')->with('error', 'No tiene permisos para acceder a esta sección.');
+        }
         // Consulta base
-        $query = ReporteFalla::with(['cliente', 'direccionAdicional']);
+        $query = ReporteFalla::with(['cliente', 'direccionAdicional','trabajo']);
 
         // Filtro por estado
         if ($request->filled('estado')) {
@@ -38,6 +41,10 @@ class ReporteFallaController extends Controller
                       $q->where('nombre', 'like', '%' . $search . '%');
                   });
             });
+        }
+
+        if (Auth::user()->role == 'empleado') {
+
         }
 
         // Ordenar por fecha de creación y paginar
@@ -70,14 +77,14 @@ class ReporteFallaController extends Controller
                 ->withInput();
         }
     }
-    
+
     // Obtener direcciones por cliente (para AJAX)
     public function getDireccionesPorCliente($clienteId)
     {
         $direcciones = DireccionAdicional::where('id_cliente', $clienteId)->get();
         return response()->json($direcciones);
     }
-    
+
     // MÉTODOS PARA CLIENTES
     // Guardar reporte
     public function clienteStore(Request $request)
@@ -91,14 +98,14 @@ class ReporteFallaController extends Controller
         try {
             // Obtener el cliente autenticado
             $cliente = Cliente::where('user_id', Auth::user()->id)->first();
-            
+
             if (!$cliente) {
                 return redirect()->back()->with('error', 'No se encontró información de cliente asociada a su cuenta.')->withInput();
             }
             // Verificar que la dirección pertenezca al cliente
             $direccion = DireccionAdicional::where('id', $request->direccion_adicional_id)
                 ->where('id_cliente', $cliente->id)
-                ->first();   
+                ->first();
             if (!$direccion) {
                 return redirect()->back()->with('error', 'La dirección seleccionada no es válida.')->withInput();
             }
@@ -108,15 +115,15 @@ class ReporteFallaController extends Controller
                 'direccion_adicional_id' => $request->direccion_adicional_id,
                 'tipo_falla' => $request->tipo_falla,
                 'descripcion' => $request->descripcion,
-                'estado' => 'pendiente', 
+                'estado' => 'pendiente',
             ]);
-            
+
             return redirect()->route('inicio')->with('success', 'Reporte de falla creado exitosamente. Pronto nos pondremos en contacto con usted.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error al crear el reporte de falla: ' . $e->getMessage())->withInput();
         }
     }
-    
+
     // Eliminar reporte (para clientes)
     public function clienteDestroy($id)
     {
@@ -130,7 +137,7 @@ class ReporteFallaController extends Controller
             $reporte = ReporteFalla::where('id', $id)
                 ->where('cliente_id', $cliente->id)
                 ->first();
-                
+
             if (!$reporte) {
                 return redirect()->route('inicio')->with('error', 'El reporte solicitado no existe o no tiene permisos para eliminarlo.');
             }
@@ -145,7 +152,7 @@ class ReporteFallaController extends Controller
             return redirect()->route('inicio')->with('error', 'Error al eliminar el reporte de falla: ' . $e->getMessage());
         }
     }
-    
+
     // Obtener reportes del cliente
     public function clienteReportes()
     {
@@ -159,7 +166,7 @@ class ReporteFallaController extends Controller
             ->with('direccionAdicional')
             ->orderBy('created_at', 'desc')
             ->get();
-            
+
         return response()->json($reportes);
     }
 }
