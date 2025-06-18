@@ -46,7 +46,6 @@
                         Completa el formulario para crear un nuevo trabajo y asignar un equipo
                     </p>
                 </div>
-
                 <!-- Tarjeta del Formulario -->
                 <div class="form-card dark:bg-gray-800 text-white overflow-hidden">
                     <div class="md:flex">
@@ -69,6 +68,12 @@
                                         <i class="fas fa-users fa-lg"></i>
                                     </div>
                                     <p class="text-indigo-200 text-lg">Equipo de trabajo</p>
+                                </div>
+                                <div class="flex items-center mb-6">
+                                    <div class="bg-indigo-500 rounded-full p-4 mr-4">
+                                        <i class="fa-solid fa-hourglass-start fa-lg"></i>
+                                    </div>
+                                    <p id="prediccion-tiempo" class="text-indigo-200 text-lg">Estimando tiempo...</p>
                                 </div>
                             </div>
                         </div>
@@ -268,19 +273,19 @@
                 // Asegurarse de que solo se pueda seleccionar como encargado a un empleado que esté en el equipo
                 const empleadosCheckboxes = document.querySelectorAll('input[name="empleados[]"]');
                 const encargadoSelect = document.querySelector('select[name="encargado_id"]');
-                
+
                 empleadosCheckboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', updateEncargadoOptions);
                 });
-                
+
                 function updateEncargadoOptions() {
                     const selectedEmpleados = Array.from(empleadosCheckboxes)
                         .filter(cb => cb.checked)
                         .map(cb => cb.value);
-                    
+
                     Array.from(encargadoSelect.options).forEach(option => {
                         if (option.value === '') return; // Mantener la opción "Seleccione un encargado..."
-                        
+
                         if (!selectedEmpleados.includes(option.value)) {
                             option.disabled = true;
                             if (option.selected) {
@@ -291,10 +296,63 @@
                         }
                     });
                 }
-                
+
                 // Ejecutar una vez al cargar para configurar el estado inicial
                 updateEncargadoOptions();
             });
         </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const tipoTrabajoSelect = document.querySelector('select[name="tipo_trabajo"]');
+                const prioridadSelect = document.querySelector('select[name="prioridad"]');
+                const empleadosCheckboxes = document.querySelectorAll('input[name="empleados[]"]');
+                const resultadoDiv = document.getElementById('prediccion-tiempo');
+
+                const getCantidadEmpleados = () =>
+                    Array.from(empleadosCheckboxes).filter(cb => cb.checked).length;
+
+                const hacerPrediccion = async () => {
+                    const tipo_trabajo = tipoTrabajoSelect.value;
+                    const prioridad = prioridadSelect.value;
+                    const cantidad_empleados = getCantidadEmpleados();
+
+                    if (!tipo_trabajo || !prioridad || cantidad_empleados < 1) {
+                        resultadoDiv.textContent = '⏳ Esperando más datos para estimar...';
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("{{ route('predecir.tiempo.api') }}", {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                tipo_trabajo,
+                                prioridad,
+                                cantidad_empleados,
+                                cant_tipo_trabajo: 0, // calculado en backend
+                                cant_prioridad: 0     // calculado en backend
+                            })
+                        });
+
+                        if (!response.ok) throw new Error('Error en la predicción');
+
+                        const json = await response.json();
+                        resultadoDiv.textContent = `⏱ Tiempo estimado: ${json.tiempo_estimado.toFixed(2)} minutos`;
+
+                    } catch (err) {
+                        resultadoDiv.textContent = '❌ No se pudo calcular el tiempo';
+                    }
+                };
+
+                tipoTrabajoSelect.addEventListener('change', hacerPrediccion);
+                prioridadSelect.addEventListener('change', hacerPrediccion);
+                empleadosCheckboxes.forEach(cb => cb.addEventListener('change', hacerPrediccion));
+            });
+        </script>
+
     </body>
 </x-app-layout>
