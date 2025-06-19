@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\VericarNoCliente;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        'is.not.cliente' => VericarNoCliente::class, // Middleware personalizado para verificar que no sea cliente
     ];
 }
