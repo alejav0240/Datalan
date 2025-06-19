@@ -91,7 +91,7 @@ class EmpleadoController extends Controller
             $empleado->user->update([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'password' => isset($validated['password']) ? bcrypt($validated['password']) : $empleado->user->password,
+                //'password' => isset($validated['password']) ? bcrypt($validated['password']) : $empleado->user->password,
             ]);
 
             // Actualizar el empleado
