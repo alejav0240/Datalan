@@ -106,10 +106,15 @@ const dashboardCard01 = async () => {
                         callbacks: {
                             title: (context) => {
                                 const date = new Date(context[0].parsed.x);
-                                return date.toLocaleString('default', { month: 'long' });
+                                return `Mes: ${date.toLocaleString('default', { month: 'long' })}`;
                             },
-                            label: (context) => formatValue(context.parsed.y),
+                            label: (context) => {
+                                const cantidad = context.parsed.y;
+                                const plural = cantidad === 1 ? 'trabajo' : 'trabajos';
+                                return `${cantidad} ${plural} en el mes`;
+                            }
                         },
+
                         ...getTooltipColors(darkMode),
                     },
                     legend: { display: false }
