@@ -19,7 +19,6 @@ Route::redirect('/', 'inicio');
 // Página principal
 Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
-
 // ==============================
 // RUTAS PÚBLICAS (sin autenticación)
 // ==============================
@@ -100,13 +99,4 @@ Route::middleware(['auth:sanctum', 'verified', 'auth'])->group(function () {
             Route::post('/{trabajo}/cambiar-estado', [TrabajoController::class, 'cambiarEstado'])->name('cambiar-estado');
         });
     });
-
-
-
-    // ==========================
-    // Default
-    // ==========================
-
-    Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
-
 });
