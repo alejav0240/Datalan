@@ -104,7 +104,7 @@
                             <li class="mr-2">
                                 <button data-tab="reportes_fallas"
                                     class="tab-link inline-block py-4 px-4 text-sm font-medium text-center border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600">
-                                    <i class="fas fa-file-alt mr-2"></i>Reportes de Fallas
+                                    <i class="fas fa-file-alt mr-2"></i>Reportes
                                 </button>
                             </li>
                         </ul>
@@ -189,7 +189,7 @@
                                 @endif
                             </div>
                         </div>
-                               
+
 
                         <!-- Reportes de fallas Tab -->
                         <div id="reportes_fallas" class="tab-content">
@@ -252,7 +252,7 @@
                         </div>
 
 
-                       
+
                     </div>
 
                     <!-- Additional Information -->
