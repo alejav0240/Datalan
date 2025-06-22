@@ -1,5 +1,5 @@
 <div class="mt-6 flex justify-end space-x-3">
-    @if ($type !== 'permisos')         
+    @if ($type !== 'permisos')
         <a href="{{ route($type . '.show', $item) }}" class="text-indigo-600 hover:text-indigo-900">
             <i class="fas fa-eye fa-lg"></i>
         </a>
@@ -59,14 +59,37 @@
                 </button>
             </form>
         @endif
+    @elseif($type == 'empleados')
+        <!-- Para otros tipos -->
+        <form action="{{ route($type . '.destroy', $item) }}" method="POST">
+            @csrf
+            @method('DELETE')
+
+            @if($item->user->is_active)
+                <button type="submit" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                </button>
+            @else
+                <button type="submit" class="text-green-600 hover:text-green-800" title="Activar">
+                    <i class="fas fa-check fa-lg"></i>
+                </button>
+            @endif
+        </form>
     @elseif($type !== 'permisos' || $item->estado === 'pendiente')
         <!-- Para otros tipos -->
         <form action="{{ route($type . '.destroy', $item) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" class="text-red-600 hover:text-red-800">
-                <i class="fas fa-trash-alt fa-lg"></i>
-            </button>
+
+            @if($item->estado)
+                <button type="submit" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                </button>
+            @else
+                <button type="submit" class="text-green-600 hover:text-green-800" title="Activar">
+                    <i class="fas fa-check fa-lg"></i>
+                </button>
+            @endif
         </form>
     @endif
 </div>

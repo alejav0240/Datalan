@@ -31,6 +31,20 @@
             </div>
         </div>
 
+        <!-- Buscador -->
+        <div class="mb-8">
+            <form action="{{ route('clientes.index') }}" method="GET">
+                <div class="relative">
+                    <input type="text" name="search" placeholder="Buscar clientes..."
+                           class="w-full p-4 rounded-xl shadow-lg border-0 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-300"
+                           value="{{ request('search') }}">
+                    <button type="submit" class="absolute right-3 top-3.5 text-indigo-600 dark:text-indigo-400">
+                        <i class="fas fa-search fa-lg"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
         <!-- Listado de Clientes -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             @foreach($clientes as $cliente)

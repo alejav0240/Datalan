@@ -12,7 +12,7 @@ class Trabajo extends Model
 
     protected $fillable = [
 
-        'reporte_id', 'tipo_trabajo', 'descripcion', 'prioridad', 'materiales', 'observaciones_materiales'
+        'reporte_id', 'tipo_trabajo', 'descripcion', 'prioridad', 'materiales', 'observaciones_materiales','created_at'
     ];
     public function empleados()
     {

@@ -22,7 +22,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-8">
             <!-- Título -->
             <h1 class="text-3xl font-bold text-indigo-700 dark:text-indigo-300">
-                <i class="fas fa-exclamation-triangle mr-2"></i> Reportes de Fallas
+                <i class="fas fa-exclamation-triangle mr-2"></i> Reportes
             </h1>
             <!-- Botones -->
             <div class="mt-4 md:mt-0 flex space-x-3">
@@ -121,7 +121,7 @@
                                 <i class="fas {{ $tipoFallaIcons[$reporte->tipo_falla] ?? 'fa-exclamation-circle text-red-600 dark:text-red-400' }} text-4xl"></i>
                             </div>
                         </div>
-                        
+
                         <div class="flex-1 p-6">
                             <!-- Detalles principales -->
                             <div>
@@ -138,7 +138,7 @@
 
                             <!-- Estado del reporte -->
                             <div class="text-sm font-bold mt-2">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     {{ $reporte->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-100' : '' }}
                                     {{ $reporte->estado == 'en_proceso' ? 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100' : '' }}
                                     {{ $reporte->estado == 'resuelto' ? 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100' : '' }}

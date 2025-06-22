@@ -109,10 +109,10 @@
                                         <!-- Reporte de Falla (solo lectura) -->
                                         <div class="col-span-2">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">
-                                                Reporte de Falla
+                                                Reporte
                                             </label>
-                                            <input type="text" value="{{ $trabajo->reporte->cliente->nombre }} - {{ $trabajo->reporte->tipo_falla }} - {{ $trabajo->reporte->direccionAdicional->direccion }}" 
-                                                class="w-full rounded-lg shadow-sm py-3 px-4 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300" 
+                                            <input type="text" value="{{ $trabajo->reporte->cliente->nombre }} - {{ $trabajo->reporte->tipo_falla }} - {{ $trabajo->reporte->direccionAdicional->direccion }}"
+                                                class="w-full rounded-lg shadow-sm py-3 px-4 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300"
                                                 readonly>
                                             <input type="hidden" name="reporte_id" value="{{ $trabajo->reporte_id }}">
                                         </div>
@@ -246,7 +246,7 @@
                                             class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('encargado_id') input-error @enderror">
                                             <option value="" class="text-gray-500 dark:text-gray-400">Seleccione un encargado...</option>
                                             @foreach($empleados as $empleado)
-                                                <option value="{{ $empleado->id }}" 
+                                                <option value="{{ $empleado->id }}"
                                                     @selected(old('encargado_id', $encargado ? $encargado->id : '') == $empleado->id)>
                                                     {{ $empleado->user->name }} - {{ $empleado->cargo }}
                                                 </option>
@@ -260,7 +260,7 @@
 
                                 <!-- Botones -->
                                 <div class="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-200">
-                                    <a href="{{ route('trabajos.index') }}" 
+                                    <a href="{{ route('trabajos.index') }}"
                                         class="px-6 py-3 text-center bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300 transition">
                                         <i class="fas fa-arrow-left mr-2"></i> Cancelar
                                     </a>
@@ -281,19 +281,19 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const empleadosCheckboxes = document.querySelectorAll('input[name="empleados[]"]');
                 const encargadoSelect = document.querySelector('select[name="encargado_id"]');
-                
+
                 empleadosCheckboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', updateEncargadoOptions);
                 });
-                
+
                 function updateEncargadoOptions() {
                     const selectedEmpleados = Array.from(empleadosCheckboxes)
                         .filter(cb => cb.checked)
                         .map(cb => cb.value);
-                    
+
                     Array.from(encargadoSelect.options).forEach(option => {
                         if (option.value === '') return;
-                        
+
                         if (!selectedEmpleados.includes(option.value)) {
                             option.disabled = true;
                             if (option.selected) {
@@ -304,7 +304,7 @@
                         }
                     });
                 }
-                
+
                 // Inicializar estado
                 updateEncargadoOptions();
             });

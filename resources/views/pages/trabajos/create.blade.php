@@ -108,7 +108,7 @@
                                         <!-- Reporte de Falla -->
                                         <div class="col-span-2">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">
-                                                Reporte de Falla <span class="text-red-500">*</span>
+                                                Reporte <span class="text-red-500">*</span>
                                             </label>
                                             <select name="reporte_id"
                                                 class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('reporte_id') input-error @enderror">

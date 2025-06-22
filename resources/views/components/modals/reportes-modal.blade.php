@@ -2,9 +2,9 @@
 
 <div id="reportesModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg relative overflow-x-auto">
-        <button id="cerrarModalReportes" 
+        <button id="cerrarModalReportes"
             class="absolute top-3 right-4 text-gray-600 hover:text-red-500 text-3xl font-bold leading-none">&times;</button>
-        <h2 class="text-2xl font-bold text-blue-600 mb-6 text-center">Mis Reportes de Fallas</h2>
+        <h2 class="text-2xl font-bold text-blue-600 mb-6 text-center">Mis Reportes</h2>
 
         @if($reportes && count($reportes) > 0)
             <table class="w-full border-collapse border border-gray-300 text-left text-sm rounded-lg overflow-hidden shadow-md">
@@ -25,7 +25,7 @@
                             <td class="border border-gray-300 px-4 py-3">{{ $reporte->direccionAdicional->direccion }}</td>
                             <td class="border border-gray-300 px-4 py-3 max-w-xs truncate">{{ $reporte->descripcion }}</td>
                             <td class="border border-gray-300 px-4 py-3">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     {{ $reporte->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800' : '' }}
                                     {{ $reporte->estado == 'en_proceso' ? 'bg-blue-100 text-blue-800' : '' }}
                                     {{ $reporte->estado == 'resuelto' ? 'bg-green-100 text-green-800' : '' }}
@@ -39,7 +39,7 @@
                                     <form action="{{ route('reportes.cliente.destroy', $reporte->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" 
+                                        <button type="submit"
                                             class="text-red-600 hover:text-red-800 font-semibold transition-colors duration-300">
                                             <i class="fas fa-trash-alt"></i> Eliminar
                                         </button>

@@ -4,6 +4,7 @@
         'aprobado' => 'Aprobado',
         'rechazado' => 'Rechazado',
     ];
+    $hoy = date('Y-m-d');
 @endphp
 <x-app-layout>
     <body class="bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen">
@@ -100,7 +101,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                                 Fecha de Inicio <span class="text-red-500">*</span>
                                             </label>
-                                            <input type="date" name="fecha_inicio" value="{{ old('fecha_inicio', isset($permiso) ? $permiso->fecha_inicio : '') }}"
+                                            <input type="date"  min="{{ $hoy }}" name="fecha_inicio" value="{{ old('fecha_inicio', isset($permiso) ? $permiso->fecha_inicio : '') }}"
                                                 class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('fecha_inicio') input-error @enderror">
                                             @error('fecha_inicio')
                                                 <p class="error-message">{{ $message }}</p>
@@ -111,7 +112,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                                 Fecha de Fin <span class="text-red-500">*</span>
                                             </label>
-                                            <input type="date" name="fecha_fin" value="{{ old('fecha_fin', isset($permiso) ? $permiso->fecha_fin : '') }}"
+                                            <input type="date" min="{{ $hoy }}" name="fecha_fin" value="{{ old('fecha_fin', isset($permiso) ? $permiso->fecha_fin : '') }}"
                                                 class="w-full rounded-lg shadow-sm input-focus py-3 px-4 bg-white dark:bg-gray-700 text-black dark:text-white @error('fecha_fin') input-error @enderror">
                                             @error('fecha_fin')
                                                 <p class="error-message">{{ $message }}</p>
