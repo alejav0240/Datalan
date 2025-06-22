@@ -140,7 +140,7 @@
                                 <i class="fas {{ $prioridadIcons[$trabajo->prioridad] ?? 'fa-question-circle text-gray-500 dark:text-gray-600' }} text-4xl"></i>
                             </div>
                         </div>
-                        
+
                         <div class="flex-1 p-6">
                             <!-- Detalles principales -->
                             <div>
@@ -157,7 +157,7 @@
 
                             <!-- Estado del reporte -->
                             <div class="text-sm font-bold mt-2">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                     {{ $trabajo->reporte->estado == 'pendiente' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-100' : '' }}
                                     {{ $trabajo->reporte->estado == 'en_proceso' ? 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100' : '' }}
                                     {{ $trabajo->reporte->estado == 'resuelto' ? 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-100' : '' }}
@@ -189,21 +189,24 @@
                             </div>
 
                             <!-- Botones de acción -->
-                            <div class="mt-6 flex justify-end space-x-3">
-                                <a href="{{ route('trabajos.show', $trabajo) }}" class="text-indigo-600 hover:text-indigo-900">
-                                    <i class="fas fa-eye fa-lg"></i>
-                                </a>
-                                <a href="{{ route('trabajos.edit', $trabajo) }}" class="text-yellow-600 hover:text-yellow-800">
-                                    <i class="fas fa-edit fa-lg"></i>
-                                </a>
-                                <form action="{{ route('trabajos.destroy', $trabajo) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800">
-                                        <i class="fas fa-trash fa-lg"></i>
-                                    </button>
-                                </form>
-                            </div>
+                                <div class="mt-6 flex justify-end space-x-3">
+                                    <a href="{{ route('trabajos.show', $trabajo) }}" class="text-indigo-600 hover:text-indigo-900">
+                                        <i class="fas fa-eye fa-lg"></i>
+                                    </a>
+                                    @if(Auth::user()->role == 'administrador')
+                                        <a href="{{ route('trabajos.edit', $trabajo) }}" class="text-yellow-600 hover:text-yellow-800">
+                                            <i class="fas fa-edit fa-lg"></i>
+                                        </a>
+                                        <form action="{{ route('trabajos.destroy', $trabajo) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-800">
+                                                <i class="fas fa-trash fa-lg"></i>
+                                            </button>
+                                        </form>
+                                      @endif
+                                </div>
+
                         </div>
                     </div>
                 </div>

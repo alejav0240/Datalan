@@ -12,15 +12,6 @@
 
             <!-- Filtros -->
             <div class="flex flex-wrap items-center gap-2">
-{{--                <select id="filtro-anio" class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-sm text-gray-800 dark:text-gray-100 rounded-md px-3 py-1.5">--}}
-{{--                    <option value="2025">2025</option>--}}
-{{--                    <option value="2024">2024</option>--}}
-{{--                </select>--}}
-{{--                <select id="filtro-tipo" class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-sm text-gray-800 dark:text-gray-100 rounded-md px-3 py-1.5">--}}
-{{--                    <option value="todos">Todos los tipos</option>--}}
-{{--                    <option value="mantenimiento">Mantenimiento</option>--}}
-{{--                    <option value="instalación">Instalación</option>--}}
-{{--                </select>--}}
                 <button
                     id="exportar-grafico"
                     class="ml-2 inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-violet-600 border border-violet-500 rounded-md hover:bg-violet-50 dark:hover:bg-violet-600/10"
@@ -40,4 +31,19 @@
             <canvas id="dashboard-card-01" class="w-full h-full"></canvas>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const exportBtn = document.getElementById('exportar-grafico');
+            const canvas = document.getElementById('dashboard-card-01'); // Asegúrate que este ID sea correcto
+
+            if (exportBtn && canvas) {
+                exportBtn.addEventListener('click', () => {
+                    const link = document.createElement('a');
+                    link.download = 'grafico_trabajos_por_mes.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+        });
+    </script>
 </div>

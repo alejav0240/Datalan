@@ -59,13 +59,29 @@
                 </button>
             </form>
         @endif
-    @elseif($type !== 'permisos' || $item->estado === 'pendiente')
+    @elseif($type == 'empleados')
         <!-- Para otros tipos -->
         <form action="{{ route($type . '.destroy', $item) }}" method="POST">
             @csrf
             @method('DELETE')
 
             @if($item->user->is_active)
+                <button type="submit" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                </button>
+            @else
+                <button type="submit" class="text-green-600 hover:text-green-800" title="Activar">
+                    <i class="fas fa-check fa-lg"></i>
+                </button>
+            @endif
+        </form>
+    @elseif($type !== 'permisos' || $item->estado === 'pendiente')
+        <!-- Para otros tipos -->
+        <form action="{{ route($type . '.destroy', $item) }}" method="POST">
+            @csrf
+            @method('DELETE')
+
+            @if($item->estado)
                 <button type="submit" class="text-red-600 hover:text-red-800">
                     <i class="fas fa-trash-alt fa-lg"></i>
                 </button>

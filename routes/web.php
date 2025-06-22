@@ -26,6 +26,10 @@ Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 // API de predicción de tiempo
 Route::post('/predecir-api', [PredecirController::class, 'predecirTiempoApi'])->name('predecir.tiempo.api');
 
+Route::prefix('trabajos')->name('trabajos.')->group(function () {
+    Route::get('/pdf', [TrabajoController::class, 'generarTrabajosPDF'])->name('pdf');
+    Route::post('/{trabajo}/cambiar-estado', [TrabajoController::class, 'cambiarEstado'])->name('cambiar-estado');
+});
 // ==============================
 // RUTAS CON AUTENTICACIÓN Y VERIFICACIÓN
 // ==============================
@@ -94,9 +98,6 @@ Route::middleware(['auth:sanctum', 'verified', 'auth'])->group(function () {
         // TRABAJOS
         // ==========================
 
-        Route::prefix('trabajos')->name('trabajos.')->group(function () {
-            Route::get('/pdf', [TrabajoController::class, 'generarTrabajosPDF'])->name('pdf');
-            Route::post('/{trabajo}/cambiar-estado', [TrabajoController::class, 'cambiarEstado'])->name('cambiar-estado');
-        });
+
     });
 });

@@ -7,9 +7,11 @@ use App\Models\Empleado;
 use App\Models\ReporteFalla;
 use App\Http\Requests\StoreTrabajoRequest;
 use App\Http\Requests\UpdateTrabajoRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Codedge\Fpdf\Fpdf\Fpdf;
+use Str;
 
 class TrabajoController extends Controller
 {
@@ -177,92 +179,102 @@ class TrabajoController extends Controller
     // Reportes de trabajo
     public function generarTrabajosPDF()
     {
-        // Traer todos los trabajos con empleados y datos relacionados para optimizar consultas
-        $trabajos = Trabajo::with(['empleados.user', 'reporte.cliente'])->get();
+        $fechaLimite = Carbon::now()->subMonths(3);
+
+        $trabajos = Trabajo::with(['empleados.user', 'reporte.cliente'])
+            ->whereHas('reporte', fn($q) => $q->whereDate('created_at', '>=', $fechaLimite))
+            ->get();
 
         if ($trabajos->isEmpty()) {
-            return redirect()->back()->with('error', 'No hay trabajos para generar el reporte.');
+            return redirect()->back()->with('error', 'No hay trabajos en los últimos 3 meses.');
         }
 
         $pdf = new Fpdf('L');
         $pdf->AddPage();
-        $pdf->SetMargins(25, 25, 25);
+        $pdf->SetMargins(20, 20, 20);
 
-        // Logo y fecha en la parte superior
-        $pdf->Image(public_path('images/logodatalan.png'), 25, 10, 30);
+        // Encabezado
+        $pdf->Image(public_path('images/logodatalan.png'), 20, 10, 30);
         $pdf->SetFont('Arial', '', 11);
-        $pdf->SetTextColor(100, 100, 100);
-        $fecha = date('d/m/Y H:i:s');
+        $pdf->SetTextColor(80, 80, 80);
         $pdf->SetXY(0, 15);
-        $pdf->Cell(0, 10, 'Fecha: ' . $fecha, 0, 1, 'R');
+        $pdf->Cell(0, 10, 'Fecha: ' . now()->format('d/m/Y H:i:s'), 0, 1, 'R');
+        $pdf->Ln(5);
 
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->SetTextColor(34, 34, 34);
+        $titulo = 'REPORTE DE TRABAJOS (Últimos 3 meses desde ' . $fechaLimite->format('d/m/Y') . ')';
+        $pdf->Cell(0, 12, utf8_decode($titulo), 0, 1, 'C');
+        $pdf->SetDrawColor(100, 100, 255);
+        $pdf->SetLineWidth(0.6);
+        $pdf->Line(20, $pdf->GetY(), 285, $pdf->GetY());
         $pdf->Ln(10);
 
-        // Título del reporte
-        $pdf->SetFont('Arial', 'B', 18);
-        $pdf->SetTextColor(40, 40, 40);
-        $pdf->Cell(0, 15, mb_convert_encoding('REPORTE GENERAL DE TRABAJOS', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
+        // Estilos de tabla
+        $headers = [
+            ['label' => 'Tipo de Trabajo',     'width' => 40],
+            ['label' => 'Prioridad',           'width' => 30],
+            ['label' => 'Descripción Error',   'width' => 55],
+            ['label' => 'Cliente',             'width' => 45],
+            ['label' => 'Estado',              'width' => 30],
+            ['label' => 'Empleados',           'width' => 65],
+        ];
 
-        // Línea decorativa
-        $pdf->SetDrawColor(79, 129, 189);
-        $pdf->SetLineWidth(0.75);
-        $pdf->Line(25, $pdf->GetY(), 270, $pdf->GetY());
-        $pdf->Ln(15);
-
-        // Encabezados de tabla
+        // Encabezado de tabla
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->SetFillColor(230, 230, 230);
-        $pdf->SetDrawColor(180, 180, 180);
-        $pdf->Cell(40, 10, 'Tipo de Trabajo', 1, 0, 'C', true);
-        $pdf->Cell(30, 10, 'Prioridad', 1, 0, 'C', true);
-        $pdf->Cell(50, 10, mb_convert_encoding('Descripción Error', 'ISO-8859-1', 'UTF-8'), 1, 0, 'C', true);
-        $pdf->Cell(40, 10, 'Cliente', 1, 0, 'C', true);
-        $pdf->Cell(25, 10, 'Estado', 1, 0, 'C', true);
-        $pdf->Cell(65, 10, 'Empleados', 1, 1, 'C', true);
+        $pdf->SetFillColor(54, 79, 107); // Azul oscuro
+        $pdf->SetTextColor(255);
+        foreach ($headers as $h) {
+            $pdf->Cell($h['width'], 10, utf8_decode($h['label']), 1, 0, 'C', true);
+        }
+        $pdf->Ln();
 
-        // Cuerpo de la tabla con datos
+        // Filas de datos
         $pdf->SetFont('Arial', '', 11);
+        $pdf->SetTextColor(30);
+        $fill = false;
+
         foreach ($trabajos as $trabajo) {
-            $tipoTrabajo = mb_convert_encoding($trabajo->tipo_trabajo ?? '', 'ISO-8859-1', 'UTF-8');
-            $prioridad = mb_convert_encoding($trabajo->prioridad ?? '', 'ISO-8859-1', 'UTF-8');
-            $descripcionError = mb_convert_encoding($trabajo->reporte->descripcion ?? '', 'ISO-8859-1', 'UTF-8');
-            $cliente = mb_convert_encoding($trabajo->reporte->cliente->nombre ?? '', 'ISO-8859-1', 'UTF-8');
-            $estado = mb_convert_encoding($trabajo->reporte->estado ?? '', 'ISO-8859-1', 'UTF-8');
+            $tipo = utf8_decode($trabajo->tipo_trabajo ?? '');
+            $prioridad = utf8_decode($trabajo->prioridad ?? '');
+            $descripcion = utf8_decode(Str::limit($trabajo->reporte->descripcion ?? '', 60));
+            $cliente = utf8_decode($trabajo->reporte->cliente->nombre ?? '');
+            $estado = utf8_decode($trabajo->reporte->estado ?? '');
 
-            // Preparar lista de empleados con saltos de línea
-            $nombres = '';
-            foreach ($trabajo->empleados as $empleado) {
-                $nombres .= ($empleado->user->name ?? '') . "\n";
-            }
-            $nombres = mb_convert_encoding(trim($nombres), 'ISO-8859-1', 'UTF-8');
+            $empleadosTexto = collect($trabajo->empleados)
+                ->map(fn($e) => $e->user->name ?? '')
+                ->filter()
+                ->implode("\n");
+            $empleadosTexto = utf8_decode($empleadosTexto);
 
-            // Altura estimada de la fila (por ejemplo 6 por línea)
             $lineHeight = 6;
-            $lineCount = substr_count($nombres, "\n") + 1;
+            $lineCount = max(
+                substr_count($empleadosTexto, "\n") + 1,
+                1
+            );
             $cellHeight = $lineHeight * $lineCount;
 
-            // Imprimir las celdas que son de una sola línea
-            $pdf->Cell(40, $cellHeight, $tipoTrabajo, 1);
-            $pdf->Cell(30, $cellHeight, $prioridad, 1);
-            $pdf->Cell(50, $cellHeight, $descripcionError, 1);
-            $pdf->Cell(40, $cellHeight, $cliente, 1);
-            $pdf->Cell(25, $cellHeight, $estado, 1);
+            // Alternar color de fondo
+            $pdf->SetFillColor($fill ? 245 : 255, $fill ? 245 : 255, $fill ? 245 : 255);
 
-            // Imprimir lista de empleados con MultiCell
+            $pdf->Cell($headers[0]['width'], $cellHeight, $tipo, 1, 0, 'L', true);
+            $pdf->Cell($headers[1]['width'], $cellHeight, $prioridad, 1, 0, 'L', true);
+            $pdf->Cell($headers[2]['width'], $cellHeight, $descripcion, 1, 0, 'L', true);
+            $pdf->Cell($headers[3]['width'], $cellHeight, $cliente, 1, 0, 'L', true);
+            $pdf->Cell($headers[4]['width'], $cellHeight, $estado, 1, 0, 'L', true);
+
+            // MultiCell para empleados
             $x = $pdf->GetX();
             $y = $pdf->GetY();
-            $pdf->MultiCell(65, $lineHeight, $nombres, 1);
+            $pdf->MultiCell($headers[5]['width'], $lineHeight, $empleadosTexto, 1, 'L', true);
+            $pdf->SetXY($x + $headers[5]['width'], $y);
 
-            // Mover cursor a la derecha para la siguiente fila
-            $pdf->SetXY($x + 65, $y + $cellHeight);
-
-            // Nueva línea para la siguiente fila
-            $pdf->Ln(0);
+            $pdf->Ln($cellHeight);
+            $fill = !$fill;
         }
 
-
-        // Enviar el PDF al navegador
-        $pdf->Output('I', 'Reporte_Trabajos.pdf');
+        $pdf->Output('I', 'Reporte_Trabajos_Ultimos_3_Meses.pdf');
         exit;
     }
+
 }

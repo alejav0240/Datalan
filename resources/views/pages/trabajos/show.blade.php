@@ -6,13 +6,13 @@
         'configuracion' => 'Configuración',
         'otro' => 'Otro'
     ];
-    
+
     $prioridades = [
         'normal' => 'Normal',
         'alta' => 'Alta',
         'urgente' => 'Urgente'
     ];
-    
+
     $estados = [
         'pendiente' => 'Pendiente',
         'en_proceso' => 'En Proceso',
@@ -69,7 +69,7 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        
+
         .work-icon {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
@@ -82,7 +82,7 @@
             font-size: 2.5rem;
         }
     </style>
-    
+
     <body class="bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
         <div class="min-h-screen flex flex-col">
             <!-- Main Content -->
@@ -96,18 +96,18 @@
                         <div class="text-center md:text-left">
                             <h3 class="text-2xl font-bold">Trabajo #{{ $trabajo->id }}</h3>
                             <h4 class="text-xl mt-1">{{ $tipos_trabajo[$trabajo->tipo_trabajo] ?? $trabajo->tipo_trabajo }}</h4>
-                            
+
                             <div class="flex flex-wrap items-center justify-center md:justify-start mt-3">
-                                <span class="priority-badge 
-                                    {{ $trabajo->prioridad === 'normal' ? 'bg-emerald-600' : 
-                                       ($trabajo->prioridad === 'alta' ? 'bg-amber-600' : 'bg-red-600') }} 
+                                <span class="priority-badge
+                                    {{ $trabajo->prioridad === 'normal' ? 'bg-emerald-600' :
+                                       ($trabajo->prioridad === 'alta' ? 'bg-amber-600' : 'bg-red-600') }}
                                     text-white mr-2">
                                     {{ $prioridades[$trabajo->prioridad] ?? ucfirst($trabajo->prioridad) }}
                                 </span>
-                                
-                                <span class="status-badge 
-                                    {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-600' : 
-                                       ($trabajo->reporte->estado === 'en_proceso' ? 'bg-blue-600' : 'bg-green-600') }} 
+
+                                <span class="status-badge
+                                    {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-600' :
+                                       ($trabajo->reporte->estado === 'en_proceso' ? 'bg-blue-600' : 'bg-green-600') }}
                                     text-white">
                                     {{ $estados[$trabajo->reporte->estado] ?? ucfirst(str_replace('_', ' ', $trabajo->reporte->estado)) }}
                                 </span>
@@ -125,7 +125,7 @@
                             </li>
                             <li class="mr-2">
                                 <button data-tab="reporte" class="tab-link inline-block py-4 px-4 text-sm font-medium text-center border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-600">
-                                    <i class="fas fa-file-alt mr-2"></i>Reporte de Falla
+                                    <i class="fas fa-file-alt mr-2"></i>Reporte
                                 </button>
                             </li>
                             <li class="mr-2">
@@ -152,37 +152,37 @@
                                         {{ $tipos_trabajo[$trabajo->tipo_trabajo] ?? $trabajo->tipo_trabajo }}
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Prioridad</div>
                                     <div class="info-value flex items-center">
-                                        <span class="priority-badge 
-                                            {{ $trabajo->prioridad === 'normal' ? 'bg-emerald-100 text-emerald-800' : 
-                                               ($trabajo->prioridad === 'alta' ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800') }} 
+                                        <span class="priority-badge
+                                            {{ $trabajo->prioridad === 'normal' ? 'bg-emerald-100 text-emerald-800' :
+                                               ($trabajo->prioridad === 'alta' ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800') }}
                                             mr-2">
                                             {{ $prioridades[$trabajo->prioridad] ?? ucfirst($trabajo->prioridad) }}
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Estado del Reporte</div>
                                     <div class="info-value">
-                                        <span class="status-badge 
-                                            {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-100 text-amber-800' : 
+                                        <span class="status-badge
+                                            {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-100 text-amber-800' :
                                                ($trabajo->reporte->estado === 'en_proceso' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800') }}">
                                             {{ $estados[$trabajo->reporte->estado] ?? ucfirst(str_replace('_', ' ', $trabajo->reporte->estado)) }}
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Fecha de Creación</div>
                                     <div class="info-value">
                                         {{ $trabajo->created_at->format('d M, Y h:i A') }}
                                     </div>
                                 </div>
-                                
+
                                 <div class="md:col-span-2">
                                     <div class="info-label">Descripción</div>
                                     <div class="info-value bg-gray-50 dark:bg-gray-700 p-4 rounded-md mt-1">
@@ -201,40 +201,40 @@
                                         {{ $trabajo->reporte->cliente->nombre }}
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Tipo de Falla</div>
                                     <div class="info-value">
                                         {{ $trabajo->reporte->tipo_falla }}
                                     </div>
                                 </div>
-                                
+
                                 <div class="md:col-span-2">
                                     <div class="info-label">Dirección</div>
                                     <div class="info-value bg-gray-50 dark:bg-gray-700 p-4 rounded-md mt-1">
                                         {{ $trabajo->reporte->direccionAdicional->direccion }}
                                     </div>
                                 </div>
-                                
+
                                 <div class="md:col-span-2">
                                     <div class="info-label">Descripción de la Falla</div>
                                     <div class="info-value bg-gray-50 dark:bg-gray-700 p-4 rounded-md mt-1">
                                         {{ $trabajo->reporte->descripcion }}
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Fecha del Reporte</div>
                                     <div class="info-value">
                                         {{ $trabajo->reporte->created_at->format('d M, Y') }}
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Estado Actual</div>
                                     <div class="info-value">
-                                        <span class="status-badge 
-                                            {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-100 text-amber-800' : 
+                                        <span class="status-badge
+                                            {{ $trabajo->reporte->estado === 'pendiente' ? 'bg-amber-100 text-amber-800' :
                                                ($trabajo->reporte->estado === 'en_proceso' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800') }}">
                                             {{ $estados[$trabajo->reporte->estado] ?? ucfirst(str_replace('_', ' ', $trabajo->reporte->estado)) }}
                                         </span>
@@ -281,7 +281,7 @@
                                         {{ $trabajo->materiales ?: 'No se han especificado materiales' }}
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="info-label">Observaciones de Materiales</div>
                                     <div class="info-value bg-gray-50 dark:bg-gray-700 p-4 rounded-md mt-1 whitespace-pre-line">
@@ -312,24 +312,26 @@
                         <a href="{{ route('trabajos.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center justify-center">
                             <i class="fas fa-arrow-left mr-2"></i>Volver a la lista
                         </a>
-                        
-                        <div class="flex flex-wrap justify-center gap-2">
-                            <a href="{{ route('trabajos.edit', $trabajo->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center">
-                                <i class="fas fa-edit mr-2"></i>Editar
-                            </a>
-                            
-                            <form action="{{ route('trabajos.destroy', $trabajo->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este trabajo?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition flex items-center">
-                                    <i class="fas fa-trash-alt mr-2"></i>Eliminar
+
+                        @if(Auth::user()->role == 'administrador')
+                            <div class="flex flex-wrap justify-center gap-2">
+                                <a href="{{ route('trabajos.edit', $trabajo->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center">
+                                    <i class="fas fa-edit mr-2"></i>Editar
+                                </a>
+
+                                <form action="{{ route('trabajos.destroy', $trabajo->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este trabajo?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition flex items-center">
+                                        <i class="fas fa-trash-alt mr-2"></i>Eliminar
+                                    </button>
+                                </form>
+
+                                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition flex items-center" onclick="window.print()">
+                                    <i class="fas fa-print mr-2"></i>Imprimir
                                 </button>
-                            </form>
-                            
-                            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition flex items-center" onclick="window.print()">
-                                <i class="fas fa-print mr-2"></i>Imprimir
-                            </button>
-                        </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </main>
