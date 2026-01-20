@@ -4,6 +4,8 @@
 
 Este proyecto es un sistema integral de gestión de reportes de fallas desarrollado para la empresa Datalan. Su objetivo principal es optimizar la interacción entre clientes y equipos técnicos, permitiendo a los clientes reportar incidentes y facilitando la asignación eficiente de estos a personal cualificado. Además, incorpora un avanzado servicio de Machine Learning para predecir el tiempo estimado de resolución de cada falla, mejorando la planificación y la gestión de expectativas.
 
+![Home Preview](./image/home.png)
+
 ## 🌟 Características Principales
 
 *   **Gestión de Clientes y Personal:** Administración completa de usuarios, incluyendo clientes y empleados con roles y permisos diferenciados.
